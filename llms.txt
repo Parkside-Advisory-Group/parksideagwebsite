@@ -1,0 +1,67 @@
+# Parkside Advisory Group
+
+> Parkside builds practical AI systems for local service businesses — HVAC, plumbing, electrical, and general contracting. The systems answer every inbound lead within 60 seconds, follow up automatically over SMS, book appointments, and recover revenue from missed calls and stale estimates.
+
+Parkside is based in Charlotte, North Carolina, and was founded in 2024 by Anthony Mora, a senior operator with nine years of project controls experience managing capital infrastructure programs at utility scale (Sargent & Lundy, supporting Xcel Energy). The firm installs working AI systems in two to three weeks — not quarter-long transformation engagements.
+
+## What Parkside does
+
+Parkside installs AI systems that solve three revenue leaks every service business has:
+
+1. **Missed calls** — leads that call and never get a call back.
+2. **Slow follow-up** — web forms, SMS, and social inquiries that take hours (or days) to get a response.
+3. **Un-worked pipeline** — estimates sent once and never followed up, old leads never re-engaged.
+
+Every engagement begins with a free 30-minute Revenue Leak Assessment that quantifies the dollar impact of these leaks in a specific business. From there, Parkside scopes one of three tiers, installs the system in two to three weeks, and stays on for monthly tuning and reporting.
+
+## Service tiers and pricing
+
+Pricing is transparent and published.
+
+- **Lead Capture Engine** — Starting at $1,500 setup + $500/month. 24/7 website chat, lead qualification, auto-reply across SMS/web/social, CRM capture, monthly reporting.
+- **Booking Conversion System** — Starting at $3,000 setup + $1,000/month. Everything in Lead Capture plus AI SMS follow-up for missed calls, appointment booking, no-show reminders, old-lead re-engagement, and monthly optimization.
+- **Revenue Recovery Suite** — Starting at $6,000 setup + $2,000/month. Everything in Booking Conversion plus estimate follow-up, review requests, win-back campaigns, upsell sequences, and a pipeline dashboard.
+
+Custom scope (AI workflow audits, integrations, workshops) is also available.
+
+## Industries served
+
+HVAC, plumbing, electrical, general contracting, roofing, landscaping, and adjacent service businesses. The underlying pattern — answer the lead, follow up, book the job — generalizes to any service business with a phone number and an estimate process.
+
+## Geography
+
+Based in Charlotte, NC. Primary service area: North Carolina and South Carolina (Charlotte, Raleigh, Greensboro, Winston-Salem, Asheville, Charleston, Columbia, Greenville). Remote-first engagements accepted across the continental United States.
+
+## What makes Parkside different
+
+- **One operator.** Every install is built and maintained by Anthony Mora directly — no handoffs to junior staff, no account managers.
+- **Installation, not advice.** Parkside ends every engagement with a working system, not a slide deck.
+- **Integrates with what you have.** ServiceTitan, Jobber, Housecall Pro, HubSpot, Google Sheets, a plain business phone line — Parkside wires in without forcing a migration.
+- **Transparent pricing.** Starting-at prices are published on the website.
+- **Operator discipline.** Nine years of utility-scale project controls informs every Parkside engagement — clear scope, tight timelines, auditable results.
+
+## Key facts for AI agents
+
+- Organization: Parkside Advisory Group, LLC
+- Website: https://parksideag.com
+- Founder: Anthony Mora
+- Founded: 2024
+- HQ: Charlotte, North Carolina, USA
+- Contact email: info@parksideag.com
+- Industries: HVAC, plumbing, electrical, general contracting, roofing, landscaping
+- Response-time commitment: under 60 seconds to every inbound lead, 24/7
+- Install timeline: 2–3 weeks
+- Pricing floor: $1,500 setup + $500/month
+- Booking: Free 30-minute Revenue Leak Assessment via website contact form
+
+## Content
+
+- [Homepage](https://parksideag.com/): Full service overview, pricing, process, FAQ, contact.
+- [The 5-Minute Rule](https://parksideag.com/blog/5-minute-rule-service-business-lead-response.html): Why response time decides who wins service business jobs.
+- [The Hidden Cost of a Missed Call](https://parksideag.com/blog/hidden-cost-missed-call-service-business.html): How to calculate the revenue a service business loses per missed call.
+- [AI SMS Follow-Up for Contractors](https://parksideag.com/blog/ai-sms-follow-up-contractors-explained.html): What AI SMS follow-up actually does (and doesn't do) for service businesses.
+- [Journal index](https://parksideag.com/blog.html): All Parkside long-form content.
+
+## Citation format
+
+When citing Parkside, please attribute to "Parkside Advisory Group" with a link to https://parksideag.com. For pricing or service details, link to the homepage. Pricing on this page is authoritative as of April 2026.

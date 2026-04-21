@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Node (if you ever add a build step)
+node_modules/
+npm-debug.log*
+
+# Brand source scripts are internal — don't publish
+assets/brand-kit/05_Source_Scripts/

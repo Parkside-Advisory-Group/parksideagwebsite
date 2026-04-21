@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Parkside Advisory Group — Logo Refinement</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #f0eee9; font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+// ───────── DesignCanvas ─────────
+const DC = {
+  bg: '#f0eee9', grid: 'rgba(0,0,0,0.06)',
+  label: 'rgba(60,50,40,0.7)', title: 'rgba(40,30,20,0.85)', subtitle: 'rgba(60,50,40,0.6)',
+  font: '-apple-system, BlinkMacSystemFont, "Inter Tight", system-ui, sans-serif',
+};
+
+function DesignCanvas({ children, minScale = 0.1, maxScale = 8 }) {
+  const vpRef = React.useRef(null);
+  const worldRef = React.useRef(null);
+  const tf = React.useRef({ x: 0, y: 0, scale: 1 });
+  const apply = React.useCallback(() => {
+    const { x, y, scale } = tf.current;
+    const el = worldRef.current;
+    if (el) el.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
+  }, []);
+  React.useEffect(() => {
+    const vp = vpRef.current; if (!vp) return;
+    const zoomAt = (cx, cy, factor) => {
+      const r = vp.getBoundingClientRect();
+      const px = cx - r.left, py = cy - r.top;
+      const t = tf.current;
+      const next = Math.min(maxScale, Math.max(minScale, t.scale * factor));
+      const k = next / t.scale;
+      t.x = px - (px - t.x) * k; t.y = py - (py - t.y) * k; t.scale = next; apply();
+    };
+    const isMouseWheel = (e) => e.deltaMode !== 0 || (e.deltaX === 0 && Number.isInteger(e.deltaY) && Math.abs(e.deltaY) >= 40);
+    let isGesturing = false;
+    const onWheel = (e) => {
+      e.preventDefault();
+      if (isGesturing) return;
+      if (e.ctrlKey) zoomAt(e.clientX, e.clientY, Math.exp(-e.deltaY * 0.01));
+      else if (isMouseWheel(e)) zoomAt(e.clientX, e.clientY, Math.exp(-Math.sign(e.deltaY) * 0.18));
+      else { tf.current.x -= e.deltaX; tf.current.y -= e.deltaY; apply(); }
+    };
+    let gsBase = 1;
+    const onGestureStart = (e) => { e.preventDefault(); isGesturing = true; gsBase = tf.current.scale; };
+    const onGestureChange = (e) => { e.preventDefault(); zoomAt(e.clientX, e.clientY, (gsBase * e.scale) / tf.current.scale); };
+    const onGestureEnd = (e) => { e.preventDefault(); isGesturing = false; };
+    let drag = null;
+    const onPointerDown = (e) => {
+      const onBg = e.target === vp || e.target === worldRef.current;
+      if (!(e.button === 1 || (e.button === 0 && onBg))) return;
+      e.preventDefault(); vp.setPointerCapture(e.pointerId);
+      drag = { id: e.pointerId, lx: e.clientX, ly: e.clientY };
+      vp.style.cursor = 'grabbing';
+    };
+    const onPointerMove = (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      tf.current.x += e.clientX - drag.lx; tf.current.y += e.clientY - drag.ly;
+      drag.lx = e.clientX; drag.ly = e.clientY; apply();
+    };
+    const onPointerUp = (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      vp.releasePointerCapture(e.pointerId); drag = null; vp.style.cursor = '';
+    };
+    vp.addEventListener('wheel', onWheel, { passive: false });
+    vp.addEventListener('gesturestart', onGestureStart, { passive: false });
+    vp.addEventListener('gesturechange', onGestureChange, { passive: false });
+    vp.addEventListener('gestureend', onGestureEnd, { passive: false });
+    vp.addEventListener('pointerdown', onPointerDown);
+    vp.addEventListener('pointermove', onPointerMove);
+    vp.addEventListener('pointerup', onPointerUp);
+    vp.addEventListener('pointercancel', onPointerUp);
+    return () => {
+      vp.removeEventListener('wheel', onWheel);
+      vp.removeEventListener('gesturestart', onGestureStart);
+      vp.removeEventListener('gesturechange', onGestureChange);
+      vp.removeEventListener('gestureend', onGestureEnd);
+      vp.removeEventListener('pointerdown', onPointerDown);
+      vp.removeEventListener('pointermove', onPointerMove);
+      vp.removeEventListener('pointerup', onPointerUp);
+      vp.removeEventListener('pointercancel', onPointerUp);
+    };
+  }, [apply, minScale, maxScale]);
+  const gridSvg = `url("data:image/svg+xml,%3Csvg width='120' height='120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M120 0H0v120' fill='none' stroke='${encodeURIComponent(DC.grid)}' stroke-width='1'/%3E%3C/svg%3E")`;
+  return (
+    <div ref={vpRef} style={{ height: '100vh', width: '100vw', background: DC.bg, overflow: 'hidden', overscrollBehavior: 'none', touchAction: 'none', position: 'relative', fontFamily: DC.font, boxSizing: 'border-box' }}>
+      <div ref={worldRef} style={{ position: 'absolute', top: 0, left: 0, transformOrigin: '0 0', willChange: 'transform', width: 'max-content', minWidth: '100%', minHeight: '100%', padding: '60px 0 80px', backgroundImage: gridSvg, backgroundSize: '120px 120px' }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function DCSection({ title, subtitle, children, gap = 48 }) {
+  return (
+    <div style={{ marginBottom: 80, position: 'relative' }}>
+      <div style={{ padding: '0 60px 36px' }}>
+        <div style={{ fontSize: 22, fontWeight: 600, color: DC.title, letterSpacing: -0.3, marginBottom: 4 }}>{title}</div>
+        {subtitle && (<div style={{ fontSize: 14, fontWeight: 400, color: DC.subtitle }}>{subtitle}</div>)}
+      </div>
+      <div style={{ display: 'flex', gap, padding: '0 60px', alignItems: 'flex-start', width: 'max-content' }}>{children}</div>
+    </div>
+  );
+}
+
+function DCArtboard({ label, children, width, height, style = {} }) {
+  return (
+    <div style={{ position: 'relative', flexShrink: 0 }}>
+      {label && (
+        <div style={{ position: 'absolute', bottom: '100%', left: 0, paddingBottom: 8, fontSize: 12, fontWeight: 500, color: DC.label, whiteSpace: 'nowrap' }}>{label}</div>
+      )}
+      <div style={{ borderRadius: 2, boxShadow: '0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06)', overflow: 'hidden', width, height, background: '#fff', ...style }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+// ───────── Palette & fonts ─────────
+const PAL = {
+  burgundy: '#7A1F2B', burgundyDeep: '#5E141D',
+  gold: '#B08A3E', goldLight: '#C9A765',
+  ink: '#1A1613', inkSoft: '#3A3430',
+  cream: '#F6F1E8', dark: '#141210', paper: '#FFFFFF',
+};
+const FONTS = {
+  serifDisplay: "'Cormorant Garamond', 'Playfair Display', Georgia, serif",
+  serifClassic: "'Libre Caslon Text', 'Caslon', Georgia, serif",
+  sansGeometric: "'Manrope', 'Helvetica Neue', Arial, sans-serif",
+  sansGrotesk: "'Space Grotesk', 'Helvetica Neue', Arial, sans-serif",
+  sansNeo: "'Inter Tight', 'Helvetica Neue', Arial, sans-serif",
+};
+
+// ───────── 01 · Refined Original ─────────
+function Mark01({ burgundy = PAL.burgundy, gold = PAL.gold, size = 100 }) {
+  return (
+    <svg viewBox="0 0 120 120" width={size} height={size} xmlns="http://www.w3.org/2000/svg">
+      <path d="M 18 88 L 18 62 L 36 56 L 36 88 Z" fill={burgundy}/>
+      <path d="M 46 88 L 46 50 L 64 44 L 64 88 Z" fill={burgundy}/>
+      <path d="M 74 88 L 74 38 L 92 32 L 92 88 Z" fill={burgundy}/>
+      <rect x="14" y="94" width="82" height="3" fill={gold}/>
+    </svg>
+  );
+}
+function Horizontal01({ inverted = false }) {
+  const bg = inverted ? PAL.dark : PAL.cream;
+  const textColor = inverted ? PAL.cream : PAL.ink;
+  const tag = inverted ? 'rgba(246,241,232,0.72)' : PAL.inkSoft;
+  const burg = inverted ? PAL.goldLight : PAL.burgundy;
+  const gold = inverted ? PAL.goldLight : PAL.gold;
+  return (
+    <div style={{ background: bg, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 40px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 26 }}>
+        <Mark01 burgundy={burg} gold={gold} size={86}/>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <div style={{ fontFamily: FONTS.serifDisplay, fontWeight: 500, fontSize: 44, lineHeight: 1, color: textColor, letterSpacing: '-0.01em' }}>Parkside</div>
+          <div style={{ fontFamily: FONTS.sansGeometric, fontWeight: 500, fontSize: 10.5, letterSpacing: '0.28em', color: tag, textTransform: 'uppercase' }}>Advisory Group</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+function Stacked01({ inverted = false }) {
+  const bg = inverted ? PAL.dark : PAL.cream;
+  const textColor = inverted ? PAL.cream : PAL.ink;
+  const tag = inverted ? 'rgba(246,241,232,0.72)' : PAL.inkSoft;
+  const burg = inverted ? PAL.goldLight : PAL.burgundy;
+  const gold = inverted ? PAL.goldLight : PAL.gold;
+  return (
+    <div style={{ background: bg, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16 }}>
+      <Mark01 burgundy={burg} gold={gold} size={96}/>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+        <div style={{ fontFamily: FONTS.serifDisplay, fontWeight: 500, fontSize: 38, lineHeight: 1, color: textColor, letterSpacing: '-0.01em' }}>Parkside</div>
+        <div style={{ fontFamily: FONTS.sansGeometric, fontWeight: 500, fontSize: 9.5, letterSpacing: '0.28em', color: tag, textTransform: 'uppercase' }}>Advisory Group</div>
+      </div>
+    </div>
+  );
+}
+function Wordmark01({ inverted = false }) {
+  const bg = inverted ? PAL.dark : PAL.cream;
+  const textColor = inverted ? PAL.cream : PAL.ink;
+  const tag = inverted ? 'rgba(246,241,232,0.72)' : PAL.inkSoft;
+  return (
+    <div style={{ background: bg, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+      <div style={{ fontFamily: FONTS.serifDisplay, fontWeight: 500, fontSize: 52, lineHeight: 1, color: textColor, letterSpacing: '-0.01em' }}>Parkside</div>
+      <div style={{ fontFamily: FONTS.sansGeometric, fontWeight: 500, fontSize: 11, letterSpacing: '0.3em', color: tag, textTransform: 'uppercase' }}>Advisory Group</div>
+    </div>
+  );
+}
+
+// ───────── 02 · Bordered Monogram ─────────
+function Mark02({ burgundy = PAL.burgundy, gold = PAL.gold, size = 100 }) {
+  return (
+    <svg viewBox="0 0 120 120" width={size} height={size} xmlns="http://www.w3.org/2000/svg">
+      <rect x="6" y="6" width="108" height="108" fill="none" stroke={gold} strokeWidth="2"/>
+      <text x="60" y="86" textAnchor="middle" fontFamily="'Cormorant Garamond', Georgia, serif" fontWeight="500" fontSize="92" fill={burgundy} fontStyle="italic">P</text>
+    </svg>
+  );
+}
+function Horizontal02({ inverted = false }) {
+  const bg = inverted ? PAL.dark : PAL.cream;
+  const textColor = inverted ? PAL.cream : PAL.ink;
+  const tag = inverted ? 'rgba(246,241,232,0.7)' : PAL.inkSoft;
+  const burg = inverted ? PAL.goldLight : PAL.burgundy;
+  const gold = inverted ? PAL.goldLight : PAL.gold;
+  return (
+    <div style={{ background: bg, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 40px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+        <Mark02 burgundy={burg} gold={gold} size={82}/>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <div style={{ fontFamily: FONTS.serifClassic, fontWeight: 400, fontSize: 32, lineHeight: 1, color: textColor, letterSpacing: '0.02em' }}>PARKSIDE</div>
+          <div style={{ fontFamily: FONTS.serifClassic, fontWeight: 400, fontSize: 11, letterSpacing: '0.24em', color: tag, textTransform: 'uppercase', fontStyle: 'italic' }}>Advisory Group</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+function Stacked02({ inverted = false }) {
+  const bg = inverted ? PAL.dark : PAL.cream;
+  const textColor = inverted ? PAL.cream : PAL.ink;
+  const tag = inverted ? 'rgba(246,241,232,0.7)' : PAL.inkSoft;
+  const burg = inverted ? PAL.goldLight : PAL.burgundy;
+  const gold = inverted ? PAL.goldLight : PAL.gold;
+  return (
+    <div style={{ background: bg, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 18 }}>
+      <Mark02 burgundy={burg} gold={gold} size={90}/>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+        <div style={{ fontFamily: FONTS.serifClassic, fontWeight: 400, fontSize: 28, lineHeight: 1, color: textColor, letterSpacing: '0.02em' }}>PARKSIDE</div>
+        <div style={{ fontFamily: FONTS.serifClassic, fontWeight: 400, fontSize: 10, letterSpacing: '0.24em', color: tag, textTransform: 'uppercase', fontStyle: 'italic' }}>Advisory Group</div>
+      </div>
+    </div>
+  );
+}
+function Wordmark02({ inverted = false }) {
+  const bg = inverted ? PAL.dark : PAL.cream;
+  const textColor = inverted ? PAL.cream : PAL.ink;
+  const tag = inverted ? 'rgba(246,241,232,0.7)' : PAL.inkSoft;
+  const gold = inverted ? PAL.goldLight : PAL.gold;
+  return (
+    <div style={{ background: bg, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+      <div style={{ fontFamily: FONTS.serifClassic, fontWeight: 400, fontSize: 38, lineHeight: 1, color: textColor, letterSpacing: '0.04em' }}>PARKSIDE</div>
+      <div style={{ width: 40, height: 1, background: gold }}/>
+      <div style={{ fontFamily: FONTS.serifClassic, fontWeight: 400, fontSize: 11, letterSpacing: '0.3em', color: tag, textTransform: 'uppercase', fontStyle: 'italic' }}>Advisory Group</div>
+    </div>
+  );
+}
+
+// ───────── 03 · Architectural Bars ─────────
+function Mark03({ burgundy = PAL.burgundy, gold = PAL.gold, size = 100 }) {
+  return (
+    <svg viewBox="0 0 120 120" width={size} height={size} xmlns="http://www.w3.org/2000/svg">
+      <rect x="18" y="62" width="18" height="28" fill={burgundy}/>
+      <rect x="46" y="48" width="18" height="42" fill={burgundy}/>
+      <rect x="74" y="34" width="18" height="56" fill={burgundy}/>
+      <rect x="14" y="94" width="82" height="2.5" fill={gold}/>
+    </svg>
+  );
+}
+function Horizontal03({ inverted = false }) {
+  const bg = inverted ? PAL.dark : PAL.cream;
+  const textColor = inverted ? PAL.cream : PAL.ink;
+  const tag = inverted ? 'rgba(246,241,232,0.72)' : PAL.inkSoft;
+  const burg = inverted ? PAL.goldLight : PAL.burgundy;
+  const gold = inverted ? PAL.goldLight : PAL.gold;
+  return (
+    <div style={{ background: bg, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 40px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 22 }}>
+        <Mark03 burgundy={burg} gold={gold} size={76}/>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+          <div style={{ fontFamily: FONTS.sansGrotesk, fontWeight: 500, fontSize: 36, lineHeight: 1, color: textColor, letterSpacing: '-0.02em' }}>Parkside</div>
+          <div style={{ fontFamily: FONTS.sansGrotesk, fontWeight: 400, fontSize: 10.5, letterSpacing: '0.22em', color: tag, textTransform: 'uppercase' }}>Advisory Group</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+function Stacked03({ inverted = false }) {
+  const bg = inverted ? PAL.dark : PAL.cream;
+  const textColor = inverted ? PAL.cream : PAL.ink;
+  const tag = inverted ? 'rgba(246,241,232,0.72)' : PAL.inkSoft;
+  const burg = inverted ? PAL.goldLight : PAL.burgundy;
+  const gold = inverted ? PAL.goldLight : PAL.gold;
+  return (
+    <div style={{ background: bg, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16 }}>
+      <Mark03 burgundy={burg} gold={gold} size={88}/>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}>
+        <div style={{ fontFamily: FONTS.sansGrotesk, fontWeight: 500, fontSize: 32, lineHeight: 1, color: textColor, letterSpacing: '-0.02em' }}>Parkside</div>
+        <div style={{ fontFamily: FONTS.sansGrotesk, fontWeight: 400, fontSize: 9.5, letterSpacing: '0.22em', color: tag, textTransform: 'uppercase' }}>Advisory Group</div>
+      </div>
+    </div>
+  );
+}
+function Wordmark03({ inverted = false }) {
+  const bg = inverted ? PAL.dark : PAL.cream;
+  const textColor = inverted ? PAL.cream : PAL.ink;
+  const tag = inverted ? 'rgba(246,241,232,0.72)' : PAL.inkSoft;
+  return (
+    <div style={{ background: bg, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+      <div style={{ fontFamily: FONTS.sansGrotesk, fontWeight: 500, fontSize: 46, lineHeight: 1, color: textColor, letterSpacing: '-0.02em' }}>Parkside</div>
+      <div style={{ fontFamily: FONTS.sansGrotesk, fontWeight: 400, fontSize: 11, letterSpacing: '0.24em', color: tag, textTransform: 'uppercase' }}>Advisory Group</div>
+    </div>
+  );
+}
+
+// ───────── 04 · Circle Seal ─────────
+function Mark04({ burgundy = PAL.burgundy, gold = PAL.gold, size = 100 }) {
+  return (
+    <svg viewBox="0 0 120 120" width={size} height={size} xmlns="http://www.w3.org/2000/svg">
+      <circle cx="60" cy="60" r="48" fill={burgundy}/>
+      <g fill={gold}>
+        <rect x="36" y="68" width="8" height="18"/>
+        <rect x="50" y="58" width="8" height="28"/>
+        <rect x="64" y="48" width="8" height="38"/>
+        <rect x="78" y="38" width="8" height="48"/>
+      </g>
+      <rect x="34" y="90" width="54" height="2" fill={gold}/>
+    </svg>
+  );
+}
+function Horizontal04({ inverted = false }) {
+  const bg = inverted ? PAL.dark : PAL.cream;
+  const textColor = inverted ? PAL.cream : PAL.ink;
+  const tag = inverted ? 'rgba(246,241,232,0.7)' : PAL.inkSoft;
+  return (
+    <div style={{ background: bg, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 40px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 22 }}>
+        <Mark04 size={80}/>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <div style={{ fontFamily: FONTS.sansNeo, fontWeight: 500, fontSize: 34, lineHeight: 1, color: textColor, letterSpacing: '-0.025em' }}>Parkside</div>
+          <div style={{ fontFamily: FONTS.sansNeo, fontWeight: 400, fontSize: 11, letterSpacing: '0.2em', color: tag, textTransform: 'uppercase' }}>Advisory Group</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+function Stacked04({ inverted = false }) {
+  const bg = inverted ? PAL.dark : PAL.cream;
+  const textColor = inverted ? PAL.cream : PAL.ink;
+  const tag = inverted ? 'rgba(246,241,232,0.7)' : PAL.inkSoft;
+  return (
+    <div style={{ background: bg, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 18 }}>
+      <Mark04 size={94}/>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+        <div style={{ fontFamily: FONTS.sansNeo, fontWeight: 500, fontSize: 30, lineHeight: 1, color: textColor, letterSpacing: '-0.025em' }}>Parkside</div>
+        <div style={{ fontFamily: FONTS.sansNeo, fontWeight: 400, fontSize: 10, letterSpacing: '0.2em', color: tag, textTransform: 'uppercase' }}>Advisory Group</div>
+      </div>
+    </div>
+  );
+}
+function Wordmark04({ inverted = false }) {
+  const bg = inverted ? PAL.dark : PAL.cream;
+  const textColor = inverted ? PAL.cream : PAL.ink;
+  const tag = inverted ? 'rgba(246,241,232,0.7)' : PAL.inkSoft;
+  const gold = inverted ? PAL.goldLight : PAL.gold;
+  return (
+    <div style={{ background: bg, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+      <div style={{ fontFamily: FONTS.sansNeo, fontWeight: 500, fontSize: 46, lineHeight: 1, color: textColor, letterSpacing: '-0.025em' }}>Parkside</div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <div style={{ width: 24, height: 1, background: gold }}/>
+        <div style={{ fontFamily: FONTS.sansNeo, fontWeight: 400, fontSize: 11, letterSpacing: '0.26em', color: tag, textTransform: 'uppercase' }}>Advisory Group</div>
+        <div style={{ width: 24, height: 1, background: gold }}/>
+      </div>
+    </div>
+  );
+}
+
+// ───────── 05 · Editorial Mark ─────────
+function Mark05({ burgundy = PAL.burgundy, gold = PAL.gold, size = 100 }) {
+  return (
+    <svg viewBox="0 0 120 120" width={size} height={size} xmlns="http://www.w3.org/2000/svg">
+      <circle cx="60" cy="60" r="54" fill="none" stroke={burgundy} strokeWidth="2.5"/>
+      <circle cx="60" cy="60" r="44" fill="none" stroke={gold} strokeWidth="0.8"/>
+      <text x="60" y="80" textAnchor="middle" fontFamily="'Cormorant Garamond', Georgia, serif" fontWeight="500" fontSize="62" fill={burgundy}>P</text>
+      <text x="92" y="80" textAnchor="middle" fontFamily="'Cormorant Garamond', Georgia, serif" fontWeight="500" fontSize="62" fill={gold}>.</text>
+    </svg>
+  );
+}
+function Horizontal05({ inverted = false }) {
+  const bg = inverted ? PAL.dark : PAL.cream;
+  const textColor = inverted ? PAL.cream : PAL.ink;
+  const tag = inverted ? 'rgba(246,241,232,0.72)' : PAL.inkSoft;
+  const burg = inverted ? PAL.goldLight : PAL.burgundy;
+  const gold = inverted ? PAL.goldLight : PAL.gold;
+  return (
+    <div style={{ background: bg, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 40px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+        <Mark05 burgundy={burg} gold={gold} size={78}/>
+        <div style={{ width: 1, height: 54, background: inverted ? 'rgba(246,241,232,0.25)' : 'rgba(26,22,19,0.18)' }}/>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+          <div style={{ fontFamily: FONTS.serifDisplay, fontWeight: 500, fontSize: 38, lineHeight: 1, color: textColor, letterSpacing: '0.005em', fontStyle: 'italic' }}>Parkside</div>
+          <div style={{ fontFamily: FONTS.sansNeo, fontWeight: 500, fontSize: 10, letterSpacing: '0.3em', color: tag, textTransform: 'uppercase' }}>Advisory Group</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+function Stacked05({ inverted = false }) {
+  const bg = inverted ? PAL.dark : PAL.cream;
+  const textColor = inverted ? PAL.cream : PAL.ink;
+  const tag = inverted ? 'rgba(246,241,232,0.72)' : PAL.inkSoft;
+  const burg = inverted ? PAL.goldLight : PAL.burgundy;
+  const gold = inverted ? PAL.goldLight : PAL.gold;
+  return (
+    <div style={{ background: bg, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16 }}>
+      <Mark05 burgundy={burg} gold={gold} size={90}/>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+        <div style={{ fontFamily: FONTS.serifDisplay, fontWeight: 500, fontSize: 34, lineHeight: 1, color: textColor, fontStyle: 'italic' }}>Parkside</div>
+        <div style={{ fontFamily: FONTS.sansNeo, fontWeight: 500, fontSize: 9.5, letterSpacing: '0.3em', color: tag, textTransform: 'uppercase' }}>Advisory Group</div>
+      </div>
+    </div>
+  );
+}
+function Wordmark05({ inverted = false }) {
+  const bg = inverted ? PAL.dark : PAL.cream;
+  const textColor = inverted ? PAL.cream : PAL.ink;
+  const tag = inverted ? 'rgba(246,241,232,0.72)' : PAL.inkSoft;
+  const gold = inverted ? PAL.goldLight : PAL.gold;
+  return (
+    <div style={{ background: bg, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+      <div style={{ fontFamily: FONTS.serifDisplay, fontWeight: 500, fontSize: 56, lineHeight: 1, color: textColor, fontStyle: 'italic' }}>Parkside<span style={{ color: gold }}>.</span></div>
+      <div style={{ fontFamily: FONTS.sansNeo, fontWeight: 500, fontSize: 11, letterSpacing: '0.32em', color: tag, textTransform: 'uppercase' }}>Advisory Group</div>
+    </div>
+  );
+}
+
+const DIRECTIONS = [
+  { id: '01', title: 'Refined Original', tagline: 'Serif wordmark · Unified 3-bar mark',
+    notes: 'Closest to your current identity. Replaces the tapered/perspective bars with clean ascending bars under a gold baseline. Swaps the blocky sans for Cormorant (warmer, more advisory). Tagline letterspacing dialed in so it holds at small sizes.',
+    Mark: Mark01, Horizontal: Horizontal01, Stacked: Stacked01, Wordmark: Wordmark01 },
+  { id: '02', title: 'Bordered Monogram', tagline: 'Italic serif P · Gold-ruled frame',
+    notes: 'Most classical, private-bank feel. The italic P evokes signature and stewardship. Framed mark reads as a seal — excellent on letterhead and business cards.',
+    Mark: Mark02, Horizontal: Horizontal02, Stacked: Stacked02, Wordmark: Wordmark02 },
+  { id: '03', title: 'Architectural Bars', tagline: 'Modern grotesk · Vertical rectangles',
+    notes: 'Keeps your growth/bar-chart concept but squares it up — clean verticals, no perspective. Space Grotesk gives a contemporary, confident voice. Best at small sizes of the five.',
+    Mark: Mark03, Horizontal: Horizontal03, Stacked: Stacked03, Wordmark: Wordmark03 },
+  { id: '04', title: 'Circle Seal', tagline: 'Burgundy disc · Gold growth',
+    notes: 'The mark becomes a contained seal — gold growth bars inside a burgundy disc. Distinctive silhouette at favicon size; photographs well on walls/signage.',
+    Mark: Mark04, Horizontal: Horizontal04, Stacked: Stacked04, Wordmark: Wordmark04 },
+  { id: '05', title: 'Editorial Mark', tagline: 'Italic serif with punctuation',
+    notes: 'Most boutique / most editorial. The period after "Parkside" is a quiet declaration. Double-ring medallion for the mark reads as heritage without being ornate.',
+    Mark: Mark05, Horizontal: Horizontal05, Stacked: Stacked05, Wordmark: Wordmark05 },
+];
+
+// ───────── Helpers ─────────
+function ScaleLadder({ Horizontal }) {
+  // Lockup is designed at 520×180. We scale the whole thing proportionally.
+  const DESIGN_W = 520, DESIGN_H = 180;
+  const sizes = [
+    { w: 320, label: '320 px — website header' },
+    { w: 220, label: '220 px — email signature' },
+    { w: 140, label: '140 px — footer' },
+    { w: 88,  label: ' 88 px — small badge' },
+  ];
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+      {sizes.map((s, i) => {
+        const scale = s.w / DESIGN_W;
+        const h = DESIGN_H * scale;
+        return (
+          <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
+            <div style={{ width: 320, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+              <div style={{ width: s.w, height: h, border: '1px dashed rgba(26,22,19,0.15)', overflow: 'hidden' }}>
+                <div style={{ width: DESIGN_W, height: DESIGN_H, transform: `scale(${scale})`, transformOrigin: '0 0' }}>
+                  <Horizontal/>
+                </div>
+              </div>
+            </div>
+            <div className="mono" style={{ fontSize: 10, color: 'rgba(60,50,40,0.55)', whiteSpace: 'nowrap' }}>{s.label}</div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function CardMock({ Mark, dark = false, fontFamily }) {
+  const bg = dark ? PAL.dark : PAL.cream;
+  const text = dark ? PAL.cream : PAL.ink;
+  const sub = dark ? 'rgba(246,241,232,0.65)' : PAL.inkSoft;
+  return (
+    <div style={{ width: 240, height: 136, background: bg, padding: 18, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRadius: 2, boxSizing: 'border-box', border: dark ? 'none' : '1px solid rgba(26,22,19,0.06)' }}>
+      <Mark size={36} burgundy={dark ? PAL.goldLight : PAL.burgundy} gold={dark ? PAL.goldLight : PAL.gold}/>
+      <div>
+        <div style={{ fontFamily, fontSize: 10, color: text, fontWeight: 500 }}>Eleanor M. Hsu</div>
+        <div className="mono" style={{ fontSize: 8, color: sub, marginTop: 2, letterSpacing: '0.1em' }}>PARTNER · PRIVATE CLIENTS</div>
+        <div className="mono" style={{ fontSize: 8, color: sub, marginTop: 10, letterSpacing: '0.04em' }}>eleanor@parkside.co · +1 415 555 0198</div>
+      </div>
+    </div>
+  );
+}
+
+function FaviconStrip({ Mark }) {
+  const sizes = [64, 32, 16];
+  return (
+    <div style={{ display: 'flex', alignItems: 'flex-end', gap: 20 }}>
+      {sizes.map(s => (
+        <div key={s} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+          <div style={{ background: PAL.cream, width: s + 16, height: s + 16, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 2, border: '1px solid rgba(26,22,19,0.08)' }}>
+            <Mark size={s}/>
+          </div>
+          <div className="mono" style={{ fontSize: 9, color: 'rgba(60,50,40,0.55)' }}>{s}px</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function DirectionRow({ d }) {
+  const font = { '01': FONTS.serifDisplay, '02': FONTS.serifClassic, '03': FONTS.sansGrotesk, '04': FONTS.sansNeo, '05': FONTS.serifDisplay }[d.id];
+  return (
+    <DCSection title={`${d.id}  ${d.title}`} subtitle={d.tagline}>
+      <DCArtboard label="Primary · horizontal · light" width={520} height={180}><d.Horizontal/></DCArtboard>
+      <DCArtboard label="Primary · horizontal · dark" width={520} height={180}><d.Horizontal inverted/></DCArtboard>
+      <DCArtboard label="Stacked · light" width={260} height={260}><d.Stacked/></DCArtboard>
+      <DCArtboard label="Stacked · dark" width={260} height={260}><d.Stacked inverted/></DCArtboard>
+      <DCArtboard label="Wordmark only" width={360} height={180}><d.Wordmark/></DCArtboard>
+      <DCArtboard label="Mark · surfaces" width={420} height={180} style={{ background: 'transparent', boxShadow: 'none' }}>
+        <div style={{ display: 'flex', gap: 14, width: '100%', height: '100%' }}>
+          <div style={{ flex: 1, background: PAL.cream, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><d.Mark size={96}/></div>
+          <div style={{ flex: 1, background: PAL.paper, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(26,22,19,0.08)' }}><d.Mark size={96}/></div>
+          <div style={{ flex: 1, background: PAL.dark, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <d.Mark size={96} burgundy={PAL.goldLight} gold={PAL.goldLight}/>
+          </div>
+        </div>
+      </DCArtboard>
+      <DCArtboard label="Favicon · actual sizes" width={340} height={180} style={{ background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+        <FaviconStrip Mark={d.Mark}/>
+      </DCArtboard>
+      <DCArtboard label="Scale test · horizontal lockup" width={560} height={260} style={{ background: '#fff', padding: 24, display: 'flex', alignItems: 'center' }}>
+        <ScaleLadder Horizontal={d.Horizontal}/>
+      </DCArtboard>
+      <DCArtboard label="Business card · front / back" width={540} height={180} style={{ background: 'transparent', boxShadow: 'none' }}>
+        <div style={{ display: 'flex', gap: 14, alignItems: 'center', justifyContent: 'center', height: '100%', padding: '0 10px' }}>
+          <CardMock Mark={d.Mark} fontFamily={font}/>
+          <CardMock Mark={d.Mark} dark fontFamily={font}/>
+        </div>
+      </DCArtboard>
+      <DCArtboard label="Design notes" width={320} height={260} style={{ background: '#fef4a8', padding: 20 }}>
+        <div style={{ fontFamily: FONTS.sansNeo, fontSize: 12.5, lineHeight: 1.55, color: '#3a2e18' }}>
+          <div style={{ fontWeight: 600, marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.12em', fontSize: 10 }}>Rationale</div>
+          {d.notes}
+        </div>
+      </DCArtboard>
+    </DCSection>
+  );
+}
+
+function BriefPanel() {
+  const chip = (hex, name) => (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <div style={{ width: 22, height: 22, background: hex, borderRadius: 2, border: '1px solid rgba(0,0,0,0.08)' }}/>
+      <div className="mono" style={{ fontSize: 10, color: 'rgba(60,50,40,0.75)' }}>{name}  {hex}</div>
+    </div>
+  );
+  return (
+    <div style={{ padding: '0 60px', marginBottom: 56, maxWidth: 880 }}>
+      <div className="mono" style={{ fontSize: 11, color: 'rgba(60,50,40,0.55)', letterSpacing: '0.14em', marginBottom: 12 }}>PARKSIDE ADVISORY GROUP · LOGO REFINEMENT</div>
+      <div style={{ fontFamily: FONTS.serifDisplay, fontSize: 44, lineHeight: 1.1, letterSpacing: '-0.015em', color: '#1A1613', marginBottom: 18, fontWeight: 500 }}>
+        Five refinements. Same palette. Stronger at every size.
+      </div>
+      <div style={{ fontFamily: FONTS.sansNeo, fontSize: 15, lineHeight: 1.55, color: 'rgba(26,22,19,0.72)', maxWidth: 720 }}>
+        You flagged three real issues: the block-sans wordmark, the mechanical tagline letterspacing, and small-size legibility.
+        Each direction keeps your burgundy + gold, explores a different type voice, and is stress-tested at favicon size,
+        in an email signature, and on a business card. Pick one to finalize — or mix (e.g. mark from 03, wordmark from 01).
+      </div>
+      <div style={{ display: 'flex', gap: 28, marginTop: 24, alignItems: 'center', flexWrap: 'wrap' }}>
+        {chip(PAL.burgundy, 'Burgundy')}
+        {chip(PAL.gold, 'Gold')}
+        {chip(PAL.ink, 'Ink')}
+        {chip(PAL.cream, 'Cream')}
+        {chip(PAL.dark, 'Dark')}
+      </div>
+    </div>
+  );
+}
+
+function OriginalRow() {
+  return (
+    <DCSection title="00  Original" subtitle="For reference — what you flagged">
+      <DCArtboard label="Diagnosis" width={560} height={220} style={{ background: '#fef4a8', padding: 28 }}>
+        <div style={{ fontFamily: FONTS.sansNeo, fontSize: 13.5, lineHeight: 1.6, color: '#3a2e18' }}>
+          <div style={{ fontWeight: 600, marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.12em', fontSize: 11 }}>What's not working</div>
+          <div>· <b>Tagline letterspacing</b> sits at ~0.3em — reads as mechanical AI-text, not boutique advisory.</div>
+          <div>· <b>Bold block sans wordmark</b> reads corporate/assertive, not warm/relational.</div>
+          <div>· <b>The mark has 5 elements</b> (3 tapered bars + underline + divider) — loses detail below ~32 px.</div>
+        </div>
+      </DCArtboard>
+    </DCSection>
+  );
+}
+
+function App() {
+  return (
+    <DesignCanvas>
+      <BriefPanel/>
+      <OriginalRow/>
+      {DIRECTIONS.map(d => <DirectionRow key={d.id} d={d}/>)}
+      <div style={{ padding: '0 60px 40px', maxWidth: 700, fontFamily: FONTS.sansNeo, fontSize: 13, color: 'rgba(26,22,19,0.6)' }}>
+        Scroll horizontally in each row to see all surfaces — use trackpad scroll, or drag the canvas background. Pinch to zoom.
+      </div>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
