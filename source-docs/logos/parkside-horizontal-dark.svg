@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="800" height="200" role="img" aria-label="Parkside Advisory Group">
+  <defs></defs>
+  <style xmlns="http://www.w3.org/2000/svg">
+    @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;family=Inter+Tight:wght@400;500;600;700&amp;display=swap');
+    .wordmark { font-family: 'Newsreader', serif; font-weight: 500; font-size: 56px; letter-spacing: -0.014em; }
+    .tagline { font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; }
+  </style>
+  <rect width="800" height="200" fill="#141210"></rect>
+  <g transform="translate(40, 40)">
+  <path d="M 18 88 L 18 62 L 36 56 L 36 88 Z" fill="#C9A765"></path>
+  <path d="M 46 88 L 46 50 L 64 44 L 64 88 Z" fill="#C9A765"></path>
+  <path d="M 74 88 L 74 38 L 92 32 L 92 88 Z" fill="#C9A765"></path>
+  <rect x="14" y="94" width="82" height="3" fill="#C9A765"></rect>
+</g>
+  <text x="180" y="112" class="wordmark" fill="#F6F1E8">Parkside</text>
+  <text x="183" y="142" class="tagline" fill="rgba(246,241,232,0.72)">ADVISORY GROUP</text>
+</svg>

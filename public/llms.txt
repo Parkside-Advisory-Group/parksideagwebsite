@@ -1,0 +1,39 @@
+# Parkside Advisory Group
+
+Parkside Advisory Group helps small and mid-sized businesses use practical AI and workflow automation to reduce manual work, improve follow-up, and create clearer operational visibility.
+
+Primary site: https://parksideag.com
+
+## Core Pages
+
+- Home: https://parksideag.com/
+- Services: https://parksideag.com/services
+- AI Operations Blueprint: https://parksideag.com/blueprint
+- Use Cases: https://parksideag.com/use-cases
+- About: https://parksideag.com/about
+- Intake: https://parksideag.com/intake
+- Privacy: https://parksideag.com/privacy
+
+## Primary Offer
+
+AI Operations Blueprint: a focused review that maps one recurring workflow, identifies practical automation opportunities, and recommends the first system to build.
+
+## Services
+
+- AI Operations Blueprint
+- Workflow Automation Sprint
+- AI Agent Build
+- AI Operations Retainer
+
+## Common Use Cases
+
+- client intake automation
+- lead and customer follow-up
+- reporting visibility
+- internal handoffs
+- recurring document and email drafting
+- workflow triage
+
+## Guardrails
+
+Parkside does not publish fixed pricing on the website. Pricing depends on discovery, workflow complexity, current tools, data readiness, and implementation scope.
