@@ -1,4 +1,4 @@
-import { IntakeRecord } from "../intake/types";
+import { IntakeRecord } from "../schemas/lead.schema";
 
 /**
  * Persists intake records when Supabase is connected.

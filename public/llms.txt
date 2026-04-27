@@ -1,6 +1,6 @@
 # Parkside Advisory Group
 
-Parkside Advisory Group helps small and mid-sized businesses use practical AI and workflow automation to reduce manual work, improve follow-up, and create clearer operational visibility.
+Parkside Advisory Group helps businesses use practical AI and workflow automation to reduce manual work, improve follow-up, and create clearer operational visibility.
 
 Primary site: https://parksideag.com
 

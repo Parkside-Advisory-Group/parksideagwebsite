@@ -3,7 +3,7 @@ import { primaryCta, useCases } from "../../lib/content";
 
 export const metadata = {
   title: "Use Cases",
-  description: "Common use cases for practical AI systems and workflow automation."
+  description: "Practical AI and automation use cases for repeated business workflows."
 };
 
 export default function UseCasesPage() {
@@ -12,10 +12,10 @@ export default function UseCasesPage() {
       <section className="page-hero">
         <div className="container">
           <p className="eyebrow">Use Cases</p>
-          <h1 className="page-title">AI and automation work best where the process repeats.</h1>
+          <h1 className="page-title">Good use cases are easy to spot. They repeat, stall, and have an owner.</h1>
           <p className="lede">
-            Parkside looks for recurring workflows where better intake, follow-up, triage, drafting, or visibility can
-            reduce manual work without forcing a tool replacement.
+            Parkside looks for places where the team already knows the work matters: missed callbacks, stale estimates,
+            slow updates, handoff gaps, and reports that have to be rebuilt by hand.
           </p>
         </div>
       </section>

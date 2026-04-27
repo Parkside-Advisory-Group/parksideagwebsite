@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { contactEmail, primaryCta, tertiaryCta } from "../lib/content";
 
 export function Footer() {
   return (
@@ -27,7 +28,7 @@ export function Footer() {
             <div className="footer-heading">Company</div>
             <Link href="/about">About</Link>
             <Link href="/privacy">Privacy Policy</Link>
-            <a href="mailto:info@parksideag.com">info@parksideag.com</a>
+            <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
           </div>
           <div>
             <div className="footer-heading">Services</div>
@@ -37,8 +38,8 @@ export function Footer() {
           </div>
           <div>
             <div className="footer-heading">Next Step</div>
-            <Link href="/intake">Start an AI Operations Blueprint</Link>
-            <Link href="/use-cases">Explore Use Cases</Link>
+            <Link href="/intake">{primaryCta}</Link>
+            <Link href="/use-cases">{tertiaryCta}</Link>
           </div>
         </div>
         <div className="footer-bottom">© 2026 Parkside Advisory Group, LLC. All rights reserved.</div>

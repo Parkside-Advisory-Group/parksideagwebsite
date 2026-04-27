@@ -31,11 +31,16 @@ Required placeholders:
 
 - `OPENAI_API_KEY`
 - `RESEND_API_KEY`
-- `PARKSIDE_NOTIFY_EMAIL`
+- `PARKSIDE_NOTIFY_EMAIL` - use `info@parksideag.com` for inbound intake notifications.
 - `NEXT_PUBLIC_BOOKING_URL`
 - `SUPABASE_URL`
 - `SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
+
+## Contact Addresses
+
+- `amora@parksideag.com` - direct work email.
+- `info@parksideag.com` - general public inbox and intake notification target.
 
 ## Working Now
 

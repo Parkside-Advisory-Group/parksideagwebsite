@@ -12,60 +12,63 @@ export interface UseCase {
   signals: string[];
 }
 
-export const primaryCta = "Start an AI Operations Blueprint";
-export const secondaryCta = "Explore Use Cases";
+export const primaryCta = "Start the Blueprint Audit";
+export const secondaryCta = "See How It Works";
+export const tertiaryCta = "Explore Use Cases";
+
+export const contactEmail = "info@parksideag.com";
 
 export const offers: Offer[] = [
   {
     name: "AI Operations Blueprint",
     summary:
-      "A focused diagnostic that maps recurring workflow pain, identifies practical automation opportunities, and produces an implementation roadmap.",
+      "A focused audit of one painful workflow: how requests arrive, who owns the next step, where follow-up stalls, and what should be built first.",
     bestFor:
-      "Operators who know manual work is slowing the business down but need a clear, scoped path before building.",
+      "Operators who can point to repeated missed follow-up, stale estimates, slow updates, or reporting cleanup but need a clear build plan.",
     outcomes: [
-      "Workflow map and bottleneck summary",
-      "Prioritized automation opportunities",
-      "Tool and data readiness review",
-      "Recommended implementation path"
+      "Workflow leak map",
+      "First-build recommendation",
+      "Human review and failure points",
+      "30/60/90-day implementation path"
     ]
   },
   {
     name: "Workflow Automation Sprint",
     summary:
-      "A scoped implementation sprint for one recurring process such as intake, follow-up, reporting, handoffs, or internal routing.",
+      "A scoped build for one recurring process such as lead intake, estimate follow-up, customer updates, reporting, or internal handoffs.",
     bestFor:
-      "Businesses with a defined workflow that repeats often and has clear ownership.",
+      "Teams with a repeated workflow, a clear owner, and enough examples to define what good handling should look like.",
     outcomes: [
-      "Automation design and configuration",
-      "Validation rules and handoff logic",
-      "Team enablement documentation",
-      "Launch support and tuning"
+      "Capture and routing logic",
+      "Reminders, summaries, or status views",
+      "Validation and handoff rules",
+      "Team rollout and tuning"
     ]
   },
   {
     name: "AI Agent Build",
     summary:
-      "A practical AI assistant or agent that helps qualify requests, summarize work, draft follow-up, or guide internal processes.",
+      "A practical AI assistant for bounded work: qualifying requests, summarizing context, drafting follow-up, or guiding an internal process.",
     bestFor:
-      "Teams that need AI-supported execution inside an existing operating workflow.",
+      "Teams that need AI help inside an existing workflow, with clear review points and a defined path when the assistant is uncertain.",
     outcomes: [
-      "Agent scope and guardrails",
-      "Prompt and tool design",
-      "Human review points",
-      "Operational testing plan"
+      "Agent scope and non-goals",
+      "Prompt, tool, and data design",
+      "Review and escalation rules",
+      "Operational test cases"
     ]
   },
   {
     name: "AI Operations Retainer",
     summary:
-      "Ongoing support to tune systems, extend automations, improve visibility, and keep AI-supported workflows aligned with operations.",
+      "Ongoing support after the first build: tune the workflow, extend the automation, improve visibility, and keep AI usage aligned with daily operations.",
     bestFor:
-      "Businesses that want a long-term operating partner for practical AI systems.",
+      "Businesses that want an operating partner to keep improving the systems the team now depends on.",
     outcomes: [
-      "Monthly improvement roadmap",
-      "System monitoring and tuning",
-      "Reporting and visibility improvements",
-      "New workflow discovery"
+      "Monthly workflow review",
+      "System tuning and cleanup",
+      "Reporting improvements",
+      "Next-build discovery"
     ]
   }
 ];
@@ -75,42 +78,42 @@ export const useCases: UseCase[] = [
     title: "Client Intake",
     category: "Front office",
     description:
-      "Capture consistent details, qualify requests, route next steps, and reduce back-and-forth during first contact.",
-    signals: ["Incomplete lead details", "Slow response", "Manual routing"]
+      "Turn calls, forms, and emails into a consistent request record with an owner, priority, and next action.",
+    signals: ["Missing project details", "Slow first response", "Manual routing"]
   },
   {
     title: "Follow-Up Discipline",
     category: "Revenue operations",
     description:
-      "Keep prospects, customers, and internal owners moving with structured follow-up and clear accountability.",
-    signals: ["Missed callbacks", "Unworked estimates", "No clear owner"]
+      "Keep prospects, estimates, and customer promises from sitting until someone remembers to check.",
+    signals: ["Missed callbacks", "Stale estimates", "No clear owner"]
   },
   {
     title: "Reporting Visibility",
     category: "Operations",
     description:
-      "Create a reliable view of workflow status, aging items, handoffs, and recurring bottlenecks.",
+      "Create a reliable view of open work, aging items, blocked handoffs, and recurring cleanup.",
     signals: ["Spreadsheet sprawl", "Status meetings", "Hidden delays"]
   },
   {
     title: "Internal Handoffs",
     category: "Delivery",
     description:
-      "Standardize what moves from sales to operations, from intake to delivery, or from field work to admin follow-up.",
+      "Define exactly what moves from sales to operations, intake to delivery, or field work to admin follow-up.",
     signals: ["Missing context", "Repeated questions", "Delayed work starts"]
   },
   {
     title: "Document and Email Drafting",
     category: "Administrative work",
     description:
-      "Use AI-supported drafting for summaries, next-step emails, internal notes, and recurring client updates.",
+      "Use AI to draft routine summaries, next-step emails, internal notes, and customer updates for human review.",
     signals: ["Manual summaries", "Delayed updates", "Inconsistent tone"]
   },
   {
     title: "Workflow Triage",
     category: "Management",
     description:
-      "Sort requests by urgency, readiness, owner, and next action so teams can focus on the right work first.",
+      "Sort requests by urgency, readiness, owner, and next action so the team works from the same queue.",
     signals: ["Queue confusion", "Urgent items buried", "Poor prioritization"]
   }
 ];

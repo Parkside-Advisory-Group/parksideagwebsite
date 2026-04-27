@@ -73,98 +73,139 @@ export function IntakeAdvisor() {
   return (
     <form className="intake-form" onSubmit={submitIntake} aria-label="Parkside Intake Advisor">
       <div className="notice">
-        Parkside Intake Advisor will clarify the workflow, score fit, and create an internal lead summary. Do not submit
-        passwords, private credentials, or confidential access details.
+        The Blueprint review starts with how work moves today. Do not submit passwords, private credentials, or
+        confidential access details.
       </div>
 
-      <div className="field-grid">
-        <Field label="Name" required>
-          <input value={formState.name} onChange={(event) => updateField("name", event.target.value)} required />
-        </Field>
-        <Field label="Email" required>
+      <FormSection
+        step="Step 1 of 4"
+        title="Business Basics"
+        description="Share who should be contacted and enough context to understand the business."
+      >
+        <Field id="name" label="Name" required>
           <input
+            id="name"
+            value={formState.name}
+            onChange={(event) => updateField("name", event.target.value)}
+            required
+          />
+        </Field>
+        <Field id="email" label="Email" required>
+          <input
+            id="email"
             type="email"
             value={formState.email}
             onChange={(event) => updateField("email", event.target.value)}
             required
           />
         </Field>
-        <Field label="Phone (optional)">
-          <input value={formState.phone} onChange={(event) => updateField("phone", event.target.value)} />
+        <Field id="phone" label="Phone (optional)">
+          <input id="phone" value={formState.phone} onChange={(event) => updateField("phone", event.target.value)} />
         </Field>
-        <Field label="Business name" required>
+        <Field id="business-name" label="Business name" required>
           <input
+            id="business-name"
             value={formState.businessName}
             onChange={(event) => updateField("businessName", event.target.value)}
             required
           />
         </Field>
-        <Field label="Website">
-          <input value={formState.website} onChange={(event) => updateField("website", event.target.value)} />
+        <Field id="website" label="Website">
+          <input id="website" value={formState.website} onChange={(event) => updateField("website", event.target.value)} />
         </Field>
-        <Field label="Industry or business type" required>
+        <Field id="industry" label="Industry or business type" required>
           <input
+            id="industry"
             value={formState.industry}
             onChange={(event) => updateField("industry", event.target.value)}
             required
           />
         </Field>
-        <Field label="What process feels most manual, repetitive, or hard to keep up with?" required full>
+      </FormSection>
+
+      <FormSection
+        step="Step 2 of 4"
+        title="Current Bottlenecks"
+        description="Point to the repeated work, missed handoffs, or slow response points that need a clearer system."
+      >
+        <Field id="primary-pain" label="What process feels most manual, repetitive, or hard to keep up with?" required full>
           <textarea
+            id="primary-pain"
             value={formState.primaryPain}
             onChange={(event) => updateField("primaryPain", event.target.value)}
             required
           />
         </Field>
-        <Field label="How often does this happen?" full>
+        <Field id="frequency-of-issue" label="How often does this happen?" full>
           <input
+            id="frequency-of-issue"
             value={formState.frequencyOfIssue}
             onChange={(event) => updateField("frequencyOfIssue", event.target.value)}
             placeholder="Daily, weekly, during busy season, after every new lead..."
           />
         </Field>
-        <Field label="How is the process handled today?" required full>
+        <Field id="current-process" label="How is the process handled today?" required full>
           <textarea
+            id="current-process"
             value={formState.currentProcess}
             onChange={(event) => updateField("currentProcess", event.target.value)}
             required
           />
         </Field>
-        <Field label="Who is involved?" full>
+        <Field id="people-involved" label="Who is involved?" full>
           <input
+            id="people-involved"
             value={formState.peopleInvolved}
             onChange={(event) => updateField("peopleInvolved", event.target.value)}
           />
         </Field>
-        <Field label="What tools or systems are involved?" full>
+      </FormSection>
+
+      <FormSection
+        step="Step 3 of 4"
+        title="Systems & Tools"
+        description="List the tools and rough impact so the audit can separate quick wins from deeper implementation work."
+      >
+        <Field id="tools-used" label="What tools or systems are involved?" full>
           <input
+            id="tools-used"
             value={formState.toolsUsed}
             onChange={(event) => updateField("toolsUsed", event.target.value)}
             placeholder="CRM, inbox, calendar, spreadsheets, phone system..."
           />
         </Field>
-        <Field label="Estimated time lost" full>
+        <Field id="estimated-time-lost" label="Estimated time lost" full>
           <input
+            id="estimated-time-lost"
             value={formState.estimatedTimeLost}
             onChange={(event) => updateField("estimatedTimeLost", event.target.value)}
           />
         </Field>
-        <Field label="Estimated revenue, customer, delay, or follow-up impact" full>
+        <Field id="estimated-business-impact" label="Estimated revenue, customer, delay, or follow-up impact" full>
           <textarea
+            id="estimated-business-impact"
             value={formState.estimatedBusinessImpact}
             onChange={(event) => updateField("estimatedBusinessImpact", event.target.value)}
           />
         </Field>
-        <Field label="What would a better outcome look like?" full>
+      </FormSection>
+
+      <FormSection
+        step="Step 4 of 4"
+        title="Desired Outcomes"
+        description="Describe what should be more repeatable after the Blueprint Audit and how soon the issue matters."
+      >
+        <Field id="desired-outcome" label="What would a better outcome look like?" full>
           <textarea
+            id="desired-outcome"
             value={formState.desiredOutcome}
             onChange={(event) => updateField("desiredOutcome", event.target.value)}
           />
         </Field>
-        <Field label="Timeline or urgency" full>
-          <input value={formState.urgency} onChange={(event) => updateField("urgency", event.target.value)} />
+        <Field id="urgency" label="Timeline or urgency" full>
+          <input id="urgency" value={formState.urgency} onChange={(event) => updateField("urgency", event.target.value)} />
         </Field>
-      </div>
+      </FormSection>
 
       <label className="checkbox-row">
         <input
@@ -177,7 +218,7 @@ export function IntakeAdvisor() {
       </label>
 
       <button className="btn" type="submit">
-        Start an AI Operations Blueprint
+        Submit for Blueprint Review
       </button>
       {status ? <p className="notice" role="status">{status}</p> : null}
       {summary ? <pre className="result-box">{summary}</pre> : null}
@@ -185,15 +226,34 @@ export function IntakeAdvisor() {
   );
 }
 
+function FormSection({
+  step,
+  title,
+  description,
+  children
+}: Readonly<{ step: string; title: string; description: string; children: React.ReactNode }>) {
+  return (
+    <section className="form-section" aria-labelledby={`${title.toLowerCase().replaceAll(" ", "-")}-heading`}>
+      <div className="form-section-header">
+        <span className="meta">{step}</span>
+        <h2 id={`${title.toLowerCase().replaceAll(" ", "-")}-heading`}>{title}</h2>
+        <p>{description}</p>
+      </div>
+      <div className="field-grid">{children}</div>
+    </section>
+  );
+}
+
 function Field({
+  id,
   label,
   required,
   full,
   children
-}: Readonly<{ label: string; required?: boolean; full?: boolean; children: React.ReactNode }>) {
+}: Readonly<{ id: string; label: string; required?: boolean; full?: boolean; children: React.ReactNode }>) {
   return (
     <div className={full ? "field full" : "field"}>
-      <label>
+      <label htmlFor={id}>
         {label}
         {required ? " *" : ""}
       </label>

@@ -3,7 +3,7 @@ import { offers, primaryCta } from "../../lib/content";
 
 export const metadata = {
   title: "Services",
-  description: "AI operations, workflow automation, AI agent builds, and retainer support from Parkside Advisory Group."
+  description: "Blueprint audits, workflow automation, AI agent builds, and operating support from Parkside Advisory Group."
 };
 
 export default function ServicesPage() {
@@ -12,10 +12,10 @@ export default function ServicesPage() {
       <section className="page-hero">
         <div className="container">
           <p className="eyebrow">Services</p>
-          <h1 className="page-title">Practical AI systems matched to operational need.</h1>
+          <h1 className="page-title">Start with the workflow that keeps costing attention.</h1>
           <p className="lede">
-            Parkside structures work around a clear offer ladder: diagnose first, implement the right workflow system,
-            then tune and extend over time.
+            Parkside does not sell a generic AI package. We inspect the handoff, define the owner and next action, then
+            build the narrow system that makes the repeated work easier to run.
           </p>
         </div>
       </section>

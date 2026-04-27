@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import { notifyParkside } from "../../../lib/integrations/email";
+import { contactEmail } from "../../../lib/content";
+import { createIntakeRecord } from "../../../lib/agents/intake-agent";
+import { sendIntakeNotification } from "../../../lib/email/send-intake-notification";
 import { saveIntakeRecord } from "../../../lib/integrations/storage";
-import { createIntakeRecord } from "../../../lib/intake/record";
-import { IntakeSubmission } from "../../../lib/intake/types";
-import { validateIntakeSubmission } from "../../../lib/intake/validation";
+import { IntakeSubmission, validateIntakeSubmission } from "../../../lib/schemas/intake.schema";
 
 export async function POST(request: Request): Promise<NextResponse> {
   try {
@@ -14,10 +14,10 @@ export async function POST(request: Request): Promise<NextResponse> {
       return NextResponse.json({ errors }, { status: 400 });
     }
 
-    const record = createIntakeRecord(submission);
+    const record = await createIntakeRecord(submission);
     const [storageResult, emailResult] = await Promise.all([
       saveIntakeRecord(record),
-      notifyParkside(record)
+      sendIntakeNotification(record)
     ]);
 
     return NextResponse.json({
@@ -31,7 +31,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     });
   } catch {
     return NextResponse.json(
-      { errors: ["The intake could not be processed. Please try again or email info@parksideag.com."] },
+      { errors: [`The intake could not be processed. Please try again or email ${contactEmail}.`] },
       { status: 500 }
     );
   }

@@ -1,3 +1,5 @@
+import { contactEmail } from "../../lib/content";
+
 export const metadata = {
   title: "Privacy Policy",
   description: "Privacy Policy for Parkside Advisory Group."
@@ -31,7 +33,9 @@ export default function PrivacyPage() {
               website intake flow.
             </p>
             <h2>Contact</h2>
-            <p>Questions can be sent to info@parksideag.com.</p>
+            <p>
+              Questions can be sent to <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+            </p>
           </div>
         </div>
       </section>

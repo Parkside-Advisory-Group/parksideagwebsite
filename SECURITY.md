@@ -6,11 +6,16 @@ Never hardcode secrets or API keys. Use environment variables:
 
 - `OPENAI_API_KEY`
 - `RESEND_API_KEY`
-- `PARKSIDE_NOTIFY_EMAIL`
+- `PARKSIDE_NOTIFY_EMAIL` - route intake notifications to `info@parksideag.com`.
 - `NEXT_PUBLIC_BOOKING_URL`
 - `SUPABASE_URL`
 - `SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
+
+Public contact addresses are not secrets:
+
+- `amora@parksideag.com` - direct work email.
+- `info@parksideag.com` - general public inbox and intake notification target.
 
 ## Intake Guardrails
 
