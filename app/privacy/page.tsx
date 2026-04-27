@@ -1,13 +1,27 @@
+import type { Metadata } from "next";
+import { JsonLd } from "../../components/JsonLd";
 import { contactEmail } from "../../lib/content";
+import { createRouteMetadata } from "../../lib/metadata";
+import { createPageBreadcrumbItems, createPageStructuredData, siteUrl } from "../../lib/structured-data";
 
-export const metadata = {
+export const metadata: Metadata = createRouteMetadata({
   title: "Privacy Policy",
-  description: "Privacy Policy for Parkside Advisory Group."
-};
+  description: "Privacy Policy for Parkside Advisory Group.",
+  path: "/privacy"
+});
+
+const structuredData = createPageStructuredData({
+  id: `${siteUrl}/privacy#webpage`,
+  path: "/privacy",
+  name: "Privacy Policy",
+  description: "Privacy Policy for Parkside Advisory Group intake information and contact handling.",
+  breadcrumbItems: createPageBreadcrumbItems("Privacy Policy", "/privacy")
+});
 
 export default function PrivacyPage() {
   return (
     <main>
+      <JsonLd data={structuredData} />
       <section className="page-hero">
         <div className="container" style={{ maxWidth: 850 }}>
           <p className="eyebrow">Privacy Policy</p>

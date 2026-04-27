@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
+import { JsonLd } from "../components/JsonLd";
 import { contactEmail } from "../lib/content";
+import { createSitewideStructuredData } from "../lib/structured-data";
 
 export const metadata: Metadata = {
   title: {
@@ -12,6 +14,9 @@ export const metadata: Metadata = {
   description:
     "Parkside Advisory Group helps businesses use practical AI and automation to reduce manual work, improve follow-up, and see what is happening across recurring workflows.",
   metadataBase: new URL("https://parksideag.com"),
+  alternates: {
+    canonical: "https://parksideag.com/"
+  },
   keywords: [
     "AI automation consulting",
     "workflow automation",
@@ -37,68 +42,13 @@ export const metadata: Metadata = {
   }
 };
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "@id": "https://parksideag.com/#organization",
-      name: "Parkside Advisory Group",
-      url: "https://parksideag.com",
-      email: contactEmail,
-      logo: "https://parksideag.com/brand/icons/favicon.svg",
-      areaServed: [
-        { "@type": "Country", name: "United States" },
-        { "@type": "City", name: "Charlotte" },
-        { "@type": "State", name: "North Carolina" }
-      ]
-    },
-    {
-      "@type": "ProfessionalService",
-      "@id": "https://parksideag.com/#service",
-      name: "Parkside Advisory Group",
-      url: "https://parksideag.com",
-      provider: { "@id": "https://parksideag.com/#organization" },
-      serviceType: [
-        "AI automation consulting",
-        "Workflow automation",
-        "Client intake automation",
-        "Follow-up automation",
-        "AI agent implementation",
-        "Business process improvement"
-      ],
-      areaServed: "United States"
-    },
-    {
-      "@type": "OfferCatalog",
-      "@id": "https://parksideag.com/#offers",
-      name: "Parkside AI Operations Services",
-      itemListElement: [
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Operations Blueprint" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Workflow Automation Sprint" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Agent Build" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Operations Retainer" } }
-      ]
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://parksideag.com/#website",
-      name: "Parkside Advisory Group",
-      url: "https://parksideag.com",
-      publisher: { "@id": "https://parksideag.com/#organization" },
-      inLanguage: "en-US"
-    }
-  ]
-};
+const structuredData = createSitewideStructuredData(contactEmail);
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <body>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
+        <JsonLd data={structuredData} />
         <Header />
         {children}
         <Footer />

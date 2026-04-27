@@ -1,11 +1,23 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { JsonLd } from "../../components/JsonLd";
 import { primaryCta } from "../../lib/content";
+import { createRouteMetadata } from "../../lib/metadata";
+import {
+  createPageBreadcrumbItems,
+  createPageStructuredData,
+  createPersonNode,
+  organizationId,
+  referenceNode,
+  siteUrl
+} from "../../lib/structured-data";
 
-export const metadata = {
+export const metadata: Metadata = createRouteMetadata({
   title: "About",
   description:
-    "About Parkside Advisory Group, its leadership, operating experience, and practical approach to AI-supported workflows."
-};
+    "About Parkside Advisory Group, its leadership, operating experience, and practical approach to AI-supported workflows.",
+  path: "/about"
+});
 
 const profileUrl = "https://www.linkedin.com/in/anthonymora1/";
 
@@ -26,50 +38,57 @@ const methodPoints = [
   "Measure whether the system improves follow-up, visibility, or handoff discipline"
 ];
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "AboutPage",
-      "@id": "https://parksideag.com/about#aboutpage",
-      url: "https://parksideag.com/about",
-      name: "About Parkside Advisory Group",
-      description:
-        "Leadership, operating experience, methodology, and service-area information for Parkside Advisory Group.",
-      isPartOf: { "@id": "https://parksideag.com/#website" },
-      about: { "@id": "https://parksideag.com/#organization" },
-      primaryImageOfPage: "https://parksideag.com/brand/icons/favicon.svg",
-      inLanguage: "en-US"
-    },
-    {
-      "@type": "Person",
-      "@id": "https://parksideag.com/about#anthony-mora",
-      name: "Anthony Mora",
-      jobTitle: "Consulting Partner",
-      url: "https://parksideag.com/about",
-      sameAs: [profileUrl],
-      worksFor: { "@id": "https://parksideag.com/#organization" },
-      knowsAbout: [
-        "AI workflow automation",
-        "Project controls",
-        "Cost management",
-        "Forecasting",
-        "Executive reporting",
-        "Financial planning",
-        "Workflow visibility",
-        "Business process improvement"
-      ]
-    }
+const aboutAnswer =
+  "Parkside Advisory Group helps businesses turn recurring manual work into clearer operating systems using practical AI and workflow automation. The firm focuses on intake, follow-up, reporting visibility, handoffs, and AI-assisted work that still has defined ownership and review.";
+
+const idealFitSignals = [
+  "A recurring workflow is already costing attention, response time, or management visibility",
+  "The team can provide real examples and name the person who owns the work",
+  "The current tools are known, even if the process across them is messy",
+  "Leadership wants a practical first build instead of a broad AI transformation program"
+];
+
+const notAFitSignals = [
+  "The business wants fixed pricing before the workflow and scope are understood",
+  "The request depends on exact savings claims or guaranteed feasibility before discovery",
+  "The team wants to submit passwords, API keys, or private credentials through intake",
+  "The desired system would remove human accountability from judgment-heavy work"
+];
+
+const anthonyMoraPerson = createPersonNode({
+  id: `${siteUrl}/about#anthony-mora`,
+  name: "Anthony Mora",
+  jobTitle: "Consulting Partner",
+  url: `${siteUrl}/about`,
+  sameAs: [profileUrl],
+  knowsAbout: [
+    "AI workflow automation",
+    "Project controls",
+    "Cost management",
+    "Forecasting",
+    "Executive reporting",
+    "Financial planning",
+    "Workflow visibility",
+    "Business process improvement"
   ]
-};
+});
+
+const structuredData = createPageStructuredData({
+  pageType: "AboutPage",
+  id: `${siteUrl}/about#aboutpage`,
+  path: "/about",
+  name: "About Parkside Advisory Group",
+  description: "Leadership, operating experience, methodology, and service-area information for Parkside Advisory Group.",
+  breadcrumbItems: createPageBreadcrumbItems("About", "/about"),
+  about: [referenceNode(organizationId), referenceNode(`${siteUrl}/about#anthony-mora`)],
+  mainEntity: referenceNode(`${siteUrl}/about#anthony-mora`),
+  extraNodes: [anthonyMoraPerson]
+});
 
 export default function AboutPage() {
   return (
     <main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
+      <JsonLd data={structuredData} />
       <section className="page-hero">
         <div className="container split">
           <div>
@@ -122,6 +141,18 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <section className="section answer-band">
+        <div className="container answer-grid">
+          <div>
+            <p className="eyebrow">Direct Answer</p>
+            <h2 className="section-title">What does Parkside Advisory Group do?</h2>
+          </div>
+          <div className="answer-panel">
+            <p>{aboutAnswer}</p>
+          </div>
+        </div>
+      </section>
+
       <section className="section" style={{ background: "var(--cream-deep)" }}>
         <div className="container">
           <p className="eyebrow">Operating Proof</p>
@@ -132,6 +163,29 @@ export default function AboutPage() {
                 <p>{point}</p>
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container guardrail-layout">
+          <div>
+            <p className="eyebrow">Best Fit</p>
+            <h2 className="section-title">Parkside is strongest when the operating problem is visible.</h2>
+            <ul className="audit-checklist">
+              {idealFitSignals.map((signal) => (
+                <li key={signal}>{signal}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="eyebrow">Not a Fit</p>
+            <h2 className="section-title">Some requests should be narrowed or handled another way.</h2>
+            <ul className="audit-checklist">
+              {notAFitSignals.map((signal) => (
+                <li key={signal}>{signal}</li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>

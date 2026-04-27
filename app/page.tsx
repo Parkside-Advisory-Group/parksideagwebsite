@@ -1,6 +1,24 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { JsonLd } from "../components/JsonLd";
 import { primaryCta } from "../lib/content";
+import { createRouteMetadata } from "../lib/metadata";
+import {
+  createHomeBreadcrumbItems,
+  createPageStructuredData,
+  offerCatalogId,
+  professionalServiceId,
+  referenceNode,
+  siteUrl
+} from "../lib/structured-data";
+
+export const metadata: Metadata = createRouteMetadata({
+  title: "Parkside Advisory Group | AI Automation for Business Workflows",
+  description:
+    "Parkside helps businesses turn missed follow-up and manual work into clear operating systems with practical AI and automation.",
+  path: "/"
+});
 
 interface NumberedItem {
   number: string;
@@ -96,9 +114,20 @@ const enablementPoints: string[] = [
   "A willingness to simplify the process before automating it"
 ];
 
+const structuredData = createPageStructuredData({
+  id: `${siteUrl}/#webpage`,
+  path: "/",
+  name: "Parkside Advisory Group",
+  description:
+    "Parkside helps businesses turn missed follow-up and manual work into clear operating systems with practical AI and automation.",
+  breadcrumbItems: createHomeBreadcrumbItems(),
+  mainEntity: [referenceNode(professionalServiceId), referenceNode(offerCatalogId)]
+});
+
 export default function HomePage() {
   return (
     <main>
+      <JsonLd data={structuredData} />
       <section className="hero home-hero">
         <div className="hero-media home-hero-media">
           <Image

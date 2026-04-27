@@ -1,310 +1,257 @@
 # GEO Audit Report: Parkside Advisory Group
 
 **Audit Date:** April 27, 2026  
-**URL:** https://www.parksideag.com  
-**Canonical Destination:** https://parksideag.com  
-**Competitor Compared:** https://gadociconsulting.com  
+**URL:** https://parksideag.com  
+**Audit Target:** Current local Next.js render at `http://localhost:3000`, with live host spot checks  
 **Business Type:** Agency/Services  
-**Pages Analyzed:** 8 Parkside HTML fetches, 7 Parkside crawl files/routes, and 50 Gadoci competitor URLs
+**Pages Analyzed:** 7 public HTML routes plus `robots.txt`, `sitemap.xml`, `llms.txt`, and `llms-full.txt`
 
 ---
 
 ## Executive Summary
 
-**Overall GEO Score: 66/100 (Fair)**
+**Overall GEO Score: 76/100 (Good)**  
+**Previous Score:** 66/100 (Fair)  
+**Net Change:** +10 points
 
-Parkside has a credible technical foundation for AI search: the live site returns server-rendered HTML, exposes a sitemap, allows crawlers, includes `llms.txt`, and ships baseline Organization/ProfessionalService schema. The largest technical risk is canonical reliability: `https://www.parksideag.com` redirects to `https://parksideag.com`, and the apex resolved successfully during the final audit but showed inconsistent DNS behavior earlier in the same session. Against Gadoci Consulting, Parkside has cleaner AI crawler guidance through `llms.txt`, but trails on content footprint, author attribution, topical depth, and third-party entity signals.
+Parkside has improved from a fair GEO foundation to a good one. The strongest gains came from route-level canonical metadata, richer direct-answer content, expanded About/E-E-A-T proof, page-specific structured data, explicit AI crawler guidance, `llms-full.txt`, and security headers. The remaining gap is mostly off-site authority and content footprint: AI systems can now understand Parkside much better on the site, but they still have limited third-party corroboration and no resource/article library to cite.
 
 ### Score Breakdown
 
-| Category | Score | Weight | Weighted Score |
-|---|---:|---:|---:|
-| AI Citability | 68/100 | 25% | 17.0 |
-| Brand Authority | 45/100 | 20% | 9.0 |
-| Content E-E-A-T | 62/100 | 20% | 12.4 |
-| Technical GEO | 80/100 | 15% | 12.0 |
-| Schema & Structured Data | 64/100 | 10% | 6.4 |
-| Platform Optimization | 92/100 | 10% | 9.2 |
-| **Overall GEO Score** | | | **66/100** |
+| Category | Previous | Current | Weight | Weighted Score |
+|---|---:|---:|---:|---:|
+| AI Citability | 68/100 | 78/100 | 25% | 19.5 |
+| Brand Authority | 45/100 | 52/100 | 20% | 10.4 |
+| Content E-E-A-T | 62/100 | 76/100 | 20% | 15.2 |
+| Technical GEO | 80/100 | 90/100 | 15% | 13.5 |
+| Schema & Structured Data | 64/100 | 84/100 | 10% | 8.4 |
+| Platform Optimization | 92/100 | 94/100 | 10% | 9.4 |
+| **Overall GEO Score** | **66/100** | **76/100** | | **76/100** |
 
 ---
 
 ## Critical Issues (Fix Immediately)
 
-1. **Canonical host behavior needs verification and monitoring**
-   - Affected URL: `https://www.parksideag.com/`
-   - Evidence: `www` returns HTTP 308 to `https://parksideag.com/`. The apex returned `200` during final verification, but earlier DNS checks from the same environment returned no answer for the apex while public resolvers returned Vercel IPs.
-   - Impact: If any resolver cannot reach the canonical apex, AI crawlers that follow the redirect from `www` may fail before indexing the site.
-   - Recommended fix: Confirm apex DNS at the registrar and Vercel, verify A/AAAA/CNAME records across multiple networks, and add uptime monitoring for `/`, `/robots.txt`, `/sitemap.xml`, and `/llms.txt`.
+No current critical issues were found in the local render.
+
+The previous canonical-host risk is resolved in the current checks. `npm run monitor:canonical-host` verified Cloudflare, Google, Quad9, and OpenDNS all resolving `parksideag.com` and `www.parksideag.com` to `76.76.21.21`; `https://www.parksideag.com/` returns HTTP 308 to `https://parksideag.com/`; and `/`, `/robots.txt`, `/sitemap.xml`, and `/llms.txt` returned HTTP 200.
 
 ## High Priority Issues
 
-1. **Parkside trails the competitor on content footprint**
-   - Affected pages: sitewide, especially `/services`, `/use-cases`, `/about`.
-   - Evidence: Parkside sitemap exposes 7 public pages. Gadoci sitemap exposes a large article library and the audit sampled 50 crawlable URLs.
-   - Impact: AI answer engines need enough topic-specific passages to quote. Parkside's current site explains the offer clearly, but has fewer durable answer assets for queries around AI operations, workflow automation, intake automation, and implementation guardrails.
-   - Recommended fix: Publish a focused resource library with 8-12 practical articles or guides tied to Parkside's strongest services and use cases.
+1. **Live deployment appears behind local code for crawler guidance**
+   - Affected URLs: `https://parksideag.com/robots.txt`, `https://parksideag.com/llms.txt`
+   - Evidence: Local `robots.txt` renders explicit allow groups for GPTBot, ClaudeBot, PerplexityBot, Googlebot, Bingbot, Google-Extended, Applebot, and Applebot-Extended. The live spot check returned a shorter 68-byte `robots.txt`, indicating the deployed site may not yet include the local update. Local `llms.txt` is 2,888 characters and links to `llms-full.txt`; live `llms.txt` returned 1,205 bytes.
+   - Impact: The codebase is improved, but AI crawlers will only see the deployed version.
+   - Recommended fix: Deploy the current build, then recheck live `/robots.txt`, `/llms.txt`, `/llms-full.txt`, and route canonical tags.
 
-2. **About page lacks strong E-E-A-T proof**
-   - Affected URL: `https://parksideag.com/about`
-   - Evidence: The About page returned 178 words. It explains philosophy but does not name accountable leadership, credentials, operating experience, methodology, public profiles, or verification signals.
-   - Impact: AI systems cross-reference expertise and entity signals before citing service businesses. Gadoci's About page names Brandon Gadoci and provides a longer founder profile, which gives AI systems more confidence.
-   - Recommended fix: Add an authority section with approved leadership details, relevant AI/workflow experience, operating principles, service area, and profile links.
+2. **Brand authority is still lightly corroborated off-site**
+   - Affected area: entity recognition across Google, ChatGPT web search, Perplexity, Gemini, and Bing Copilot.
+   - Evidence: Web search for exact Parkside Advisory Group / `parksideag.com` signals surfaced weak or noisy third-party results. The new About page and Person schema help, but external corroboration is still limited.
+   - Impact: AI systems can parse the site, but may hesitate to recommend or cite Parkside when stronger third-party entities compete.
+   - Recommended fix: Add approved LinkedIn company profile links, leadership profile links, partner references, guest posts, podcast appearances, directory profiles, or other legitimate entity corroboration.
 
-3. **No route-specific canonical metadata**
-   - Affected URLs: all Parkside pages.
-   - Evidence: Crawled Parkside pages had titles and descriptions but no rendered canonical link tags. Gadoci pages included canonical URLs.
-   - Impact: Canonicals help search engines and AI crawlers consolidate entity and page signals, especially when `www` redirects to apex.
-   - Recommended fix: Add `alternates.canonical` metadata for every route.
-
-4. **Schema is sitewide but not page-specific**
-   - Affected URLs: homepage, `/services`, `/blueprint`, `/use-cases`, `/about`, `/intake`, `/privacy`.
-   - Evidence: Every Parkside page exposes the same JSON-LD graph: Organization, ProfessionalService, OfferCatalog, WebSite, and related nodes. There is no WebPage, AboutPage, Service page schema, BreadcrumbList, FAQPage, Article, or Person schema.
-   - Impact: The baseline graph is useful, but it does not tell AI systems which page answers which question or which person/entity is responsible for expertise.
-   - Recommended fix: Add page-level JSON-LD that reflects visible page content and links back to `https://parksideag.com/#organization`.
-
-5. **No visible author or publication signals for guidance content**
-   - Affected URLs: `/services`, `/blueprint`, `/use-cases`, `/about`.
-   - Evidence: Parkside has no article section and no visible bylines. Gadoci article pages expose Article, Person, Organization, WebPage, author names, dates, and topic tags.
-   - Impact: Author and freshness signals increase citation confidence for AI systems, especially for advisory content.
-   - Recommended fix: For any resource/guidance page, add author/reviewer, last-updated date, and a short expertise note.
+3. **No durable resource/article footprint yet**
+   - Affected pages: sitewide.
+   - Evidence: The sitemap still has 7 public pages and no article/resource URLs.
+   - Impact: Parkside now has better direct-answer blocks on core pages, but lacks topic-specific citation assets for searches like AI follow-up automation, intake automation, workflow triage, service business reporting, and automation guardrails.
+   - Recommended fix: Publish 6-10 tightly scoped resources before scaling volume.
 
 ## Medium Priority Issues
 
-1. **Core service pages are concise but thin**
-   - `/services`: 376 words.
-   - `/blueprint`: 411 words.
-   - `/use-cases`: 295 words.
-   - `/about`: 178 words.
-   - Recommendation: Expand the highest-value pages with direct answer blocks, examples, inputs, outputs, guardrails, and "not a fit" guidance.
+1. **Homepage remains the strongest broad citation page, but secondary pages are still compact**
+   - Current word counts: homepage 730, services 674, blueprint 709, use cases 520, about 697, intake 315, privacy 189.
+   - Recommendation: Keep expanding with concise answer blocks, examples, and implementation guardrails where they answer real questions.
 
-2. **Robots.txt allows crawling but does not explicitly name AI crawlers**
-   - Evidence: Live robots content is `User-Agent: * Allow: /` with sitemap.
-   - Impact: This is technically sufficient for GPTBot, ClaudeBot, PerplexityBot, Googlebot, Bingbot, Google-Extended, and Applebot-Extended unless a bot requires special handling. Explicit allow rules are not required, but they make AI crawler policy unambiguous.
-   - Recommendation: Consider explicit AI crawler allow groups if the brand wants a clear public AI indexing policy.
+2. **About page is much stronger, but proof is mostly first-party**
+   - Evidence: About now names Anthony Mora, includes 10+ years of operating experience, and links to LinkedIn.
+   - Recommendation: Add externally verifiable credentials or references as they become available.
 
-3. **`llms.txt` exists but is a directory, not a full citation guide**
-   - Evidence: `/llms.txt` lists core pages, offer, services, use cases, and guardrails.
-   - Impact: This is a good start. It does not yet include citation-ready facts, page summaries, preferred positioning, or representative questions each page answers.
-   - Recommendation: Expand it into a richer AI content guide and add `/llms-full.txt`.
+3. **No FAQ schema yet**
+   - Evidence: Pages now include direct-answer sections and representative questions, but no FAQPage JSON-LD.
+   - Recommendation: Add FAQPage schema only where the visible page has true FAQ-style question/answer content.
 
-4. **Open Graph is global rather than route-specific**
-   - Evidence: Pages expose OG/Twitter tags, but route pages inherit the same broad OG values.
-   - Impact: AI search and social crawlers benefit from route-specific titles, descriptions, images, and canonical URLs.
-   - Recommendation: Add route-specific Open Graph and Twitter metadata.
-
-5. **Security headers are partially present**
-   - Evidence: Vercel serves HSTS. The audit did not find explicit CSP, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, or frame protections in app config.
-   - Impact: These are not primary GEO factors, but trust and technical quality signals matter.
-   - Recommendation: Add conservative security headers in `next.config.mjs` or hosting config.
+4. **Sitemap last-modified date is still static**
+   - Evidence: all sitemap entries use `2026-04-24T00:00:00.000Z`.
+   - Recommendation: Update intentionally when major content changes are published.
 
 ## Low Priority Issues
 
-1. **Sitemap freshness is static**
-   - Evidence: All sitemap entries use `2026-04-24T00:00:00.000Z`.
-   - Recommendation: Keep it if content is static, but update timestamps intentionally when pages change.
+1. **No IndexNow support**
+   - Impact: Bing/Copilot discovery may be slower after future publishing.
+   - Recommendation: Add after the first content expansion.
 
-2. **No IndexNow protocol**
-   - Impact: Bing/Copilot discovery may be slower after updates.
-   - Recommendation: Add IndexNow once content publishing begins.
-
-3. **No public competitor response strategy**
-   - Evidence: Gadoci has a large thought-leadership surface around AI transformation, operations, adoption, and governance.
-   - Recommendation: Build fewer but more focused Parkside pages around workflow automation, intake, follow-up, service operations, and practical implementation.
+2. **Route imagery is concentrated on the homepage**
+   - Impact: Not a core GEO blocker, but richer page-specific social previews can improve link sharing and crawler context.
+   - Recommendation: Add route-specific OG images when brand assets are ready.
 
 ---
 
 ## Category Deep Dives
 
-### AI Citability (68/100)
+### AI Citability (78/100)
 
-Parkside's homepage is the strongest citable page. It returned 736 words, one clear H1, eight descriptive H2s, and practical language around missed follow-up, handoffs, workflow ownership, guardrails, and first builds. The copy is concrete and avoids generic AI hype.
+Parkside improved substantially. The core pages now include direct-answer blocks for what Parkside does, services, Blueprint, use cases, inputs, outputs, fit criteria, not-a-fit guidance, and guardrails. These passages are much easier for AI systems to extract and cite than the prior shorter route copy.
 
-The main gap is depth. Most secondary pages are under 450 words, and `/about` is under 200 words. AI systems cite pages that contain direct answers, definitions, examples, and quotable explanations. Parkside has strong raw positioning, but many answers are implied rather than stated in compact passages.
+Evidence from the local render:
 
-Recommended direct answer blocks:
+- `/services`: 674 words with direct answer, examples, inputs, outputs, guardrails, and not-a-fit content.
+- `/blueprint`: 709 words with a clear explanation of the audit, productive inputs, outputs, and failure/review points.
+- `/use-cases`: 520 words with use-case criteria, inputs, outputs, and representative questions.
+- `/about`: 697 words with leadership, methodology, operating proof, fit criteria, and service area.
 
-- "What does Parkside Advisory Group do?"
-- "What is the AI Operations Blueprint?"
-- "When is workflow automation a good fit?"
-- "What should not be automated?"
-- "What inputs does Parkside need before building automation?"
-- "How does Parkside keep human accountability in AI-supported workflows?"
+Remaining opportunity: publish dedicated resource pages that answer narrow, high-intent questions in 700-1,200 words each.
 
-### Brand Authority (45/100)
+### Brand Authority (52/100)
 
-Brand naming is consistent across metadata, schema, footer, sitemap, and `llms.txt`. That is a strong first-party entity base.
+The on-site entity base is better: Organization schema, ProfessionalService schema, AboutPage schema, Person schema, a LinkedIn profile link, consistent brand language, and `llms.txt` guidance are all meaningful improvements.
 
-The gap is external corroboration. Public search surfaced stronger results for Gadoci Consulting, including its own About page, article pages, tagged content, and Brandon Gadoci's LinkedIn profile. Parkside did not show comparable third-party or author-entity evidence in the sampled search results.
+The score remains constrained because search results still show limited third-party confirmation for Parkside Advisory Group as an AI automation/workflow operations entity. For GEO, the next lift will come less from more site metadata and more from trusted external mentions.
 
-Recommended improvements:
+Recommended authority actions:
 
-- Add verified LinkedIn company and leadership profile links.
-- Add sameAs links to Organization schema once profiles are approved.
-- Publish accountable author/reviewer pages.
-- Build a curated set of durable references: partner mentions, podcast appearances, guest posts, or public case-style examples.
+- Add LinkedIn company `sameAs` once approved.
+- Add additional leadership/profile URLs where appropriate.
+- Build 3-5 credible public references: guest posts, partner pages, podcast notes, directory listings, or local business profiles.
+- Use consistent phrasing: "Parkside Advisory Group", "AI automation", "workflow automation", "AI Operations Blueprint".
 
-### Content E-E-A-T (62/100)
+### Content E-E-A-T (76/100)
 
-Parkside demonstrates good operational judgment. The site repeatedly says automation should follow ownership, data readiness, and human review. Intake and privacy copy also avoid credential collection and fixed pricing promises.
+This is one of the clearest improvements. The About page now provides named leadership, operating experience, concrete methodology, proof points, and service-area context. The Services and Use Cases pages now explain inputs, outputs, boundaries, and where Parkside will slow down or recommend a different path.
 
-The weakness is not the quality of the positioning; it is the lack of proof. Gadoci has named founder content, article bylines, dates, and a body of public thinking. Parkside needs enough visible expertise for AI systems to understand why the brand is qualified to advise on AI-supported operations.
+This helps AI systems understand that Parkside is not making broad AI claims; it is presenting a practical workflow discipline with constraints.
 
-Recommended additions:
+Remaining gaps:
 
-- Add "How Parkside evaluates workflow automation" methodology content.
-- Add "best fit / not a fit / inputs / outputs / guardrails" blocks to Services and Blueprint.
-- Add founder or leadership credentials where approved.
-- Add maintained guidance pages with dates and reviewer attribution.
+- No public case studies or anonymized examples.
+- No article bylines or reviewed dates because there is no resource library yet.
+- External proof is still limited.
 
-### Technical GEO (80/100)
+### Technical GEO (90/100)
 
-The live site returned server-rendered HTML with meaningful text. The homepage and all sampled routes returned `200`. Vercel headers showed prerendering and cache hits. `robots.txt`, `sitemap.xml`, and `llms.txt` returned `200`.
+The current local render is strong:
 
-The technical foundation is therefore good, but two items need attention:
+- Server-rendered HTML returns meaningful content.
+- All public routes returned HTTP 200 locally.
+- `robots.txt`, `sitemap.xml`, `llms.txt`, and `llms-full.txt` return successfully locally.
+- AI crawlers are explicitly allowed in `app/robots.ts`.
+- Canonical metadata is rendered on every public route.
+- Security headers are configured in `next.config.mjs`: CSP, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, and X-Frame-Options.
+- Typecheck and lint pass.
 
-- `www` redirects to apex. That is acceptable only if apex DNS remains reliable everywhere.
-- Security and metadata controls are incomplete for an enterprise-grade launch.
+The main caveat is deployment parity. Live spot checks show the canonical host and core endpoints are healthy, but live `robots.txt` and `llms.txt` appear older than local output.
 
-Technical recommendations:
+### Schema & Structured Data (84/100)
 
-- Monitor DNS and final URL status from multiple regions.
-- Add route-level canonical metadata.
-- Add explicit security headers.
-- Add static asset cache rules if not already handled by Vercel defaults.
-- Consider IndexNow for Bing/Copilot once content publishing starts.
+The prior report identified global-only schema as a major gap. That is now largely fixed.
 
-### Schema & Structured Data (64/100)
+Current schema types rendered locally:
 
-Parkside has a better baseline organization graph than Gadoci's homepage, which had no JSON-LD in the sampled home crawl. Parkside exposes Organization, ProfessionalService, OfferCatalog, Service, and WebSite nodes.
+| Route | Schema Types |
+|---|---|
+| `/` | Organization, ProfessionalService, OfferCatalog, WebSite, WebPage, BreadcrumbList |
+| `/services` | Organization, ProfessionalService, OfferCatalog, WebSite, WebPage, BreadcrumbList, Service |
+| `/blueprint` | Organization, ProfessionalService, OfferCatalog, WebSite, WebPage, BreadcrumbList, Service |
+| `/use-cases` | Organization, ProfessionalService, OfferCatalog, WebSite, WebPage, BreadcrumbList, ItemList |
+| `/about` | Organization, ProfessionalService, OfferCatalog, WebSite, AboutPage, BreadcrumbList, Person |
+| `/intake` | Organization, ProfessionalService, OfferCatalog, WebSite, ContactPage, BreadcrumbList |
+| `/privacy` | Organization, ProfessionalService, OfferCatalog, WebSite, WebPage, BreadcrumbList |
 
-The current schema is still incomplete for GEO. It is global and repeated on every page. It does not include page-specific nodes, Person, ContactPoint, sameAs, BreadcrumbList, FAQPage, or Article schema.
+Remaining schema opportunities:
 
-Recommended schema roadmap:
+- Add ContactPoint to Organization if the public contact policy is approved.
+- Add FAQPage schema where visible Q&A content exists.
+- Add Article schema when resource pages launch.
+- Add `sameAs` to Organization for company profile URLs once approved.
 
-- Enrich Organization with description, sameAs, contactPoint, logo, service area, and founder/leader if approved.
-- Add WebPage and BreadcrumbList to every route.
-- Add Service schema to Blueprint and Services.
-- Add AboutPage and Person schema to About once leadership details are published.
-- Add Article schema to future resource pages.
+### Platform Optimization (94/100)
 
-### Platform Optimization (92/100)
+Parkside is now well prepared for crawler access and AI interpretation:
 
-Parkside allows crawling, exposes `llms.txt`, returns rendered HTML, and provides a sitemap. That is a strong baseline for Google AI Overviews, ChatGPT web search, Perplexity, Gemini, and Bing Copilot.
+- `llms.txt` includes citation-ready facts, preferred positioning, representative questions, and guardrails.
+- `llms-full.txt` adds a fuller AI content guide with citation rules by page.
+- The sitemap lists all core public pages.
+- The robots implementation explicitly allows major AI/search crawlers locally.
+- Rendered HTML includes canonical tags and schema.
 
-The lower platform-specific risk is not access; it is authority. AI answer engines increasingly rely on corroborating sources, author reputation, and content depth. Gadoci is stronger here because it has an article library, author pages, canonical metadata, and public search visibility around AI operations and transformation topics.
+Remaining platform risk is authority, not access. Google AI Overviews, ChatGPT search, Perplexity, Gemini, and Bing Copilot can understand the site, but recommendations will improve when there are more high-quality third-party corroboration signals and focused resources.
 
 ---
 
-## Competitor Comparison: Gadoci Consulting
+## Improvement Summary Since Prior Audit
 
-| Metric | Parkside Advisory Group | Gadoci Consulting |
-|---|---:|---:|
-| Overall GEO Score | 66/100 | 76/100 |
-| Google AIO Readiness | 69/100 | 78/100 |
-| ChatGPT Readiness | 70/100 | 79/100 |
-| Perplexity Readiness | 65/100 | 80/100 |
-| Gemini Readiness | 68/100 | 77/100 |
-| Bing Copilot Readiness | 67/100 | 78/100 |
-| Public pages sampled | 7 main pages | 50 of 100+ sitemap URLs |
-| Sitemap depth | 7 URLs | Large article library |
-| Canonical tags | Missing in rendered crawl | Present |
-| llms.txt | Present | Not found during audit |
-| Homepage word count | 736 | 1,927 |
-| Article schema | Not present | Present on article pages |
-| Author signals | Limited | Stronger: named founder and article author |
-| Baseline Organization schema | Present | Not on homepage sample |
-| Robots policy | Allows all | Allows public pages, blocks private app paths |
-| SSR/rendered HTML | Yes | Yes |
-
-### Where Parkside Leads
-
-- Parkside has `llms.txt`, which Gadoci did not expose in the audit.
-- Parkside has a clean sitewide Organization/ProfessionalService/OfferCatalog schema graph.
-- Parkside's positioning is more specific to workflow automation, missed follow-up, handoffs, and service operations.
-- Parkside's intake and privacy guardrails are brand-safe and practical.
-
-### Where Parkside Trails
-
-- Gadoci has a much larger topical footprint through its article library.
-- Gadoci has stronger author attribution, founder detail, article dates, tags, and content freshness signals.
-- Gadoci uses canonical links across sampled pages.
-- Gadoci has stronger public search evidence for the brand and founder entity.
-
-### Competitive Implication
-
-Parkside does not need to match Gadoci's publishing volume. It needs a focused content moat around practical workflow automation, intake, follow-up, service operations, and AI guardrails. Ten high-quality, tightly scoped resources would likely close more of the AI citability gap than dozens of generic AI strategy posts.
+| Prior Finding | Current Status |
+|---|---|
+| Canonical host behavior needed verification | Improved: DNS and canonical endpoint checks now pass |
+| No route-specific canonical metadata | Fixed locally: canonical links render on every route |
+| Schema was sitewide but not page-specific | Fixed/improved: route-level WebPage/AboutPage/ContactPage/Breadcrumb/Service/Person schema added |
+| About page lacked E-E-A-T proof | Improved: leadership, operating proof, methodology, profile link, and Person schema added |
+| Secondary pages were thin | Improved: services, blueprint, use cases, and about all expanded |
+| Robots did not explicitly name AI crawlers | Fixed locally: explicit AI crawler allow rules added |
+| `llms.txt` was incomplete | Improved locally: richer `llms.txt` plus `llms-full.txt` |
+| Security headers were partial | Improved: CSP and related security headers configured |
 
 ---
 
 ## Quick Wins (Implement This Week)
 
-1. Add route-specific canonical metadata for all public pages.
-2. Add explicit `sameAs` fields to Organization schema after approved public profiles exist.
-3. Expand `/llms.txt` with preferred citation facts, page summaries, and questions each page answers.
-4. Add a richer About authority section with approved leadership and methodology details.
-5. Add direct answer blocks to Home, Services, Blueprint, and Use Cases.
-6. Add explicit AI crawler allow rules if the brand wants a public AI-indexing stance.
-7. Add route-specific Open Graph and Twitter card metadata.
+1. Deploy the current local build and verify live parity for `/robots.txt`, `/llms.txt`, `/llms-full.txt`, canonical tags, and security headers.
+2. Add Organization `sameAs` links for approved company and leadership profiles.
+3. Add `ContactPoint` schema if the public email/contact policy is acceptable.
+4. Add visible "Last updated" dates to future resource-style pages.
+5. Create the first resource page: "What is an AI Operations Blueprint?"
 
 ## 30-Day Action Plan
 
-### Week 1: Availability and Metadata
+### Week 1: Deployment Parity
 
-- [ ] Confirm apex and `www` DNS from multiple networks and monitoring providers.
-- [ ] Keep `www` redirecting to apex only if apex is stable everywhere.
-- [ ] Add canonical URLs to all pages.
-- [ ] Add route-specific Open Graph and Twitter metadata.
-- [ ] Add conservative security headers.
+- [ ] Deploy the current Next build.
+- [ ] Re-run `npm run monitor:canonical-host`.
+- [ ] Verify live `/robots.txt` includes explicit AI crawler groups.
+- [ ] Verify live `/llms.txt` links to `/llms-full.txt`.
+- [ ] Verify live route canonical tags.
 
-### Week 2: Schema and AI Readability
+### Week 2: Entity Authority
 
-- [ ] Enrich Organization schema with approved description, contactPoint, sameAs, and service-area details.
-- [ ] Add WebPage and BreadcrumbList schema to every public route.
-- [ ] Add Service schema to Blueprint and Services.
-- [ ] Add AboutPage and Person schema after authority content is approved.
-- [ ] Expand `llms.txt` and add `/llms-full.txt`.
+- [ ] Add approved LinkedIn company/profile links.
+- [ ] Add Organization `sameAs` values.
+- [ ] Add ContactPoint if approved.
+- [ ] Create 2-3 legitimate external profiles or directory references with consistent brand wording.
 
-### Week 3: E-E-A-T and Authority
+### Week 3: Citation Content
 
-- [ ] Add leadership, methodology, and review principles to About.
-- [ ] Add author/reviewer and last-updated signals to guidance-style pages.
-- [ ] Publish or link approved public profiles.
-- [ ] Add proof-oriented workflow examples without guaranteeing outcomes.
+- [ ] Publish "What is an AI Operations Blueprint?"
+- [ ] Publish "What workflows are good candidates for AI automation?"
+- [ ] Publish "How service businesses can prevent missed follow-up."
+- [ ] Add Article schema, author/reviewer, and updated dates to each resource.
 
-### Week 4: Content Depth and Competitive Positioning
+### Week 4: Depth and Distribution
 
-- [ ] Publish 3-4 foundational resources: intake automation, missed follow-up, workflow handoffs, and AI guardrails.
-- [ ] Add FAQ sections where questions appear visibly on the page.
-- [ ] Create an internal content roadmap for 8-12 practical resources.
-- [ ] Re-run the GEO audit and compare against Gadoci again.
+- [ ] Publish 2-3 more practical workflow resources.
+- [ ] Add FAQPage schema where visible Q&A blocks exist.
+- [ ] Submit updated sitemap through Search Console/Bing Webmaster Tools.
+- [ ] Consider IndexNow after resource publishing begins.
 
 ---
 
 ## Appendix: Pages Analyzed
 
-| URL | Title | Status | Word Count | GEO Issues |
-|---|---|---:|---:|---:|
-| https://www.parksideag.com/ | Parkside Advisory Group \| AI Automation for Business Workflows | 200 via redirect | 736 | 3 |
-| https://parksideag.com/ | Parkside Advisory Group \| AI Automation for Business Workflows | 200 | 736 | 3 |
-| https://parksideag.com/services | Services \| Parkside Advisory Group | 200 | 376 | 5 |
-| https://parksideag.com/blueprint | AI Operations Blueprint \| Parkside Advisory Group | 200 | 411 | 4 |
-| https://parksideag.com/use-cases | Use Cases \| Parkside Advisory Group | 200 | 295 | 5 |
-| https://parksideag.com/about | About \| Parkside Advisory Group | 200 | 178 | 6 |
-| https://parksideag.com/intake | Intake \| Parkside Advisory Group | 200 | 310 | 3 |
-| https://parksideag.com/privacy | Privacy Policy \| Parkside Advisory Group | 200 | 192 | 2 |
-| https://parksideag.com/robots.txt | robots.txt | 200 | n/a | 1 |
-| https://parksideag.com/sitemap.xml | sitemap.xml | 200 | n/a | 1 |
-| https://parksideag.com/llms.txt | llms.txt | 200 | n/a | 2 |
+| URL | Title | Status | Word Count | Key GEO Issues |
+|---|---|---:|---:|---|
+| `http://localhost:3000/` | Parkside Advisory Group | 200 | 730 | Strong; add route-specific OG image later |
+| `http://localhost:3000/services` | Services | 200 | 674 | Stronger; can support FAQ schema if Q&A expands |
+| `http://localhost:3000/blueprint` | AI Operations Blueprint | 200 | 709 | Stronger; ideal first resource topic |
+| `http://localhost:3000/use-cases` | Use Cases | 200 | 520 | Good; could add deeper examples |
+| `http://localhost:3000/about` | About | 200 | 697 | Much improved; needs external corroboration |
+| `http://localhost:3000/intake` | Intake | 200 | 315 | Good guardrails; keep credential warnings |
+| `http://localhost:3000/privacy` | Privacy Policy | 200 | 189 | Adequate for purpose |
+| `http://localhost:3000/robots.txt` | robots.txt | 200 | n/a | Strong locally; deploy parity needed |
+| `http://localhost:3000/sitemap.xml` | sitemap.xml | 200 | n/a | Static dates |
+| `http://localhost:3000/llms.txt` | llms.txt | 200 | n/a | Strong locally; deploy parity needed |
+| `http://localhost:3000/llms-full.txt` | llms-full.txt | 200 | n/a | Strong local addition |
 
-### Competitor Pages Sampled
+## Verification Commands
 
-The competitor crawl sampled `https://gadociconsulting.com`, `/about`, `/contact`, `/articles`, and article URLs from the sitemap up to the 50-page audit cap. All sampled public pages returned `200` during the audit. Private paths blocked by robots.txt were excluded.
-
-### Verification Performed
-
-- Final status checks with `curl -L -I` for both domains.
-- Robots and sitemap checks for both domains.
-- HTML extraction for title, description, canonical, H1/H2 headings, word count, JSON-LD, Open Graph, Twitter tags, and image alt coverage.
-- Public search checks for Parkside and Gadoci brand/entity presence.
-- Manual review against Parkside brand rules: no fixed pricing, no guaranteed savings, no prohibited positioning language.
+- `npm run typecheck` passed.
+- `npm run lint` passed.
+- `npm run monitor:canonical-host` passed.
+- Local rendered route audit confirmed canonical links, route metadata, page-level JSON-LD, and image alt coverage.
