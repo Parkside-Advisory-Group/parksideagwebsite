@@ -15,6 +15,12 @@ export interface IntakeSubmission {
   desiredOutcome: string;
   urgency: string;
   permissionToFollowUp: boolean;
+  /** Identifies the intake entry point. Use "growth-audit" for the Growth Audit form. */
+  source?: string;
+  /** Team size — captured by the Growth Audit form. */
+  teamSize?: string;
+  /** What prompted the prospect to explore AI or systems now — Growth Audit context field. */
+  growthContext?: string;
 }
 
 const pricingPromisePattern = /(guarantee|guaranteed|exact savings|final price|fixed price|\$\d+)/i;

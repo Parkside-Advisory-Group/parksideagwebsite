@@ -26,6 +26,9 @@ export interface LeadSummary {
   recommendedOffer: string;
   recommendedFollowUp: string;
   risksAndNotes: string[];
+  source?: string;
+  teamSize?: string;
+  growthContext?: string;
 }
 
 export interface IntakeRecord {
@@ -50,4 +53,10 @@ export interface IntakeRecord {
   internal_summary: string;
   status: LeadStatus;
   follow_up_notes: string;
+  /** Entry point that generated this record. e.g. "growth-audit-page" */
+  source?: string;
+  /** Team size, captured by the Growth Audit form. */
+  team_size?: string;
+  /** What prompted the prospect to explore AI or systems now — Growth Audit context field. */
+  growth_context?: string;
 }

@@ -77,7 +77,10 @@ export function buildLeadSummary(submission: IntakeSubmission): LeadSummary {
       submission.permissionToFollowUp ? "Permission to follow up granted." : "No follow-up permission granted.",
       "Do not quote final pricing until discovery confirms scope.",
       "Do not request passwords or private credentials during intake."
-    ]
+    ],
+    source: submission.source,
+    teamSize: submission.teamSize,
+    growthContext: submission.growthContext
   };
 }
 
@@ -85,11 +88,14 @@ export function buildLeadSummary(submission: IntakeSubmission): LeadSummary {
  * Formats a lead summary for internal review and notification emails.
  */
 export function formatInternalSummary(summary: LeadSummary): string {
-  return [
+  const lines = [
     `Prospect: ${summary.prospect}`,
     `Business: ${summary.business}`,
     `Contact: ${summary.contact}`,
+    `Source: ${summary.source ?? "intake"}`,
+    `Team size: ${summary.teamSize ?? "not provided"}`,
     `Primary pain: ${summary.primaryPain}`,
+    `Growth context: ${summary.growthContext ?? "not provided"}`,
     `Workflow category: ${summary.workflowCategory}`,
     `Current process: ${summary.currentProcess}`,
     `Tools mentioned: ${summary.toolsMentioned}`,
@@ -100,7 +106,8 @@ export function formatInternalSummary(summary: LeadSummary): string {
     `Recommended offer: ${summary.recommendedOffer}`,
     `Recommended follow-up: ${summary.recommendedFollowUp}`,
     `Risks/notes: ${summary.risksAndNotes.join(" ")}`
-  ].join("\n");
+  ];
+  return lines.join("\n");
 }
 
 /**
@@ -130,6 +137,9 @@ export async function createIntakeRecord(submission: IntakeSubmission): Promise<
     lead_tier: guidance.summary.leadTier,
     internal_summary: guidance.internalSummary,
     status: "new",
-    follow_up_notes: guidance.summary.recommendedFollowUp
+    follow_up_notes: guidance.summary.recommendedFollowUp,
+    source: submission.source,
+    team_size: submission.teamSize,
+    growth_context: submission.growthContext
   };
 }
