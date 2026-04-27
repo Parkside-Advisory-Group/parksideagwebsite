@@ -1,0 +1,106 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Parkside Advisory Group home" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img [ref=e5]
+        - generic [ref=e10]:
+          - generic [ref=e11]: Parkside
+          - generic [ref=e12]: Advisory Group
+      - link "Start" [ref=e117] [cursor=pointer]:
+        - /url: /intake
+  - main [ref=e19]:
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - paragraph [ref=e23]: Parkside Intake Advisor
+        - heading "Start an AI Operations Blueprint." [level=1] [ref=e24]
+        - paragraph [ref=e25]: Share the workflow that feels manual, repetitive, or hard to keep up with. Parkside Intake Advisor will organize the context, score fit, and recommend the next step without quoting final pricing or making implementation promises before discovery.
+      - form "Parkside Intake Advisor" [ref=e26]:
+        - generic [ref=e27]: Parkside Intake Advisor will clarify the workflow, score fit, and create an internal lead summary. Do not submit passwords, private credentials, or confidential access details.
+        - generic [ref=e28]:
+          - generic [ref=e29]:
+            - generic [ref=e30]: Name *
+            - textbox [ref=e31]
+          - generic [ref=e32]:
+            - generic [ref=e33]: Email *
+            - textbox [ref=e34]
+          - generic [ref=e35]:
+            - generic [ref=e36]: Phone (optional)
+            - textbox [ref=e37]
+          - generic [ref=e38]:
+            - generic [ref=e39]: Business name *
+            - textbox [ref=e40]
+          - generic [ref=e41]:
+            - generic [ref=e42]: Website
+            - textbox [ref=e43]
+          - generic [ref=e44]:
+            - generic [ref=e45]: Industry or business type *
+            - textbox [ref=e46]
+          - generic [ref=e47]:
+            - generic [ref=e48]: What process feels most manual, repetitive, or hard to keep up with? *
+            - textbox [ref=e49]
+          - generic [ref=e50]:
+            - generic [ref=e51]: How often does this happen?
+            - textbox "Daily, weekly, during busy season, after every new lead..." [ref=e52]
+          - generic [ref=e53]:
+            - generic [ref=e54]: How is the process handled today? *
+            - textbox [ref=e55]
+          - generic [ref=e56]:
+            - generic [ref=e57]: Who is involved?
+            - textbox [ref=e58]
+          - generic [ref=e59]:
+            - generic [ref=e60]: What tools or systems are involved?
+            - textbox "CRM, inbox, calendar, spreadsheets, phone system..." [ref=e61]
+          - generic [ref=e62]:
+            - generic [ref=e63]: Estimated time lost
+            - textbox [ref=e64]
+          - generic [ref=e65]:
+            - generic [ref=e66]: Estimated revenue, customer, delay, or follow-up impact
+            - textbox [ref=e67]
+          - generic [ref=e68]:
+            - generic [ref=e69]: What would a better outcome look like?
+            - textbox [ref=e70]
+          - generic [ref=e71]:
+            - generic [ref=e72]: Timeline or urgency
+            - textbox [ref=e73]
+        - generic [ref=e74]:
+          - checkbox "I give Parkside permission to follow up about this workflow." [ref=e75]
+          - generic [ref=e76]: I give Parkside permission to follow up about this workflow.
+        - button "Start an AI Operations Blueprint" [ref=e77]
+  - contentinfo [ref=e78]:
+    - generic [ref=e79]:
+      - generic [ref=e80]:
+        - generic [ref=e81]:
+          - link "Parkside Advisory Group home" [ref=e82] [cursor=pointer]:
+            - /url: /
+            - img [ref=e83]
+            - generic [ref=e88]:
+              - generic [ref=e89]: Parkside
+              - generic [ref=e90]: Advisory Group
+          - paragraph [ref=e91]: Practical AI and automation for businesses that need faster follow-up, fewer manual tasks, and a clearer view of what is stuck.
+        - generic [ref=e92]:
+          - generic [ref=e93]: Company
+          - link "About" [ref=e94] [cursor=pointer]:
+            - /url: /about
+          - link "Privacy Policy" [ref=e95] [cursor=pointer]:
+            - /url: /privacy
+          - link "info@parksideag.com" [ref=e96] [cursor=pointer]:
+            - /url: mailto:info@parksideag.com
+        - generic [ref=e97]:
+          - generic [ref=e98]: Services
+          - link "AI Operations Blueprint" [ref=e99] [cursor=pointer]:
+            - /url: /blueprint
+          - link "Automation Sprint" [ref=e100] [cursor=pointer]:
+            - /url: /services
+          - link "AI Agent Build" [ref=e101] [cursor=pointer]:
+            - /url: /services
+        - generic [ref=e102]:
+          - generic [ref=e103]: Next Step
+          - link "Start an AI Operations Blueprint" [ref=e104] [cursor=pointer]:
+            - /url: /intake
+          - link "Explore Use Cases" [ref=e105] [cursor=pointer]:
+            - /url: /use-cases
+      - generic [ref=e106]: © 2026 Parkside Advisory Group, LLC. All rights reserved.
+  - button "Open Next.js Dev Tools" [ref=e112] [cursor=pointer]:
+    - img [ref=e113]
+  - alert [ref=e116]

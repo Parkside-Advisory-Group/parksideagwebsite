@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings=0",
+    "monitor:canonical-host": "node scripts/verify-canonical-host.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

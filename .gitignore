@@ -9,4 +9,4 @@ dist/
 .DS_Store
 .vercel
 .gstack/
-.gstack/
+.playwright-mcp/
