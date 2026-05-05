@@ -24,7 +24,9 @@ export const metadata: Metadata = {
     "client intake automation",
     "follow-up automation",
     "business process improvement",
-    "Charlotte AI consultant",
+    "Indiana AI consultant",
+    "Northwest Indiana workflow automation",
+    "Greater Chicagoland AI consultant",
     "AI operations blueprint"
   ],
   openGraph: {

@@ -11,6 +11,7 @@ interface GrowthAuditFormState {
   industry: string;
   teamSize: string;
   currentBottleneck: string;
+  currentProcess: string;
   growthContext: string;
   currentTools: string;
   desiredOutcome: string;
@@ -25,6 +26,7 @@ const initialState: GrowthAuditFormState = {
   industry: "",
   teamSize: "",
   currentBottleneck: "",
+  currentProcess: "",
   growthContext: "",
   currentTools: "",
   desiredOutcome: "",
@@ -58,13 +60,13 @@ export function GrowthAuditForm() {
       industry: formState.industry,
       // Map Growth Audit fields onto the shared schema
       primaryPain: formState.currentBottleneck,
-      currentProcess: formState.currentBottleneck,
+      currentProcess: formState.currentProcess,
       toolsUsed: formState.currentTools,
       desiredOutcome: formState.desiredOutcome,
       // Growth Audit-specific optional fields
       teamSize: formState.teamSize || undefined,
       growthContext: formState.growthContext || undefined,
-      source: "growth-audit-page",
+      source: "growth-audit",
       // Unused by this form; included to satisfy the schema
       frequencyOfIssue: "",
       peopleInvolved: "",
@@ -193,6 +195,16 @@ export function GrowthAuditForm() {
             value={formState.currentBottleneck}
             onChange={(e) => updateField("currentBottleneck", e.target.value)}
             placeholder="Describe the process, task, or gap that costs you the most time or causes the most friction."
+            required
+          />
+        </Field>
+
+        <Field id="ga-current-process" label="How do you handle this today?" required full>
+          <textarea
+            id="ga-current-process"
+            value={formState.currentProcess}
+            onChange={(e) => updateField("currentProcess", e.target.value)}
+            placeholder="Describe the current steps, owner, handoffs, or workaround your team uses now."
             required
           />
         </Field>

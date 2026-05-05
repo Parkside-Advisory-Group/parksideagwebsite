@@ -53,7 +53,7 @@ export interface IntakeRecord {
   internal_summary: string;
   status: LeadStatus;
   follow_up_notes: string;
-  /** Entry point that generated this record. e.g. "growth-audit-page" */
+  /** Entry point that generated this record. e.g. "growth-audit" */
   source?: string;
   /** Team size, captured by the Growth Audit form. */
   team_size?: string;

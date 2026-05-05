@@ -16,7 +16,7 @@ export const primaryCta = "Start the Blueprint Audit";
 export const secondaryCta = "See How It Works";
 export const tertiaryCta = "Explore Use Cases";
 
-export const contactEmail = "info@parksideag.com";
+export const contactEmail = "amora@parksideag.com";
 
 export const offers: Offer[] = [
   {

@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { JsonLd } from "../components/JsonLd";
+import { HomeHeroVisualLoader } from "../components/HomeHeroVisualLoader";
 import { primaryCta } from "../lib/content";
+import { fieldNotes } from "../lib/field-notes";
 import { createRouteMetadata } from "../lib/metadata";
 import {
   createHomeBreadcrumbItems,
@@ -146,6 +148,15 @@ export default function HomePage() {
               Parkside finds the places where requests stall, estimates go cold, and teams chase status, then builds
               the practical AI and automation layer that keeps the work moving.
             </p>
+            <p className="hero-trust">
+              Built for project-based and service businesses that need follow-up, reporting, and handoffs to stop
+              depending on memory.
+            </p>
+            <div className="hero-signal" aria-label="Common Parkside starting points">
+              <span>Lead intake</span>
+              <span>Estimate follow-up</span>
+              <span>Manual reporting</span>
+            </div>
             <div className="button-row">
               <Link className="btn" href="/intake">
                 {primaryCta}
@@ -155,6 +166,7 @@ export default function HomePage() {
               </Link>
             </div>
           </div>
+          <HomeHeroVisualLoader />
         </div>
         <div className="hero-baseline" />
       </section>
@@ -318,7 +330,7 @@ export default function HomePage() {
             <div className="home-editorial-image">
               <Image
                 src="/assets/AA396370-3ADB-4787-B619-969589BB3CFA.jpg.webp"
-                alt="Charlotte skyline at sunset representing Parkside's operating base"
+                alt="Business district at sunset representing Parkside's operating base"
                 fill
                 loading="eager"
                 sizes="(max-width: 900px) 100vw, 42vw"
@@ -333,6 +345,32 @@ export default function HomePage() {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      <section className="section field-notes-preview-section">
+        <div className="container">
+          <div className="section-heading-row">
+            <div>
+              <p className="eyebrow">Field Notes</p>
+              <h2 className="section-title">Useful thinking before the first call.</h2>
+            </div>
+            <Link className="text-link" href="/field-notes">
+              View all notes
+            </Link>
+          </div>
+          <div className="field-notes-grid preview-grid">
+            {fieldNotes.slice(0, 3).map((note) => (
+              <article className="field-note-card reveal-on-scroll" key={note.slug}>
+                <p className="eyebrow">{note.category}</p>
+                <h3>{note.title}</h3>
+                <p>{note.description}</p>
+                <Link className="text-link" href={`/field-notes/${note.slug}`}>
+                  Read the note
+                </Link>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 

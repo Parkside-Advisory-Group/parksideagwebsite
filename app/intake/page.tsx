@@ -41,6 +41,14 @@ export default function IntakePage() {
               organize the context, score fit, and recommend the next step without quoting final pricing or making
               implementation promises before discovery.
             </p>
+            <div className="intake-proof-panel" aria-label="What happens after submitting the intake">
+              <p className="eyebrow">What happens next</p>
+              <ul>
+                <li>Parkside reviews one workflow for fit and urgency.</li>
+                <li>You get a clear recommendation for the first useful system.</li>
+                <li>If the workflow is not a fit, Parkside says so before scoping work.</li>
+              </ul>
+            </div>
           </div>
           <IntakeAdvisor />
         </div>
