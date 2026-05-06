@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 160" width="600" height="160" role="img" aria-label="Parkside wordmark">
+  <defs></defs>
+  <style xmlns="http://www.w3.org/2000/svg">
+    @import url('https://fonts.googleapis.com/css2?family=Newsreader:wght@500&amp;family=Inter+Tight:wght@500&amp;display=swap');
+    .wordmark { font-family: 'Newsreader', serif; font-weight: 500; font-size: 76px; letter-spacing: -0.014em; }
+    .tagline { font-family: 'Inter Tight', sans-serif; font-weight: 500; font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase; }
+  </style>
+  <rect width="600" height="160" fill="#141210"></rect>
+  <text x="300" y="92" class="wordmark" text-anchor="middle" fill="#F6F1E8">Parkside</text>
+  <text x="300" y="124" class="tagline" text-anchor="middle" fill="rgba(246,241,232,0.72)">ADVISORY GROUP</text>
+</svg>

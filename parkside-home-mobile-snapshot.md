@@ -1,0 +1,190 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Parkside Advisory Group home" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img [ref=e5]
+        - generic [ref=e10]:
+          - generic [ref=e11]: Parkside
+          - generic [ref=e12]: Advisory Group
+      - link "Start" [ref=e225] [cursor=pointer]:
+        - /url: /intake
+  - main [ref=e19]:
+    - generic [ref=e20]:
+      - img "Tree-lined path at sunrise" [ref=e22]
+      - generic [ref=e24]:
+        - paragraph [ref=e25]: AI Automation for Everyday Business Workflows
+        - heading "Spend less time chasing tasks, updates, and follow-up." [level=1] [ref=e26]
+        - paragraph [ref=e27]: Parkside helps small and mid-sized businesses use practical AI to capture requests, follow up faster, and see what needs attention before work slips through the cracks.
+        - generic [ref=e28]:
+          - generic [ref=e29]: New request
+          - generic [ref=e30]: Routed
+          - generic [ref=e31]: Follow-up queued
+        - generic [ref=e32]:
+          - link "Start an AI Operations Blueprint" [ref=e33] [cursor=pointer]:
+            - /url: /intake
+          - link "Explore Use Cases" [ref=e34] [cursor=pointer]:
+            - /url: /use-cases
+    - generic [ref=e37]:
+      - generic [ref=e38]:
+        - paragraph [ref=e39]: Operational Pain
+        - heading "Most workflow problems are follow-through problems." [level=2] [ref=e40]
+      - generic [ref=e41]:
+        - paragraph [ref=e42]: Work slows down when leads sit in inboxes, customers wait for updates, owners have to remind everyone what comes next, and the team cannot quickly see where work is stuck. Parkside focuses on those repeated moments and turns them into simple, trackable systems.
+        - img "Foggy road representing unclear handoffs and hidden workflow delays" [ref=e44]
+    - generic [ref=e47]:
+      - paragraph [ref=e48]: What Parkside Builds
+      - heading "Simple AI systems for the work your team repeats every week." [level=2] [ref=e49]
+      - generic [ref=e50]:
+        - generic [ref=e51]:
+          - text: "01"
+          - heading "Better intake" [level=3] [ref=e52]
+          - paragraph [ref=e53]: Capture the right details up front, sort requests, and route the next step to the right person.
+        - generic [ref=e54]:
+          - text: "02"
+          - heading "Reliable follow-up" [level=3] [ref=e55]
+          - paragraph [ref=e56]: Keep leads, estimates, customer updates, and internal handoffs from depending on memory.
+        - generic [ref=e57]:
+          - text: "03"
+          - heading "Clear visibility" [level=3] [ref=e58]
+          - paragraph [ref=e59]: See open items, aging work, owners, delays, and next actions without rebuilding reports by hand.
+    - generic [ref=e61]:
+      - paragraph [ref=e62]: Core Use Cases
+      - heading "Start where the workflow repeats." [level=2] [ref=e63]
+      - generic [ref=e64]:
+        - article [ref=e65]:
+          - text: Front office
+          - heading "Client Intake" [level=3] [ref=e66]
+          - paragraph [ref=e67]: Capture consistent details, qualify requests, route next steps, and reduce back-and-forth during first contact.
+        - article [ref=e68]:
+          - text: Revenue operations
+          - heading "Follow-Up Discipline" [level=3] [ref=e69]
+          - paragraph [ref=e70]: Keep prospects, customers, and internal owners moving with structured follow-up and clear accountability.
+        - article [ref=e71]:
+          - text: Operations
+          - heading "Reporting Visibility" [level=3] [ref=e72]
+          - paragraph [ref=e73]: Create a reliable view of workflow status, aging items, handoffs, and recurring bottlenecks.
+        - article [ref=e74]:
+          - text: Delivery
+          - heading "Internal Handoffs" [level=3] [ref=e75]
+          - paragraph [ref=e76]: Standardize what moves from sales to operations, from intake to delivery, or from field work to admin follow-up.
+        - article [ref=e77]:
+          - text: Administrative work
+          - heading "Document and Email Drafting" [level=3] [ref=e78]
+          - paragraph [ref=e79]: Use AI-supported drafting for summaries, next-step emails, internal notes, and recurring client updates.
+        - article [ref=e80]:
+          - text: Management
+          - heading "Workflow Triage" [level=3] [ref=e81]
+          - paragraph [ref=e82]: Sort requests by urgency, readiness, owner, and next action so teams can focus on the right work first.
+    - generic [ref=e84]:
+      - generic [ref=e85]:
+        - paragraph [ref=e86]: AI Operations Blueprint
+        - heading "The first step is diagnosis, not software." [level=2] [ref=e87]
+        - paragraph [ref=e88]: The Blueprint is a working session and roadmap. We look at one painful process, find where time and follow-up are being lost, and decide what should be automated first.
+        - img "City street at sunset representing daily business activity and follow-up" [ref=e90]
+        - link "Learn About the Blueprint" [ref=e92] [cursor=pointer]:
+          - /url: /blueprint
+      - generic [ref=e93]:
+        - generic [ref=e94]:
+          - generic [ref=e95]: Blueprint Output
+          - strong [ref=e96]: One clear first build
+        - list [ref=e97]:
+          - listitem [ref=e98]
+          - listitem [ref=e101]
+          - listitem [ref=e104]
+          - listitem [ref=e107]
+    - generic [ref=e111]:
+      - paragraph [ref=e112]: Process
+      - heading "A clear path from workflow pain to a working system." [level=2] [ref=e113]
+      - generic [ref=e114]:
+        - generic [ref=e115]:
+          - generic [ref=e116]: Step 1
+          - heading "Clarify" [level=3] [ref=e117]
+          - paragraph [ref=e118]: Capture the pain, current process, people, tools, and desired outcome.
+        - generic [ref=e119]:
+          - generic [ref=e120]: Step 2
+          - heading "Map" [level=3] [ref=e121]
+          - paragraph [ref=e122]: Turn the workflow into a clear picture of owners, handoffs, and stuck points.
+        - generic [ref=e123]:
+          - generic [ref=e124]: Step 3
+          - heading "Prioritize" [level=3] [ref=e125]
+          - paragraph [ref=e126]: Pick the first build based on repeat volume, business impact, and tool readiness.
+        - generic [ref=e127]:
+          - generic [ref=e128]: Step 4
+          - heading "Build" [level=3] [ref=e129]
+          - paragraph [ref=e130]: Implement the right automation, assistant, reporting view, or follow-up workflow.
+    - generic [ref=e132]:
+      - paragraph [ref=e133]: Offer Path
+      - heading "Start with the Blueprint, then build what the workflow actually needs." [level=2] [ref=e134]
+      - generic [ref=e135]:
+        - article [ref=e136]:
+          - heading "AI Operations Blueprint" [level=3] [ref=e137]
+          - paragraph [ref=e138]: A focused diagnostic that maps recurring workflow pain, identifies practical automation opportunities, and produces an implementation roadmap.
+        - article [ref=e139]:
+          - heading "Workflow Automation Sprint" [level=3] [ref=e140]
+          - paragraph [ref=e141]: A scoped implementation sprint for one recurring process such as intake, follow-up, reporting, handoffs, or internal routing.
+        - article [ref=e142]:
+          - heading "AI Agent Build" [level=3] [ref=e143]
+          - paragraph [ref=e144]: A practical AI assistant or agent that helps qualify requests, summarize work, draft follow-up, or guide internal processes.
+        - article [ref=e145]:
+          - heading "AI Operations Retainer" [level=3] [ref=e146]
+          - paragraph [ref=e147]: Ongoing support to tune systems, extend automations, improve visibility, and keep AI-supported workflows aligned with operations.
+    - generic [ref=e149]:
+      - generic [ref=e150]:
+        - paragraph [ref=e151]: AI Systems Credibility
+        - heading "Built around practical AI judgment, not hype." [level=2] [ref=e152]
+        - img "Charlotte skyline at sunset representing Parkside's operating base" [ref=e154]
+      - generic [ref=e155]:
+        - paragraph [ref=e156]: Parkside evaluates AI opportunities through workflow mapping, tool readiness, data quality, human review points, and measurable operating outcomes. Every recommended system needs a clear owner, a defined failure path, and a practical reason to exist inside the business.
+        - generic "AI credibility signals" [ref=e157]:
+          - generic [ref=e158]
+          - generic [ref=e162]
+          - generic [ref=e166]
+        - link "Start an AI Operations Blueprint" [ref=e171] [cursor=pointer]:
+          - /url: /intake
+    - generic [ref=e173]:
+      - paragraph [ref=e174]: Common Questions
+      - heading "Answers for owners evaluating AI automation." [level=2] [ref=e175]
+      - generic [ref=e176]:
+        - article [ref=e177]:
+          - heading "Do we need to replace our current tools?" [level=3] [ref=e178]
+          - paragraph [ref=e179]: Usually not. Parkside starts with the tools already in use, then recommends changes only when the current setup blocks the workflow.
+        - article [ref=e180]:
+          - heading "What should we automate first?" [level=3] [ref=e181]
+          - paragraph [ref=e182]: Start with work that repeats often, has a clear owner, and causes delays, missed follow-up, or manual reporting effort.
+        - article [ref=e183]:
+          - heading "Will the website quote pricing?" [level=3] [ref=e184]
+          - paragraph [ref=e185]: No. Pricing stays behind discovery because scope depends on workflow complexity, tools, data readiness, and implementation needs.
+  - contentinfo [ref=e186]:
+    - generic [ref=e187]:
+      - generic [ref=e188]:
+        - generic [ref=e189]:
+          - link "Parkside Advisory Group home" [ref=e190] [cursor=pointer]:
+            - /url: /
+          - paragraph [ref=e199]: Practical AI and automation for businesses that need faster follow-up, fewer manual tasks, and a clearer view of what is stuck.
+        - generic [ref=e200]:
+          - generic [ref=e201]: Company
+          - link "About" [ref=e202] [cursor=pointer]:
+            - /url: /about
+          - link "Privacy Policy" [ref=e203] [cursor=pointer]:
+            - /url: /privacy
+          - link "info@parksideag.com" [ref=e204] [cursor=pointer]:
+            - /url: mailto:info@parksideag.com
+        - generic [ref=e205]:
+          - generic [ref=e206]: Services
+          - link "AI Operations Blueprint" [ref=e207] [cursor=pointer]:
+            - /url: /blueprint
+          - link "Automation Sprint" [ref=e208] [cursor=pointer]:
+            - /url: /services
+          - link "AI Agent Build" [ref=e209] [cursor=pointer]:
+            - /url: /services
+        - generic [ref=e210]:
+          - generic [ref=e211]: Next Step
+          - link "Start an AI Operations Blueprint" [ref=e212] [cursor=pointer]:
+            - /url: /intake
+          - link "Explore Use Cases" [ref=e213] [cursor=pointer]:
+            - /url: /use-cases
+      - generic [ref=e214]: © 2026 Parkside Advisory Group, LLC. All rights reserved.
+  - button "Open Next.js Dev Tools" [ref=e221] [cursor=pointer]:
+    - img [ref=e222]
+  - alert [ref=e215]
