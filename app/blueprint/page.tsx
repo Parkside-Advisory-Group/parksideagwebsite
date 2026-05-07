@@ -12,18 +12,18 @@ import {
 } from "../../lib/structured-data";
 
 export const metadata: Metadata = createRouteMetadata({
-  title: "AI Operations Blueprint",
-  description: "A practical audit for finding the first useful AI or automation build inside a recurring workflow.",
+  title: "Free AI Workflow Savings Snapshot",
+  description: "A lightweight report that identifies workflow leaks and practical AI opportunities before a deeper Blueprint.",
   path: "/blueprint"
 });
 
 const blueprintService = {
   "@type": "Service",
   "@id": `${siteUrl}/blueprint#ai-operations-blueprint`,
-  name: "AI Operations Blueprint",
-  description: "A practical audit for finding the first useful AI or automation build inside a recurring workflow.",
+  name: "Free AI Workflow Savings Snapshot",
+  description: "A lightweight report that identifies workflow leaks and practical AI opportunities before a deeper Blueprint.",
   provider: { "@id": organizationId },
-  serviceType: "AI Operations Blueprint",
+  serviceType: "AI Workflow Savings Snapshot",
   areaServed: "United States",
   url: `${siteUrl}/blueprint`
 };
@@ -31,16 +31,16 @@ const blueprintService = {
 const structuredData = createPageStructuredData({
   id: `${siteUrl}/blueprint#webpage`,
   path: "/blueprint",
-  name: "AI Operations Blueprint",
-  description: "The audit that finds the first workflow worth fixing with practical AI and automation.",
-  breadcrumbItems: createPageBreadcrumbItems("AI Operations Blueprint", "/blueprint"),
+  name: "Free AI Workflow Savings Snapshot",
+  description: "The free report that identifies likely workflow leaks and the first practical AI opportunity.",
+  breadcrumbItems: createPageBreadcrumbItems("Free AI Workflow Savings Snapshot", "/blueprint"),
   mainEntity: referenceNode(`${siteUrl}/blueprint#ai-operations-blueprint`),
   extraNodes: [blueprintService]
 });
 
 export default function BlueprintPage() {
   const directAnswer =
-    "The AI Operations Blueprint is a focused audit of one recurring workflow. It identifies where work is captured, who owns the next step, where follow-up or reporting breaks down, and which practical automation or AI-assisted system should be built first.";
+    "The free AI Workflow Savings Snapshot is a lightweight report on one recurring workflow. It identifies likely leaks, practical AI or automation opportunities, readiness gaps, and the first system worth considering. The paid AI Operations Blueprint is the deeper next step when the Snapshot shows a workflow is worth mapping and scoping.";
 
   const blueprintInputs = [
     "A workflow the team repeats often enough to study",
@@ -50,10 +50,10 @@ export default function BlueprintPage() {
   ];
 
   const blueprintOutputs = [
-    "A workflow leak map showing where work stalls",
-    "A first-build recommendation with the smallest useful scope",
-    "Automation, AI-assist, and reporting opportunities ranked by value",
-    "Human review points, failure paths, and readiness notes"
+    "A short workflow leak summary showing where work appears to stall",
+    "Three practical AI or automation opportunities ranked by value",
+    "A first-system recommendation with the smallest useful scope",
+    "Readiness notes, human review points, and follow-up questions"
   ];
 
   const blueprintExamples = [
@@ -99,11 +99,11 @@ export default function BlueprintPage() {
       <JsonLd data={structuredData} />
       <section className="page-hero dark-band">
         <div className="container">
-          <p className="eyebrow light">AI Operations Blueprint</p>
-          <h1 className="page-title">The audit that finds the first workflow worth fixing.</h1>
+          <p className="eyebrow light">Free AI Workflow Savings Snapshot</p>
+          <h1 className="page-title">A quick report on where AI could actually help your workflow.</h1>
           <p className="lede">
-            The Blueprint looks at one repeated operating problem, missed follow-up, stale estimates, slow updates, or
-            manual reporting, then defines the practical system to build first.
+            Share one repeated operating problem, missed follow-up, stale estimates, slow updates, or manual reporting.
+            Parkside sends back a practical Snapshot with likely leaks, useful AI opportunities, and a recommended first step.
           </p>
           <div className="button-row">
             <Link className="btn" href="/intake">
@@ -120,13 +120,13 @@ export default function BlueprintPage() {
         <div className="container split">
           <div>
             <p className="eyebrow">What It Is</p>
-            <h2 className="section-title">A working session for one real process, not a generic AI brainstorm.</h2>
+            <h2 className="section-title">A focused first look at one real process, not a generic AI brainstorm.</h2>
           </div>
           <div className="panel">
             <p>
-              Parkside reviews how the work moves today: the trigger, owner, tools, timing, customer touchpoints, and
-              failure points. The audit names what should be automated, what should stay human-reviewed, and what needs
-              to be cleaned up before implementation.
+              Parkside reviews the intake details you provide: the trigger, owner, tools, timing, customer touchpoints,
+              and failure points. The Snapshot names what may be worth automating, what should stay human-reviewed,
+              and what needs clarification before implementation.
             </p>
           </div>
         </div>
@@ -136,7 +136,7 @@ export default function BlueprintPage() {
         <div className="container answer-grid">
           <div>
             <p className="eyebrow">Direct Answer</p>
-            <h2 className="section-title">What is the AI Operations Blueprint?</h2>
+            <h2 className="section-title">What is the AI Workflow Savings Snapshot?</h2>
           </div>
           <div className="answer-panel">
             <p>{directAnswer}</p>
@@ -184,7 +184,7 @@ export default function BlueprintPage() {
       <section className="section">
         <div className="container">
           <p className="eyebrow">What You Receive</p>
-          <h2 className="section-title">A roadmap that names the first build and the guardrails around it.</h2>
+          <h2 className="section-title">A short report that names the likely leaks and best first move.</h2>
           <div className="deliverable-grid">
             {deliverables.map((deliverable, index) => (
               <article className="deliverable-item" key={deliverable}>
@@ -268,13 +268,14 @@ export default function BlueprintPage() {
       <section className="section">
         <div className="container split">
           <div>
-            <p className="eyebrow">After the Audit</p>
-            <h2 className="section-title">Implementation starts narrow, then earns the right to expand.</h2>
+            <p className="eyebrow">After the Snapshot</p>
+            <h2 className="section-title">If the opportunity is real, the Blueprint maps the build.</h2>
           </div>
           <div>
             <p className="lede">
-              The Blueprint can lead into a scoped automation sprint, AI-assisted intake or follow-up, a reporting view,
-              or an internal handoff system. Parkside installs the useful layer first, then tunes it as the team uses it.
+              The Snapshot can lead into a paid AI Operations Blueprint, then a scoped automation sprint, AI-assisted
+              intake or follow-up, a reporting view, or an internal handoff system. Parkside installs the useful layer
+              first, then tunes it as the team uses it.
             </p>
             <div className="button-row">
               <Link className="btn" href="/intake">

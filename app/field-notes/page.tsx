@@ -49,7 +49,7 @@ export default function FieldNotesPage() {
           <p className="lede">Share the process that keeps slipping. Parkside will help identify the first useful build.</p>
           <div className="button-row">
             <Link className="btn" href="/intake">
-              Start the Blueprint Audit
+              Get the Free Snapshot
             </Link>
           </div>
         </div>

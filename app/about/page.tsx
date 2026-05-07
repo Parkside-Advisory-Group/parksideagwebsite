@@ -221,8 +221,8 @@ export default function AboutPage() {
               in Charlotte, North Carolina, and the broader Carolinas market.
             </p>
             <p className="lede">
-              The first step is usually the AI Operations Blueprint: a focused review of one recurring workflow, the
-              current tools involved, the team responsible for the work, and the practical system worth building first.
+              The first step is usually the free AI Workflow Savings Snapshot: a lightweight review of one recurring
+              workflow, the current tools involved, the team responsible for the work, and the practical system worth considering first.
             </p>
             <div className="button-row">
               <Link className="btn" href="/intake">

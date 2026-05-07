@@ -58,15 +58,15 @@ export function GrowthAuditForm() {
       businessName: formState.businessName,
       website: formState.website || undefined,
       industry: formState.industry,
-      // Map Growth Audit fields onto the shared schema
+      // Map Snapshot fields onto the shared schema
       primaryPain: formState.currentBottleneck,
       currentProcess: formState.currentProcess,
       toolsUsed: formState.currentTools,
       desiredOutcome: formState.desiredOutcome,
-      // Growth Audit-specific optional fields
+      // Snapshot-specific optional fields
       teamSize: formState.teamSize || undefined,
       growthContext: formState.growthContext || undefined,
-      source: "growth-audit",
+      source: "snapshot",
       // Unused by this form; included to satisfy the schema
       frequencyOfIssue: "",
       peopleInvolved: "",
@@ -101,23 +101,23 @@ export function GrowthAuditForm() {
   if (phase === "success") {
     return (
       <div className="notice" role="status" aria-live="polite">
-        <strong>Your Growth Audit request has been received.</strong> We&apos;ll review your answers and follow up
-        with next steps.
+        <strong>Your Snapshot request has been received.</strong> We&apos;ll review your answers and follow up
+        with the report or a clarifying question.
       </div>
     );
   }
 
   return (
-    <form className="intake-form" onSubmit={handleSubmit} aria-label="Growth Audit Intake Form" noValidate>
+    <form className="intake-form" onSubmit={handleSubmit} aria-label="Snapshot Intake Form" noValidate>
       <div className="notice">
-        Share the honest picture of your business. Do not submit passwords, private credentials, or confidential
+        Share the honest picture of one workflow. Do not submit passwords, private credentials, or confidential
         system access.
       </div>
 
       <FormSection
         step="Step 1 of 3"
         title="About Your Business"
-        description="Contact details and enough context to understand what you operate."
+        description="Contact details and enough context to understand the business."
       >
         <Field id="ga-name" label="Your name" required>
           <input
@@ -236,7 +236,7 @@ export function GrowthAuditForm() {
       <FormSection
         step="Step 3 of 3"
         title="Where You Want to Go"
-        description="Define the outcome that would make this worth doing."
+        description="Define the outcome that would make this workflow worth fixing."
       >
         <Field
           id="ga-outcome"
@@ -263,7 +263,7 @@ export function GrowthAuditForm() {
       </label>
 
       <button className="btn" type="submit" disabled={phase === "submitting"}>
-        {phase === "submitting" ? "Submitting…" : "Request the Growth Audit"}
+        {phase === "submitting" ? "Submitting…" : "Request the Free Snapshot"}
       </button>
 
       {phase === "error" && errorMessage ? (

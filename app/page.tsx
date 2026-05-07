@@ -142,15 +142,15 @@ export default function HomePage() {
         </div>
         <div className="container hero-content home-hero-content">
           <div className="hero-copy">
-            <p className="eyebrow light">AI Operations Blueprint</p>
-            <h1 className="page-title">Turn missed follow-up and manual work into clear operating systems.</h1>
+            <p className="eyebrow light">Free AI Workflow Savings Snapshot</p>
+            <h1 className="page-title">See where manual work is costing time, leads, and attention.</h1>
             <p className="lede">
-              Parkside finds the places where requests stall, estimates go cold, and teams chase status, then builds
-              the practical AI and automation layer that keeps the work moving.
+              Share one workflow that feels messy, slow, or repetitive. Parkside sends back a practical Snapshot with
+              likely leaks, AI opportunities, and the first system worth considering.
             </p>
             <p className="hero-trust">
-              Built for project-based and service businesses that need follow-up, reporting, and handoffs to stop
-              depending on memory.
+              Built for project-based and service businesses that want a clear first look before committing to a deeper
+              AI Operations Blueprint.
             </p>
             <div className="hero-signal" aria-label="Common Parkside starting points">
               <span>Lead intake</span>
@@ -236,10 +236,10 @@ export default function HomePage() {
         <div className="container process-editorial">
           <div className="process-narrative">
             <p className="eyebrow light">How It Works</p>
-            <h2 className="section-title">A clear path from the problem you feel to the system you can use.</h2>
+            <h2 className="section-title">A clear path from the problem you feel to the first useful recommendation.</h2>
             <p className="lede">
-              The Blueprint does not start with a software recommendation. It starts with the actual path from first
-              contact to done, including the places where work slows down.
+              The free Snapshot does not start with a software recommendation. It starts with the actual path from first
+              contact to done, then points to the first practical AI or workflow opportunity.
             </p>
           </div>
           <div className="home-timeline" aria-label="How Parkside builds operating systems">
@@ -295,7 +295,7 @@ export default function HomePage() {
         <div className="container split home-section-split">
           <div>
             <p className="eyebrow">Primary Next Step</p>
-            <h2 className="section-title">A good first build is narrow, visible, and owned.</h2>
+            <h2 className="section-title">Start with a free Snapshot, then decide if a full Blueprint is worth it.</h2>
             <div className="home-editorial-image">
               <Image
                 src="/assets/DSC07222.jpeg.webp"
@@ -376,8 +376,8 @@ export default function HomePage() {
 
       <section className="section dark-band home-final-cta">
         <div className="container narrow-container reveal-on-scroll">
-          <h2 className="section-title">If the team is still chasing the same work every week, start there.</h2>
-          <p className="lede">Map the workflow. Pick the first build. Make the next action visible.</p>
+          <h2 className="section-title">If the team is still chasing the same work every week, start with the Snapshot.</h2>
+          <p className="lede">Share the workflow. See the likely leaks. Decide what is worth building next.</p>
           <div className="button-row">
             <Link className="btn" href="/intake">
               {primaryCta}

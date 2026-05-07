@@ -75,12 +75,12 @@ export default async function FieldNotePage({ params }: FieldNotePageProps) {
             <div className="article-cta">
               <h2>If this is showing up in your business, map the workflow first.</h2>
               <p>
-                The Blueprint Audit starts with one recurring workflow and identifies the first practical system worth
-                building.
+                The free Snapshot starts with one recurring workflow and identifies likely leaks, practical AI opportunities,
+                and whether a deeper Blueprint is worth mapping.
               </p>
               <div className="button-row">
                 <Link className="btn" href="/intake">
-                  Start the Blueprint Audit
+                  Get the Free Snapshot
                 </Link>
                 <Link className="btn ghost" href="/field-notes">
                   Back to Field Notes

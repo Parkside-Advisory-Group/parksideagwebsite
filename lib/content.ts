@@ -12,7 +12,7 @@ export interface UseCase {
   signals: string[];
 }
 
-export const primaryCta = "Start the Blueprint Audit";
+export const primaryCta = "Get the Free Snapshot";
 export const secondaryCta = "See How It Works";
 export const tertiaryCta = "Explore Use Cases";
 
@@ -20,11 +20,24 @@ export const contactEmail = "amora@parksideag.com";
 
 export const offers: Offer[] = [
   {
+    name: "Free AI Workflow Savings Snapshot",
+    summary:
+      "A lightweight report that reviews one painful workflow, names likely leaks, and shows where practical AI or automation could help first.",
+    bestFor:
+      "Operators who want a clear first look at missed follow-up, stale estimates, slow updates, manual reporting, or repeated admin work before paying for a deeper Blueprint.",
+    outcomes: [
+      "Workflow leak summary",
+      "3 practical AI or automation opportunities",
+      "First-system recommendation",
+      "Readiness notes and follow-up questions"
+    ]
+  },
+  {
     name: "AI Operations Blueprint",
     summary:
-      "A focused audit of one painful workflow: how requests arrive, who owns the next step, where follow-up stalls, and what should be built first.",
+      "A paid working session and roadmap for one painful workflow: how requests arrive, who owns the next step, where follow-up stalls, and what should be built first.",
     bestFor:
-      "Operators who can point to repeated missed follow-up, stale estimates, slow updates, or reporting cleanup but need a clear build plan.",
+      "Operators who have reviewed the Snapshot and want a clear build plan, implementation sequence, and scope for the first useful system.",
     outcomes: [
       "Workflow leak map",
       "First-build recommendation",

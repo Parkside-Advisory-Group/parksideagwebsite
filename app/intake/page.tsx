@@ -5,8 +5,8 @@ import { createRouteMetadata } from "../../lib/metadata";
 import { createPageBreadcrumbItems, createPageStructuredData, siteUrl } from "../../lib/structured-data";
 
 export const metadata: Metadata = createRouteMetadata({
-  title: "Intake",
-  description: "Start the Blueprint Audit with Parkside Advisory Group.",
+  title: "Free AI Workflow Savings Snapshot Intake",
+  description: "Request a free AI Workflow Savings Snapshot from Parkside Advisory Group.",
   path: "/intake"
 });
 
@@ -14,12 +14,12 @@ const structuredData = createPageStructuredData({
   pageType: "ContactPage",
   id: `${siteUrl}/intake#contactpage`,
   path: "/intake",
-  name: "Parkside Intake Advisor",
-  description: "Start the Blueprint Audit with Parkside Advisory Group by sharing a workflow for review.",
+  name: "Parkside Snapshot Intake Advisor",
+  description: "Request a free AI Workflow Savings Snapshot by sharing one workflow for review.",
   breadcrumbItems: createPageBreadcrumbItems("Intake", "/intake"),
   potentialAction: {
     "@type": "ContactAction",
-    name: "Start the Blueprint Audit",
+    name: "Request the Free AI Workflow Savings Snapshot",
     target: {
       "@type": "EntryPoint",
       urlTemplate: `${siteUrl}/intake`
@@ -34,19 +34,19 @@ export default function IntakePage() {
       <section className="page-hero">
         <div className="container intake-shell">
           <div>
-            <p className="eyebrow">Parkside Intake Advisor</p>
-            <h1 className="page-title">Start the Blueprint Audit.</h1>
+            <p className="eyebrow">Free AI Workflow Savings Snapshot</p>
+            <h1 className="page-title">Request your free Snapshot.</h1>
             <p className="lede">
-              Share the workflow that feels manual, repetitive, or hard to keep up with. Parkside Intake Advisor will
-              organize the context, score fit, and recommend the next step without quoting final pricing or making
+              Share the workflow that feels manual, repetitive, or hard to keep up with. Parkside will organize the
+              context, identify likely leaks, and send a practical Snapshot without quoting final pricing or making
               implementation promises before discovery.
             </p>
             <div className="intake-proof-panel" aria-label="What happens after submitting the intake">
               <p className="eyebrow">What happens next</p>
               <ul>
                 <li>Parkside reviews one workflow for fit and urgency.</li>
-                <li>You get a clear recommendation for the first useful system.</li>
-                <li>If the workflow is not a fit, Parkside says so before scoping work.</li>
+                <li>You get a short Snapshot with likely leaks and practical AI opportunities.</li>
+                <li>If the opportunity is real, the next step is a paid AI Operations Blueprint.</li>
               </ul>
             </div>
           </div>

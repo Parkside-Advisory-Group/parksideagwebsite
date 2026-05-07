@@ -32,7 +32,7 @@ export function Footer() {
           </div>
           <div>
             <div className="footer-heading">Services</div>
-            <Link href="/blueprint">AI Operations Blueprint</Link>
+            <Link href="/blueprint">Free AI Workflow Savings Snapshot</Link>
             <Link href="/services">Automation Sprint</Link>
             <Link href="/services">AI Agent Build</Link>
           </div>

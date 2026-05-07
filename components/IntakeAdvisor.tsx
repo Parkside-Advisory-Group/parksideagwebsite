@@ -51,7 +51,7 @@ export function IntakeAdvisor() {
 
   async function submitIntake(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
-    setStatus("Reviewing the workflow details...");
+    setStatus("Preparing the Snapshot intake...");
     setSummary("");
 
     const response = await fetch("/api/intake", {
@@ -66,14 +66,14 @@ export function IntakeAdvisor() {
       return;
     }
 
-    setStatus("Intake received. Recommended next step: AI Operations Blueprint.");
+    setStatus("Snapshot request received. Parkside will review the workflow and follow up with the report or next question.");
     setSummary(payload.record?.internal_summary ?? "");
   }
 
   return (
     <form className="intake-form" onSubmit={submitIntake} aria-label="Parkside Intake Advisor">
       <div className="notice">
-        The Blueprint review starts with how work moves today. Do not submit passwords, private credentials, or
+        The free Snapshot starts with how work moves today. Do not submit passwords, private credentials, or
         confidential access details.
       </div>
 
@@ -164,7 +164,7 @@ export function IntakeAdvisor() {
       <FormSection
         step="Step 3 of 4"
         title="Systems & Tools"
-        description="List the tools and rough impact so the audit can separate quick wins from deeper implementation work."
+        description="List the tools and rough impact so the Snapshot can separate quick wins from deeper implementation work."
       >
         <Field id="tools-used" label="What tools or systems are involved?" full>
           <input
@@ -193,7 +193,7 @@ export function IntakeAdvisor() {
       <FormSection
         step="Step 4 of 4"
         title="Desired Outcomes"
-        description="Describe what should be more repeatable after the Blueprint Audit and how soon the issue matters."
+        description="Describe what should be more repeatable after the Snapshot and how soon the issue matters."
       >
         <Field id="desired-outcome" label="What would a better outcome look like?" full>
           <textarea
@@ -218,7 +218,7 @@ export function IntakeAdvisor() {
       </label>
 
       <button className="btn" type="submit">
-        Submit for Blueprint Review
+        Request the Free Snapshot
       </button>
       {status ? <p className="notice" role="status">{status}</p> : null}
       {summary ? <pre className="result-box">{summary}</pre> : null}
