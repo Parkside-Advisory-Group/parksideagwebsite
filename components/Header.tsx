@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { track } from "@vercel/analytics";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { primaryCta } from "../lib/content";
@@ -30,6 +31,14 @@ export function Header() {
     setIsMobileMenuOpen(false);
   }
 
+  function trackNavigation(label: string, href: string, location: "desktop" | "mobile" | "brand"): void {
+    track("navigation_click", { label, href, location });
+  }
+
+  function trackCta(location: "header" | "mobile-header"): void {
+    track("snapshot_cta_click", { location, href: "/intake", cta: primaryCta });
+  }
+
   return (
     <header className="site-header">
       <div className="container site-header-inner">
@@ -38,7 +47,10 @@ export function Header() {
           href="/"
           aria-current={isActiveRoute("/") ? "page" : undefined}
           aria-label="Parkside Advisory Group home"
-          onClick={closeMobileMenu}
+          onClick={() => {
+            trackNavigation("Home", "/", "brand");
+            closeMobileMenu();
+          }}
         >
           <svg className="brand-mark" viewBox="0 0 120 120" aria-hidden="true">
             <path d="M 18 88 L 18 62 L 36 56 L 36 88 Z" />
@@ -58,6 +70,7 @@ export function Header() {
               href={item.href}
               aria-current={isActiveRoute(item.href) ? "page" : undefined}
               key={item.href}
+              onClick={() => trackNavigation(item.label, item.href, "desktop")}
             >
               {item.label}
             </Link>
@@ -66,6 +79,7 @@ export function Header() {
             className={isActiveRoute("/intake") ? "btn active" : "btn"}
             href="/intake"
             aria-current={isActiveRoute("/intake") ? "page" : undefined}
+            onClick={() => trackCta("header")}
           >
             {primaryCta}
           </Link>
@@ -96,7 +110,10 @@ export function Header() {
               href={item.href}
               aria-current={isActiveRoute(item.href) ? "page" : undefined}
               key={item.href}
-              onClick={closeMobileMenu}
+              onClick={() => {
+                trackNavigation(item.label, item.href, "mobile");
+                closeMobileMenu();
+              }}
             >
               {item.label}
             </Link>
@@ -105,7 +122,10 @@ export function Header() {
             className={isActiveRoute("/intake") ? "btn active" : "btn"}
             href="/intake"
             aria-current={isActiveRoute("/intake") ? "page" : undefined}
-            onClick={closeMobileMenu}
+            onClick={() => {
+              trackCta("mobile-header");
+              closeMobileMenu();
+            }}
           >
             {primaryCta}
           </Link>

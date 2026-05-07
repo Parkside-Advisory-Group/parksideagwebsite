@@ -19,8 +19,7 @@ Open `http://localhost:3000`.
 - `lib/intake/` - intake validation, lead scoring, summary, and record creation.
 - `lib/integrations/` - Resend and Supabase placeholders.
 - `lib/prompts/` - AI prompt files for intake, scoring, summaries, and proposal drafts.
-- `public/` - copied brand assets and current-site photography.
-- `current-site/` - preserved static prototype reference.
+- `public/` - brand assets, photography, generated hero assets, and public LLM guidance files.
 - `source-docs/` - brand source files and guidelines.
 
 ## Environment Variables
@@ -44,7 +43,7 @@ Required placeholders:
 
 ## Working Now
 
-- Home, Services, AI Operations Blueprint, Use Cases, About, Intake, and Privacy pages.
+- Home, Services, Free Snapshot/Blueprint, Use Cases, About, Intake, and Privacy pages.
 - Intake form validation.
 - Lead scoring from 0-100.
 - Lead tiering.

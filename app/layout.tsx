@@ -3,22 +3,26 @@ import "./globals.css";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { JsonLd } from "../components/JsonLd";
+import { SiteAnalytics } from "../components/SiteAnalytics";
 import { contactEmail } from "../lib/content";
 import { createSitewideStructuredData } from "../lib/structured-data";
 
 export const metadata: Metadata = {
   title: {
-    default: "Parkside Advisory Group | AI Automation for Business Workflows",
+    default: "Parkside Advisory Group | Free AI Workflow Savings Snapshot",
     template: "%s | Parkside Advisory Group"
   },
   description:
-    "Parkside Advisory Group helps businesses use practical AI and automation to reduce manual work, improve follow-up, and see what is happening across recurring workflows.",
+    "Parkside helps small and mid-sized businesses use practical AI and workflow automation to reduce manual work, improve follow-up, and see what is happening across recurring workflows.",
   metadataBase: new URL("https://parksideag.com"),
   alternates: {
     canonical: "https://parksideag.com/"
   },
   keywords: [
     "AI automation consulting",
+    "free AI workflow analysis",
+    "AI workflow savings snapshot",
+    "small business AI automation",
     "workflow automation",
     "AI business systems",
     "client intake automation",
@@ -30,9 +34,9 @@ export const metadata: Metadata = {
     "AI operations blueprint"
   ],
   openGraph: {
-    title: "Parkside Advisory Group | AI Automation for Business Workflows",
+    title: "Parkside Advisory Group | Free AI Workflow Savings Snapshot",
     description:
-      "Practical AI and automation for businesses that need faster follow-up, fewer manual tasks, and clearer workflow visibility.",
+      "Get a free AI Workflow Savings Snapshot for one messy business process, then decide if a paid Blueprint or implementation sprint is worth it.",
     url: "https://parksideag.com",
     siteName: "Parkside Advisory Group",
     locale: "en_US",
@@ -54,6 +58,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Header />
         {children}
         <Footer />
+        <SiteAnalytics />
       </body>
     </html>
   );

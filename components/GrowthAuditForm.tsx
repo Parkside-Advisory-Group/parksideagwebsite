@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { track } from "@vercel/analytics";
 import { IntakeSubmission } from "../lib/schemas/intake.schema";
 
 interface GrowthAuditFormState {
@@ -49,6 +50,7 @@ export function GrowthAuditForm() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
+    track("snapshot_form_submit_attempt", { source: "snapshot" });
     setPhase("submitting");
     setErrorMessage("");
 
@@ -86,13 +88,16 @@ export function GrowthAuditForm() {
       const payload = (await response.json()) as { errors?: string[] };
 
       if (!response.ok) {
+        track("snapshot_form_submit_error", { source: "snapshot", reason: "api_validation" });
         setErrorMessage(payload.errors?.join(" ") ?? "The submission could not be completed. Please try again.");
         setPhase("error");
         return;
       }
 
+      track("snapshot_form_submit_success", { source: "snapshot" });
       setPhase("success");
     } catch {
+      track("snapshot_form_submit_error", { source: "snapshot", reason: "network" });
       setErrorMessage("Something went wrong. Please try again or email info@parksideag.com.");
       setPhase("error");
     }

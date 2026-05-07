@@ -160,15 +160,15 @@ export const fieldNotes: FieldNote[] = [
       "If reporting hurts every week, fix the information path before asking AI to make prettier summaries."
   },
   {
-    slug: "what-is-ai-operations-blueprint-audit",
-    title: "What Parkside Means by an AI Operations Blueprint Audit.",
+    slug: "what-is-ai-workflow-savings-snapshot",
+    title: "What Parkside Means by an AI Workflow Savings Snapshot.",
     description:
-      "The Blueprint Audit maps one workflow, identifies where work stalls, and recommends the first practical build.",
+      "The free Snapshot reviews one workflow, identifies where work stalls, and recommends the first practical next step.",
     date: "2026-05-10",
-    category: "Blueprint Audit",
+    category: "Free Snapshot",
     readTime: "4 min read",
     intro:
-      "The AI Operations Blueprint Audit is not a generic software recommendation. It is a focused review of one painful workflow and the practical operating system that should come next.",
+      "The AI Workflow Savings Snapshot is not a generic software recommendation. It is a focused, free review of one painful workflow and the practical operating system that may be worth building next.",
     sections: [
       {
         heading: "The audit starts with the real path of work.",
@@ -186,7 +186,7 @@ export const fieldNotes: FieldNote[] = [
       }
     ],
     takeaway:
-      "The Blueprint Audit gives the business a practical next step instead of another vague AI conversation."
+      "The Snapshot gives the business a practical next step instead of another vague AI conversation."
   }
 ];
 

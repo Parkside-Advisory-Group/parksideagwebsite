@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { track } from "@vercel/analytics";
 
 interface IntakeFormState {
   name: string;
@@ -51,6 +52,7 @@ export function IntakeAdvisor() {
 
   async function submitIntake(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
+    track("snapshot_form_submit_attempt", { source: "intake-advisor" });
     setStatus("Preparing the Snapshot intake...");
     setSummary("");
 
@@ -62,10 +64,12 @@ export function IntakeAdvisor() {
     const payload = (await response.json()) as { errors?: string[]; record?: { internal_summary: string } };
 
     if (!response.ok) {
+      track("snapshot_form_submit_error", { source: "intake-advisor", reason: "api_validation" });
       setStatus(payload.errors?.join(" ") ?? "The intake could not be submitted.");
       return;
     }
 
+    track("snapshot_form_submit_success", { source: "intake-advisor" });
     setStatus("Snapshot request received. Parkside will review the workflow and follow up with the report or next question.");
     setSummary(payload.record?.internal_summary ?? "");
   }

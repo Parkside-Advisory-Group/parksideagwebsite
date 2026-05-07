@@ -12,7 +12,7 @@ These instructions apply to all code generation, refactoring, and review work in
 
 ## Project Rules
 
-- Keep `current-site/` intact as the original static prototype unless explicitly asked otherwise.
+- `current-site/` was intentionally removed after the Snapshot-funnel clean sweep; use `source-docs/` and current app code as references.
 - Treat `source-docs/` as the brand source of truth. The actual folder is `source-docs/guidelines/`.
 - Do not publicly describe Parkside as small, solo, boutique, freelancer, side project, beta, experimental, or new.
 - Do not publish fixed pricing.

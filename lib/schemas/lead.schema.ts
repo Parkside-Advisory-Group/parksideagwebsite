@@ -55,8 +55,8 @@ export interface IntakeRecord {
   follow_up_notes: string;
   /** Entry point that generated this record. e.g. "growth-audit" */
   source?: string;
-  /** Team size, captured by the Growth Audit form. */
+  /** Team size, captured by the Snapshot form. */
   team_size?: string;
-  /** What prompted the prospect to explore AI or systems now — Growth Audit context field. */
+  /** What prompted the prospect to explore AI or systems now — Snapshot context field. */
   growth_context?: string;
 }

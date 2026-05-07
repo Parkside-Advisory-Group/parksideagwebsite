@@ -218,7 +218,7 @@ export default function AboutPage() {
             <p className="lede">
               Parkside works with businesses that need better intake, follow-up, reporting visibility, and internal
               handoffs. Engagements can be run remotely across the United States, with regional relevance for operators
-              in Charlotte, North Carolina, and the broader Carolinas market.
+              in Northwest Indiana, Greater Chicagoland, and the broader Midwest market.
             </p>
             <p className="lede">
               The first step is usually the free AI Workflow Savings Snapshot: a lightweight review of one recurring

@@ -15,11 +15,11 @@ export interface IntakeSubmission {
   desiredOutcome: string;
   urgency: string;
   permissionToFollowUp: boolean;
-  /** Identifies the intake entry point. Use "growth-audit" for the Growth Audit form. */
+  /** Identifies the intake entry point. Use "growth-audit" for the Snapshot form. */
   source?: string;
-  /** Team size — captured by the Growth Audit form. */
+  /** Team size — captured by the Snapshot form. */
   teamSize?: string;
-  /** What prompted the prospect to explore AI or systems now — Growth Audit context field. */
+  /** What prompted the prospect to explore AI or systems now — Snapshot context field. */
   growthContext?: string;
 }
 

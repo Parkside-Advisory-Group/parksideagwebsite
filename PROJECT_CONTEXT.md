@@ -2,30 +2,16 @@
 
 This project is for Parkside Advisory Group.
 
-The goal is to create a launchable proof-of-concept website and conversational AI intake flow for selling AI operations consulting, workflow automation, and AI agent implementation services.
+The goal is to create a launchable conversion site and intake flow for the baseline path:
 
-The current website prototype is located in /current-site.
-
-The current prototype is a static HTML/CSS/JS site. Preserve the original files before refactoring. Use the current prototype as design/reference material, not sacred code.
-
-Brand source files are located in /source-docs.
-
-The source-docs folder contains brand guidance, logos, marks, wordmarks, icons, and other design assets. Treat these as the source of truth for visual identity.
-
-The first monetized offer should likely be:
-
-AI Operations Blueprint
-
-This offer diagnoses a client’s recurring workflow pain, identifies automation opportunities, and recommends a practical implementation roadmap.
-
-The site should also support future offers:
-
-1. AI Operations Blueprint
-2. Workflow Automation Sprint
-3. AI Agent Build
+1. Free AI Workflow Savings Snapshot
+2. Paid AI Operations Blueprint
+3. Workflow Automation Sprint / AI Agent Build
 4. AI Operations Retainer
 
-Pricing should not be public yet. Pricing should remain behind intake/discovery because scope depends on client needs.
+Brand source files are located in `/source-docs`.
+
+The source-docs folder contains brand guidance, logos, marks, wordmarks, icons, and other design assets. Treat these as the source of truth for visual identity.
 
 The website should feel premium, credible, operationally sharp, and high-touch without explicitly saying the business is small, solo, boutique, early-stage, or experimental.
 
@@ -53,8 +39,10 @@ The public tone should feel:
 
 The build should prioritize:
 
-- speed to launch
+- Snapshot requests
 - clean architecture
+- conversion-focused copy
+- analytics instrumentation
 - conversational intake
 - lead qualification
 - client trust
@@ -73,8 +61,8 @@ Do not overbuild:
 
 Primary website conversion goal:
 
-Start an AI Operations Blueprint
+Get the Free AI Workflow Savings Snapshot request.
 
 Secondary conversion goal:
 
-Explore Use Cases
+Educate the visitor enough to understand the Snapshot → Blueprint → implementation path.

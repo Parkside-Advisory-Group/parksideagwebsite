@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { JsonLd } from "../components/JsonLd";
 import { HomeHeroVisualLoader } from "../components/HomeHeroVisualLoader";
+import { TrackedLink } from "../components/TrackedLink";
 import { primaryCta } from "../lib/content";
 import { fieldNotes } from "../lib/field-notes";
 import { createRouteMetadata } from "../lib/metadata";
@@ -16,9 +17,9 @@ import {
 } from "../lib/structured-data";
 
 export const metadata: Metadata = createRouteMetadata({
-  title: "Parkside Advisory Group | AI Automation for Business Workflows",
+  title: "Free AI Workflow Savings Snapshot | Parkside Advisory Group",
   description:
-    "Parkside helps businesses turn missed follow-up and manual work into clear operating systems with practical AI and automation.",
+    "Get a free AI Workflow Savings Snapshot for one messy business process. Parkside identifies handoff leaks, manual-work drag, and the first practical AI automation opportunity.",
   path: "/"
 });
 
@@ -37,7 +38,8 @@ const problemPoints: string[] = [
   "New leads sit in an inbox until someone remembers to reply",
   "Estimates age out because no one owns the next follow-up",
   "Customer updates depend on texts, memory, and side conversations",
-  "Weekly reporting means rebuilding the same spreadsheet again"
+  "Weekly reporting means rebuilding the same spreadsheet again",
+  "AI tools get tested once, then abandoned because no workflow owns them"
 ];
 
 const workflowStates: WorkflowState[] = [
@@ -143,14 +145,14 @@ export default function HomePage() {
         <div className="container hero-content home-hero-content">
           <div className="hero-copy">
             <p className="eyebrow light">Free AI Workflow Savings Snapshot</p>
-            <h1 className="page-title">See where manual work is costing time, leads, and attention.</h1>
+            <h1 className="page-title">Find the workflow leak before buying another AI tool.</h1>
             <p className="lede">
-              Share one workflow that feels messy, slow, or repetitive. Parkside sends back a practical Snapshot with
-              likely leaks, AI opportunities, and the first system worth considering.
+              Get a free AI Workflow Savings Snapshot for one messy, repetitive business process. Parkside reviews the
+              handoff, names likely leaks, and shows the first practical AI or automation opportunity.
             </p>
             <p className="hero-trust">
-              Built for project-based and service businesses that want a clear first look before committing to a deeper
-              AI Operations Blueprint.
+              No charge. No obligation. Built for small and mid-sized businesses that want useful AI without agency-bro
+              hype or a bloated transformation project.
             </p>
             <div className="hero-signal" aria-label="Common Parkside starting points">
               <span>Lead intake</span>
@@ -161,9 +163,14 @@ export default function HomePage() {
               <Link className="btn" href="/intake">
                 {primaryCta}
               </Link>
-              <Link className="btn secondary" href="#how-it-works">
+              <TrackedLink
+                className="btn secondary"
+                href="#how-it-works"
+                eventName="secondary_cta_click"
+                eventProperties={{ location: "home_hero", cta: "See How It Works" }}
+              >
                 See How It Works
-              </Link>
+              </TrackedLink>
             </div>
           </div>
           <HomeHeroVisualLoader />
@@ -175,7 +182,7 @@ export default function HomePage() {
         <div className="container split home-section-split">
           <div>
             <p className="eyebrow">The Problem</p>
-            <h2 className="section-title">The leak is usually in the handoff.</h2>
+            <h2 className="section-title">Most businesses do not have an AI problem. They have a handoff problem.</h2>
             <div className="home-editorial-image">
               <Image
                 src="/assets/DSC02953-2+Medium.jpeg.webp"
@@ -295,7 +302,7 @@ export default function HomePage() {
         <div className="container split home-section-split">
           <div>
             <p className="eyebrow">Primary Next Step</p>
-            <h2 className="section-title">Start with a free Snapshot, then decide if a full Blueprint is worth it.</h2>
+            <h2 className="section-title">The free Snapshot gives you a useful answer before you spend money.</h2>
             <div className="home-editorial-image">
               <Image
                 src="/assets/DSC07222.jpeg.webp"
@@ -379,9 +386,14 @@ export default function HomePage() {
           <h2 className="section-title">If the team is still chasing the same work every week, start with the Snapshot.</h2>
           <p className="lede">Share the workflow. See the likely leaks. Decide what is worth building next.</p>
           <div className="button-row">
-            <Link className="btn" href="/intake">
+            <TrackedLink
+              className="btn"
+              href="/intake"
+              eventName="snapshot_cta_click"
+              eventProperties={{ location: "home_final", cta: primaryCta }}
+            >
               {primaryCta}
-            </Link>
+            </TrackedLink>
           </div>
         </div>
       </section>

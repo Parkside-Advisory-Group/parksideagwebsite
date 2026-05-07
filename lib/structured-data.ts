@@ -73,8 +73,10 @@ export function createSitewideStructuredData(contactEmail: string): StructuredDa
         logo: `${siteUrl}/brand/icons/favicon.svg`,
         areaServed: [
           { "@type": "Country", name: "United States" },
-          { "@type": "City", name: "Charlotte" },
-          { "@type": "State", name: "North Carolina" }
+          { "@type": "City", name: "Crown Point" },
+          { "@type": "State", name: "Indiana" },
+          { "@type": "AdministrativeArea", name: "Northwest Indiana" },
+          { "@type": "AdministrativeArea", name: "Greater Chicagoland" }
         ]
       },
       {
@@ -98,6 +100,7 @@ export function createSitewideStructuredData(contactEmail: string): StructuredDa
         "@id": offerCatalogId,
         name: "Parkside AI Operations Services",
         itemListElement: [
+          { "@type": "Offer", price: 0, priceCurrency: "USD", itemOffered: { "@type": "Service", name: "Free AI Workflow Savings Snapshot" } },
           { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Operations Blueprint" } },
           { "@type": "Offer", itemOffered: { "@type": "Service", name: "Workflow Automation Sprint" } },
           { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Agent Build" } },

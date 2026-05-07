@@ -520,36 +520,49 @@ textarea {
 }
 
 .home-hero-visual {
-  aspect-ratio: 1;
-  filter: drop-shadow(0 30px 70px rgba(0, 0, 0, 0.24));
-  height: min(34vw, 480px);
-  opacity: 0.96;
+  aspect-ratio: 4 / 5;
+  filter: drop-shadow(0 34px 80px rgba(0, 0, 0, 0.34));
+  max-height: 560px;
+  opacity: 0.98;
   pointer-events: none;
   position: absolute;
-  right: clamp(-150px, -8vw, -82px);
+  right: clamp(-90px, -4vw, -24px);
   top: 52%;
   transform: translateY(-50%);
-  width: min(34vw, 480px);
+  width: min(38vw, 520px);
   z-index: 3;
 }
 
 .home-hero-visual-panel {
-  background:
-    linear-gradient(180deg, rgba(246, 241, 232, 0.14), rgba(246, 241, 232, 0.04)),
-    rgba(20, 18, 16, 0.44);
-  border: 1px solid rgba(246, 241, 232, 0.16);
-  box-shadow: inset 0 1px 0 rgba(246, 241, 232, 0.12);
-  display: grid;
-  gap: clamp(14px, 2vw, 22px);
-  inset: 5%;
-  padding: clamp(18px, 2.2vw, 30px);
+  border: 1px solid rgba(246, 241, 232, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(246, 241, 232, 0.22),
+    0 28px 80px rgba(0, 0, 0, 0.24);
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.home-hero-visual-panel img {
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.03);
+  width: 100%;
+}
+
+.home-hero-visual-overlay {
+  background: linear-gradient(180deg, rgba(20, 18, 16, 0.06), rgba(20, 18, 16, 0.82));
+  color: var(--cream);
+  display: flex;
+  flex-direction: column;
+  inset: 0;
+  justify-content: end;
+  padding: clamp(22px, 3vw, 34px);
   position: absolute;
 }
 
 .home-hero-visual-kicker,
-.home-hero-visual-footer,
-.home-hero-visual-number,
-.home-hero-visual-eyebrow {
+.home-hero-visual-chips span {
   font-family: var(--mono);
   font-size: 10px;
   font-weight: 700;
@@ -558,61 +571,30 @@ textarea {
 }
 
 .home-hero-visual-kicker {
-  color: rgba(246, 241, 232, 0.8);
+  color: var(--gold-light);
+  margin-bottom: 12px;
 }
 
-.home-hero-visual-rule {
-  background: linear-gradient(90deg, rgba(201, 167, 101, 0.72), rgba(246, 241, 232, 0.12), transparent);
-  height: 1px;
-}
-
-.home-hero-visual-grid {
-  display: grid;
-  gap: 10px;
-}
-
-.home-hero-visual-card {
-  background: rgba(246, 241, 232, 0.08);
-  border: 1px solid rgba(246, 241, 232, 0.14);
-  display: grid;
-  gap: 5px;
-  grid-template-columns: 38px 1fr;
-  padding: 13px 14px;
-}
-
-.home-hero-visual-card strong,
-.home-hero-visual-card > span:last-child {
-  grid-column: 2;
-}
-
-.home-hero-visual-card strong {
-  color: var(--cream);
+.home-hero-visual-overlay strong {
   font-family: var(--serif);
-  font-size: clamp(18px, 2vw, 24px);
+  font-size: clamp(25px, 3vw, 38px);
   font-weight: 500;
-  line-height: 1.05;
+  letter-spacing: -0.01em;
+  line-height: 1.02;
+  max-width: 420px;
 }
 
-.home-hero-visual-card > span:last-child {
-  color: rgba(246, 241, 232, 0.62);
-  font-size: 12px;
-  line-height: 1.35;
-}
-
-.home-hero-visual-number {
-  color: var(--gold);
-  grid-row: 1 / span 3;
-}
-
-.home-hero-visual-eyebrow {
-  color: rgba(246, 241, 232, 0.54);
-}
-
-.home-hero-visual-footer {
-  color: rgba(246, 241, 232, 0.54);
+.home-hero-visual-chips {
   display: flex;
-  gap: 14px;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.home-hero-visual-chips span {
+  border: 1px solid rgba(246, 241, 232, 0.24);
+  color: rgba(246, 241, 232, 0.82);
+  padding: 8px 10px;
 }
 
 .home-section-split {
@@ -1922,10 +1904,9 @@ textarea {
   }
 
   .home-hero-visual {
-    height: min(34vw, 360px);
-    opacity: 0.58;
-    right: -104px;
-    width: min(34vw, 360px);
+    opacity: 0.52;
+    right: -86px;
+    width: min(36vw, 380px);
   }
 }
 
@@ -2000,28 +1981,19 @@ textarea {
 
   .home-hero-visual {
     bottom: 22px;
-    height: min(52vw, 280px);
-    opacity: 0.42;
+    opacity: 0.34;
     pointer-events: none;
     right: -54px;
     top: auto;
     transform: none;
-    width: min(52vw, 280px);
+    width: min(58vw, 300px);
   }
 
-  .home-hero-visual-panel {
-    gap: 10px;
-    padding: 16px;
+  .home-hero-visual-overlay {
+    padding: 18px;
   }
 
-  .home-hero-visual-card {
-    gap: 3px;
-    grid-template-columns: 28px 1fr;
-    padding: 9px 10px;
-  }
-
-  .home-hero-visual-card > span:last-child,
-  .home-hero-visual-footer {
+  .home-hero-visual-chips {
     display: none;
   }
 
