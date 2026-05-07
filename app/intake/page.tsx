@@ -38,8 +38,8 @@ export default function IntakePage() {
             <h1 className="page-title">Request your free Snapshot.</h1>
             <p className="lede">
               Share the workflow that feels manual, repetitive, or hard to keep up with. Parkside will organize the
-              context, identify likely leaks, and send a practical Snapshot without quoting final pricing or making
-              implementation promises before discovery.
+              context, identify likely leaks, and send a practical Snapshot at no charge and with no obligation to
+              move forward.
             </p>
             <div className="intake-proof-panel" aria-label="What happens after submitting the intake">
               <p className="eyebrow">What happens next</p>
