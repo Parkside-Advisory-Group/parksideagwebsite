@@ -187,6 +187,35 @@ export const fieldNotes: FieldNote[] = [
     ],
     takeaway:
       "The Snapshot gives the business a practical next step instead of another vague AI conversation."
+  },
+  {
+    slug: "ai-readiness-is-a-workflow-score-not-a-certificate",
+    title: "AI Readiness Is a Workflow Score, Not a Certificate.",
+    description:
+      "A useful AI readiness check looks for repeat volume, ownership, examples, tools, impact, and human review before recommending automation.",
+    date: "2026-05-20",
+    category: "AI Readiness",
+    readTime: "4 min read",
+    intro:
+      "A business does not become AI-ready because it says the right words or buys the newest tool. Readiness shows up in the work: a repeated process, a clear owner, accessible examples, current tools, business impact, and a human review path.",
+    sections: [
+      {
+        heading: "The best first target is repeated and visible.",
+        body: [
+          "If a workflow happens daily or weekly, the business has enough signal to inspect it. If it touches revenue, response time, customer trust, management visibility, or team capacity, it may be worth improving.",
+          "Parkside looks for the operating facts before the software recommendation: what starts the work, who owns it, where information lives, where it stalls, and what happens when something is uncertain."
+        ]
+      },
+      {
+        heading: "Readiness is not the same as automation.",
+        body: [
+          "Some workflows should become an automation, some should become a checklist, some need a reporting view, and some need ownership clarified before AI touches them.",
+          "That is why Parkside uses a Snapshot and opportunity estimator instead of a certificate. The goal is not a badge. The goal is knowing the next practical move."
+        ]
+      }
+    ],
+    takeaway:
+      "Before asking if a business is AI-ready, ask whether one important workflow is repeated, owned, example-backed, tool-visible, and safe to improve."
   }
 ];
 

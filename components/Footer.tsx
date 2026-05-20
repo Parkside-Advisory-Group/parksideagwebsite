@@ -39,6 +39,7 @@ export function Footer() {
           <div>
             <div className="footer-heading">Next Step</div>
             <Link href="/intake">{primaryCta}</Link>
+            <Link href="/opportunity-estimator">Estimate the Opportunity</Link>
             <Link href="/use-cases">{tertiaryCta}</Link>
           </div>
         </div>

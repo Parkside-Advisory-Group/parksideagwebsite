@@ -165,11 +165,11 @@ export default function HomePage() {
               </Link>
               <TrackedLink
                 className="btn secondary"
-                href="#how-it-works"
+                href="/opportunity-estimator"
                 eventName="secondary_cta_click"
-                eventProperties={{ location: "home_hero", cta: "See How It Works" }}
+                eventProperties={{ location: "home_hero", cta: "Estimate the Opportunity" }}
               >
-                See How It Works
+                Estimate the Opportunity
               </TrackedLink>
             </div>
           </div>
@@ -326,6 +326,27 @@ export default function HomePage() {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      <section className="section home-estimator-section">
+        <div className="container split home-section-split">
+          <div>
+            <p className="eyebrow">Opportunity Estimator</p>
+            <h2 className="section-title">Not sure if the workflow is ready? Score it before the call.</h2>
+          </div>
+          <div className="panel">
+            <p>
+              Parkside now has a lightweight estimator for the same questions a good first conversation should answer:
+              repeat volume, owner, tools, recent examples, business impact, and urgency. It points the visitor toward a
+              Snapshot, a deeper Blueprint conversation, or preparation before automation.
+            </p>
+            <div className="button-row">
+              <Link className="btn ghost" href="/opportunity-estimator">
+                Estimate the Opportunity
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 

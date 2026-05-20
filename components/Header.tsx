@@ -14,6 +14,7 @@ interface NavigationItem {
 const navigationItems: NavigationItem[] = [
   { href: "/services", label: "Services" },
   { href: "/blueprint", label: "Free Snapshot" },
+  { href: "/opportunity-estimator", label: "Estimator" },
   { href: "/use-cases", label: "Use Cases" },
   { href: "/field-notes", label: "Field Notes" },
   { href: "/about", label: "About" }

@@ -893,7 +893,8 @@ textarea {
 }
 
 .home-ai-fit-section,
-.home-enable-section {
+.home-enable-section,
+.home-estimator-section {
   background:
     linear-gradient(90deg, rgba(238, 231, 215, 0.72), rgba(255, 255, 255, 0.72) 42%, var(--paper)),
     var(--paper);
@@ -901,7 +902,8 @@ textarea {
 }
 
 .home-ai-fit-section::before,
-.home-enable-section::before {
+.home-enable-section::before,
+.home-estimator-section::before {
   background: linear-gradient(90deg, transparent, rgba(176, 138, 62, 0.32), transparent);
   content: "";
   height: 1px;
@@ -1584,14 +1586,17 @@ textarea {
     linear-gradient(180deg, #171410, var(--dark));
 }
 
-.intake-shell {
+.intake-shell,
+.estimator-shell {
   display: grid;
   gap: 24px;
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   align-items: start;
 }
 
-.intake-form {
+.intake-form,
+.estimator-form,
+.estimator-result {
   background: rgba(255, 255, 255, 0.86);
   border: 1px solid rgba(26, 22, 19, 0.1);
   box-shadow: var(--shadow-soft);
@@ -1600,7 +1605,8 @@ textarea {
   padding: clamp(22px, 4vw, 36px);
 }
 
-.form-section {
+.form-section,
+.estimator-section {
   background: rgba(246, 241, 232, 0.48);
   border: 1px solid rgba(26, 22, 19, 0.09);
   display: grid;
@@ -1613,7 +1619,8 @@ textarea {
   padding-bottom: 15px;
 }
 
-.form-section h2 {
+.form-section h2,
+.estimator-section h2 {
   font-family: var(--serif);
   font-size: clamp(24px, 3vw, 30px);
   font-weight: 500;
@@ -1846,6 +1853,146 @@ textarea {
   }
 }
 
+.estimator-intro-section {
+  background: linear-gradient(180deg, var(--cream), var(--cream-deep));
+}
+
+.estimator-section-fields {
+  display: grid;
+  gap: 18px;
+}
+
+.estimator-fieldset {
+  border: 0;
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.estimator-fieldset legend {
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.option-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.checkbox-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.option-card {
+  align-items: flex-start;
+  background: rgba(255, 255, 255, 0.66);
+  border: 1px solid rgba(26, 22, 19, 0.09);
+  color: var(--ink-soft);
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+  min-height: 56px;
+  padding: 13px 14px;
+  transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.option-card:hover {
+  background: var(--paper);
+  border-color: rgba(122, 31, 43, 0.22);
+  box-shadow: 0 12px 26px rgba(26, 22, 19, 0.07);
+  transform: translateY(-1px);
+}
+
+.option-card input {
+  accent-color: var(--burgundy);
+  margin-top: 4px;
+}
+
+.option-card span {
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.estimator-result {
+  position: sticky;
+  top: calc(var(--nav-height) + 24px);
+}
+
+.estimator-score {
+  align-items: center;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  gap: 16px;
+  padding-bottom: 18px;
+}
+
+.estimator-score span {
+  align-items: center;
+  background: var(--burgundy);
+  color: #fffaf0;
+  display: inline-flex;
+  font-family: var(--mono);
+  font-size: 24px;
+  font-weight: 700;
+  height: 64px;
+  justify-content: center;
+  width: 64px;
+}
+
+.estimator-score strong,
+.estimator-result h2,
+.estimator-placeholder h2 {
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: clamp(26px, 3vw, 36px);
+  font-weight: 500;
+  line-height: 1.08;
+  margin: 0;
+}
+
+.estimator-result p,
+.estimator-placeholder p {
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.estimator-result ul {
+  background: var(--cream);
+  border: 1px solid var(--rule);
+  display: grid;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.estimator-result li {
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-soft);
+  font-size: 15px;
+  padding: 13px 16px;
+}
+
+.estimator-result li:last-child {
+  border-bottom: 0;
+}
+
+.estimator-disclaimer {
+  border-left: 3px solid var(--gold);
+  font-size: 13px;
+  padding-left: 13px;
+}
+
+.estimator-placeholder {
+  display: grid;
+  gap: 14px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -1953,11 +2100,13 @@ textarea {
   .evidence-grid,
   .guardrail-layout,
   .intake-shell,
+  .estimator-shell,
   .footer-grid {
     grid-template-columns: 1fr;
   }
 
-  .field-grid {
+  .field-grid,
+  .option-grid {
     grid-template-columns: 1fr;
   }
 
