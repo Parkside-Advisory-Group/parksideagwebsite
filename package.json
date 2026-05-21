@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint . --max-warnings=0",
     "monitor:canonical-host": "node scripts/verify-canonical-host.mjs",
+    "test": "tsx --test tests/*.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -23,6 +24,7 @@
     "@types/react-dom": "19.2.3",
     "eslint": "9.39.2",
     "eslint-config-next": "16.2.6",
+    "tsx": "^4.22.3",
     "typescript": "6.0.3"
   },
   "overrides": {
