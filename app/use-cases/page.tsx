@@ -13,7 +13,8 @@ import {
 
 export const metadata: Metadata = createRouteMetadata({
   title: "Use Cases",
-  description: "Practical AI and automation use cases for repeated business workflows.",
+  description:
+    "Six practical AI automation use cases for small and mid-sized businesses: client intake, estimate follow-up, reporting visibility, internal handoffs, document drafting, and workflow triage.",
   path: "/use-cases"
 });
 
@@ -151,10 +152,13 @@ export default function UseCasesPage() {
             ))}
           </ul>
         </div>
-        <div className="container button-row">
-          <Link className="btn" href="/intake">
-            {primaryCta}
-          </Link>
+        <div className="container">
+          <div className="button-row">
+            <Link className="btn" href="/intake">
+              {primaryCta}
+            </Link>
+          </div>
+          <p className="cta-assurance">One workflow · Free report · Reply within 1–2 business days</p>
         </div>
       </section>
     </main>

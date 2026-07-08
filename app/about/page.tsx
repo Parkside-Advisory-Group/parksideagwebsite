@@ -22,11 +22,11 @@ export const metadata: Metadata = createRouteMetadata({
 const profileUrl = "https://www.linkedin.com/in/anthonymora1/";
 
 const operatingProof = [
-  "10+ years in project controls, cost management, forecasting, executive reporting, and financial accountability",
-  "Experience supporting large utility and energy infrastructure programs, including capital work exceeding $500M",
-  "Budget development, baseline establishment, accrual tracking, variance analysis, and EAC/ETC forecasting",
-  "Reporting workflows using Power BI, Excel, SAP/Oracle data, KPIs, S-curves, earned value, and executive dashboards",
-  "Operating work across change control, risk review, cash flow, project status, and leadership decision support"
+  "10+ years in project controls, cost management, forecasting, and executive reporting — work where a missed handoff shows up as real money",
+  "Supported large utility and energy infrastructure programs, including capital work exceeding $500M",
+  "Budgets, baselines, variance analysis, and cost forecasting — the discipline of knowing exactly where work stands",
+  "Reporting systems built from Power BI, Excel, and SAP/Oracle data, turning raw exports into dashboards leadership actually used",
+  "Change control, risk review, cash flow, and status reporting that executive decisions depended on"
 ];
 
 const methodPoints = [
@@ -229,6 +229,7 @@ export default function AboutPage() {
                 {primaryCta}
               </Link>
             </div>
+            <p className="cta-assurance">Reviewed personally · Reply within 1–2 business days · No obligation</p>
           </div>
         </div>
       </section>

@@ -1,0 +1,383 @@
+/* ── Live instruments: workflow diagnostic + intake telemetry ───────── */
+
+.process-instrument {
+  margin-top: clamp(30px, 4vw, 46px);
+  max-width: 460px;
+}
+
+.home-hero-visual {
+  width: 100%;
+}
+
+.hhv .hhv-panel {
+  background: linear-gradient(180deg, rgba(26, 21, 16, 0.85), rgba(20, 18, 16, 0.96));
+  border: 1px solid rgba(246, 241, 232, 0.16);
+  box-shadow: inset 0 1px 0 rgba(246, 241, 232, 0.1), 0 30px 80px rgba(0, 0, 0, 0.3);
+  color: var(--cream);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2.4vw, 24px);
+  height: 100%;
+  padding: clamp(22px, 3vw, 32px);
+  position: relative;
+}
+
+.hhv .hhv-panel::before {
+  border-left: 1px solid rgba(201, 167, 101, 0.7);
+  border-top: 1px solid rgba(201, 167, 101, 0.7);
+  content: "";
+  height: 10px;
+  left: 7px;
+  position: absolute;
+  top: 7px;
+  width: 10px;
+}
+
+.hhv-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.hhv-kicker {
+  align-items: center;
+  color: var(--gold-light);
+  display: inline-flex;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  gap: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.hhv-dot {
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(201, 167, 101, 0.55);
+  height: 6px;
+  width: 6px;
+}
+
+.hhv-dot-live {
+  animation: hhvPulseDot 2.6s var(--ease-cinematic) infinite;
+}
+
+.hhv-ref {
+  color: rgba(246, 241, 232, 0.5);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+}
+
+.hhv-title {
+  font-family: var(--serif);
+  font-size: clamp(21px, 2.5vw, 27px);
+  font-weight: 440;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+  margin: 0;
+  max-width: 16ch;
+}
+
+.hhv-trace {
+  flex: 1;
+  padding-left: 4px;
+  position: relative;
+}
+
+.hhv-trace-line {
+  background: linear-gradient(180deg, var(--gold-light), rgba(176, 138, 62, 0.15));
+  bottom: 7px;
+  left: 9px;
+  position: absolute;
+  top: 7px;
+  transform-origin: top center;
+  width: 1.5px;
+}
+
+.hhv-stages {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  height: 100%;
+  justify-content: space-between;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.hhv-stage {
+  align-items: center;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 20px 1fr auto;
+}
+
+.hhv-node {
+  background: var(--dark);
+  border: 1.5px solid rgba(201, 167, 101, 0.7);
+  border-radius: 50%;
+  height: 11px;
+  justify-self: center;
+  position: relative;
+  width: 11px;
+}
+
+.hhv-stage-leak .hhv-node {
+  background: var(--burgundy);
+  border-color: var(--gold-light);
+  box-shadow: 0 0 14px 1px rgba(122, 31, 43, 0.9);
+}
+
+.hhv-node-ring {
+  border: 1.5px solid rgba(201, 167, 101, 0.6);
+  border-radius: 50%;
+  inset: -4px;
+  position: absolute;
+}
+
+.hhv-stage-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hhv-stage-label {
+  color: rgba(246, 241, 232, 0.95);
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.hhv-stage-status {
+  color: rgba(246, 241, 232, 0.52);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.hhv-stage-leak .hhv-stage-status {
+  color: var(--gold-light);
+}
+
+.hhv-flag {
+  background: rgba(122, 31, 43, 0.32);
+  border: 1px solid rgba(201, 167, 101, 0.4);
+  color: var(--gold-light);
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  padding: 4px 8px;
+  text-transform: uppercase;
+}
+
+.hhv-readouts {
+  border-top: 1px solid var(--rule-light);
+  display: flex;
+  gap: 20px;
+  padding-top: clamp(14px, 2vw, 18px);
+}
+
+.hhv-readout {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hhv-readout-label {
+  color: rgba(246, 241, 232, 0.5);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.hhv-readout-value {
+  color: var(--gold-light);
+  font-family: var(--serif);
+  font-size: 15px;
+}
+
+.hhv-meter {
+  background: rgba(246, 241, 232, 0.12);
+  height: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.hhv-meter-fill {
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  display: block;
+  height: 100%;
+  transform-origin: left center;
+}
+
+/* ── Intake telemetry (IntakeAdvisor side panel) ────────────────────── */
+
+.intake-diag {
+  background: linear-gradient(180deg, rgba(26, 21, 16, 0.8), rgba(20, 18, 16, 0.95));
+  border: 1px solid rgba(246, 241, 232, 0.14);
+  box-shadow: inset 0 1px 0 rgba(246, 241, 232, 0.1), 0 18px 48px rgba(26, 22, 19, 0.16);
+  color: var(--cream);
+  display: grid;
+  gap: 16px;
+  padding: clamp(18px, 3vw, 24px);
+  position: relative;
+  transition: border-color 300ms var(--ease-cinematic);
+}
+
+.intake-diag::before {
+  border-left: 1px solid rgba(201, 167, 101, 0.7);
+  border-top: 1px solid rgba(201, 167, 101, 0.7);
+  content: "";
+  height: 9px;
+  left: 6px;
+  position: absolute;
+  top: 6px;
+  width: 9px;
+}
+
+.intake-diag[data-phase="received"] {
+  border-color: rgba(201, 167, 101, 0.5);
+}
+
+.intake-diag-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.intake-diag-kicker {
+  align-items: center;
+  color: var(--gold-light);
+  display: inline-flex;
+  font-family: var(--mono);
+  font-size: 10px;
+  gap: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.intake-diag-dot {
+  background: var(--gold);
+  border-radius: 50%;
+  height: 6px;
+  width: 6px;
+}
+
+.intake-diag-dot-live {
+  animation: hhvPulseDot 2.6s var(--ease-cinematic) infinite;
+}
+
+.intake-diag-ref {
+  color: rgba(246, 241, 232, 0.55);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.intake-diag-meters {
+  display: grid;
+  gap: 12px;
+}
+
+.intake-diag-meter {
+  display: grid;
+  gap: 6px;
+}
+
+.intake-diag-meter-top {
+  align-items: baseline;
+  display: flex;
+  font-family: var(--mono);
+  font-size: 11px;
+  justify-content: space-between;
+  letter-spacing: 0.08em;
+}
+
+.intake-diag-meter-label {
+  color: rgba(246, 241, 232, 0.72);
+  text-transform: uppercase;
+}
+
+.intake-diag-meter-note {
+  color: var(--gold-light);
+}
+
+.intake-diag-track {
+  background: rgba(246, 241, 232, 0.12);
+  display: block;
+  height: 5px;
+  overflow: hidden;
+}
+
+.intake-diag-fill {
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  display: block;
+  height: 100%;
+  min-width: 3%;
+}
+
+.intake-diag-signals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  min-height: 26px;
+}
+
+.intake-diag-signal {
+  background: rgba(201, 167, 101, 0.1);
+  border: 1px solid rgba(201, 167, 101, 0.34);
+  color: rgba(246, 241, 232, 0.9);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  padding: 5px 9px;
+}
+
+.intake-diag-empty {
+  color: rgba(246, 241, 232, 0.45);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+
+.intake-diag-scan {
+  border-top: 1px solid var(--rule-light);
+  display: grid;
+  gap: 8px;
+  overflow: hidden;
+  padding-top: 14px;
+}
+
+.intake-diag-scan-label {
+  color: var(--gold-light);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.intake-diag-scan-bar {
+  background: rgba(246, 241, 232, 0.12);
+  height: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.intake-diag-scan-bar span {
+  background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+  inset: 0;
+  position: absolute;
+  width: 40%;
+}
+
+.intake-diag-scan-bar-live span {
+  animation: intakeScan 1.2s var(--ease-cinematic) infinite;
+}

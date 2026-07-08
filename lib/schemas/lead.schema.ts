@@ -33,6 +33,8 @@ export interface LeadSummary {
 
 export interface IntakeRecord {
   id: string;
+  /** Parkside correlation ID used across intake, review, and follow-up. */
+  correlation_id: string;
   created_at: string;
   name: string;
   email: string;

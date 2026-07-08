@@ -12,6 +12,14 @@ export interface IntakeGuidanceResult {
   guardrails: string[];
 }
 
+function formatCorrelationDate(isoDate: string): string {
+  return isoDate.slice(0, 10).replace(/-/g, "");
+}
+
+function buildCorrelationId(createdAt: string, recordId: string): string {
+  return `PS-INTAKE-${formatCorrelationDate(createdAt)}-${recordId.slice(0, 4).toUpperCase()}`;
+}
+
 function categorizeWorkflow(submission: IntakeSubmission): string {
   const text = `${submission.primaryPain} ${submission.currentProcess} ${submission.toolsUsed}`.toLowerCase();
 
@@ -87,8 +95,9 @@ export function buildLeadSummary(submission: IntakeSubmission): LeadSummary {
 /**
  * Formats a lead summary for internal review and notification emails.
  */
-export function formatInternalSummary(summary: LeadSummary): string {
+export function formatInternalSummary(summary: LeadSummary, correlationId?: string): string {
   const lines = [
+    correlationId ? `Correlation ID: ${correlationId}` : undefined,
     `Prospect: ${summary.prospect}`,
     `Business: ${summary.business}`,
     `Contact: ${summary.contact}`,
@@ -106,7 +115,7 @@ export function formatInternalSummary(summary: LeadSummary): string {
     `Recommended offer: ${summary.recommendedOffer}`,
     `Recommended follow-up: ${summary.recommendedFollowUp}`,
     `Risks/notes: ${summary.risksAndNotes.join(" ")}`
-  ];
+  ].filter(Boolean);
   return lines.join("\n");
 }
 
@@ -115,10 +124,15 @@ export function formatInternalSummary(summary: LeadSummary): string {
  */
 export async function createIntakeRecord(submission: IntakeSubmission): Promise<IntakeRecord> {
   const guidance = await generateIntakeGuidance(submission);
+  const id = crypto.randomUUID();
+  const createdAt = new Date().toISOString();
+  const correlationId = buildCorrelationId(createdAt, id);
+  const recommendedFollowUp = `Correlation ID: ${correlationId} | ${guidance.summary.recommendedFollowUp}`;
 
   return {
-    id: crypto.randomUUID(),
-    created_at: new Date().toISOString(),
+    id,
+    correlation_id: correlationId,
+    created_at: createdAt,
     name: submission.name,
     email: submission.email,
     phone: submission.phone,
@@ -135,9 +149,9 @@ export async function createIntakeRecord(submission: IntakeSubmission): Promise<
     urgency: submission.urgency,
     lead_score: guidance.summary.leadScore,
     lead_tier: guidance.summary.leadTier,
-    internal_summary: guidance.internalSummary,
+    internal_summary: formatInternalSummary(guidance.summary, correlationId),
     status: "new",
-    follow_up_notes: guidance.summary.recommendedFollowUp,
+    follow_up_notes: recommendedFollowUp,
     source: submission.source,
     team_size: submission.teamSize,
     growth_context: submission.growthContext

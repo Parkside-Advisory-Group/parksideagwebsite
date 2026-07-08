@@ -28,6 +28,57 @@ const blueprintService = {
   url: `${siteUrl}/blueprint`
 };
 
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+const faqItems: FaqItem[] = [
+  {
+    question: "How much does the AI Workflow Savings Snapshot cost?",
+    answer:
+      "Nothing. The Snapshot is free, with no obligation. The paid AI Operations Blueprint is a separate next step, and it only makes sense when the Snapshot shows a workflow worth mapping."
+  },
+  {
+    question: "What do I get in the Snapshot?",
+    answer:
+      "A short report on one recurring workflow: a leak summary showing where work appears to stall, three practical AI or automation opportunities ranked by value, a first-system recommendation with the smallest useful scope, and readiness notes with follow-up questions."
+  },
+  {
+    question: "How long does it take?",
+    answer:
+      "The intake form takes about ten minutes. Every request is reviewed personally, and you hear back within one to two business days with initial observations and a proposed next step."
+  },
+  {
+    question: "Do you need access to our systems?",
+    answer:
+      "No. The Snapshot works entirely from your intake answers. Never share passwords, API keys, or login credentials — the intake form rejects them by design."
+  },
+  {
+    question: "Which workflows fit best?",
+    answer:
+      "Workflows that repeat daily or weekly, have a clear owner, come with real examples, and carry business impact — lead intake, estimate follow-up, customer updates, manual reporting, and internal handoffs are common starting points."
+  },
+  {
+    question: "What happens after the Snapshot?",
+    answer:
+      "If the opportunity is real, the next step is a paid AI Operations Blueprint that maps the build, then a scoped implementation. If the workflow is not ready, the Snapshot says so and names what to fix first."
+  }
+];
+
+const faqStructuredData = {
+  "@type": "FAQPage",
+  "@id": `${siteUrl}/blueprint#faq`,
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer
+    }
+  }))
+};
+
 const structuredData = createPageStructuredData({
   id: `${siteUrl}/blueprint#webpage`,
   path: "/blueprint",
@@ -35,7 +86,7 @@ const structuredData = createPageStructuredData({
   description: "The free report that identifies likely workflow leaks and the first practical AI opportunity.",
   breadcrumbItems: createPageBreadcrumbItems("Free AI Workflow Savings Snapshot", "/blueprint"),
   mainEntity: referenceNode(`${siteUrl}/blueprint#ai-operations-blueprint`),
-  extraNodes: [blueprintService]
+  extraNodes: [blueprintService, faqStructuredData]
 });
 
 export default function BlueprintPage() {
@@ -262,6 +313,21 @@ export default function BlueprintPage() {
               ))}
             </ul>
           </div>
+        </div>
+      </section>
+
+      <section className="section faq-band">
+        <div className="container">
+          <p className="eyebrow">Common Questions</p>
+          <h2 className="section-title">Questions operators usually ask first.</h2>
+          <dl className="faq-list">
+            {faqItems.map((item) => (
+              <div className="faq-item" key={item.question}>
+                <dt>{item.question}</dt>
+                <dd>{item.answer}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 

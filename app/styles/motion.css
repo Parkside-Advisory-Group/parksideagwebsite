@@ -1,0 +1,175 @@
+/* ── Motion: keyframes, scroll-driven reveals, reduced-motion floor ──── */
+
+@keyframes contentRise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sectionReveal {
+  from {
+    opacity: 0.88;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hhvPulseDot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(201, 167, 101, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(201, 167, 101, 0);
+  }
+}
+
+@keyframes intakeScan {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(320%);
+  }
+}
+
+@keyframes cueDrop {
+  0% {
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  40% {
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  70% {
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  100% {
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+/* Hero copy enters as a plotted sequence: register → headline → support. */
+.hero-copy > * {
+  animation: contentRise 900ms var(--ease-cinematic) both;
+}
+
+.hero-copy > *:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.hero-copy > *:nth-child(3) {
+  animation-delay: 260ms;
+}
+
+.hero-copy > *:nth-child(4) {
+  animation-delay: 380ms;
+}
+
+.hero-copy > *:nth-child(5) {
+  animation-delay: 500ms;
+}
+
+.hero-strip {
+  animation: contentRise 900ms var(--ease-cinematic) 650ms both;
+}
+
+.reveal-on-scroll {
+  animation: contentRise 700ms var(--ease-cinematic) both;
+}
+
+@keyframes plotDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Scroll-scrubbed reveals where the browser supports view timelines. */
+@supports (animation-timeline: view()) {
+  /* Plotted curves draw themselves as they enter the viewport. */
+  .workflow-line path,
+  .resolved-line path {
+    animation: plotDraw 1ms linear both;
+    animation-range: entry 0% cover 55%;
+    animation-timeline: view();
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+
+  .section .reveal-on-scroll,
+  .card,
+  .panel,
+  .blueprint-card,
+  .intake-form,
+  .field-note-card,
+  .workflow-column,
+  .use-case-column,
+  .home-timeline-step,
+  .ledger li {
+    animation: sectionReveal 1ms linear both;
+    animation-range: entry 0% cover 22%;
+    animation-timeline: view();
+  }
+
+  .ledger li:nth-child(2),
+  .use-case-map .use-case-column:nth-child(2),
+  .home-timeline .home-timeline-step:nth-child(2),
+  .workflow-comparison .workflow-column:nth-child(2) {
+    animation-range: entry 4% cover 26%;
+  }
+
+  .ledger li:nth-child(3),
+  .use-case-map .use-case-column:nth-child(3),
+  .home-timeline .home-timeline-step:nth-child(3) {
+    animation-range: entry 8% cover 30%;
+  }
+
+  .ledger li:nth-child(4),
+  .use-case-map .use-case-column:nth-child(4),
+  .home-timeline .home-timeline-step:nth-child(4) {
+    animation-range: entry 12% cover 34%;
+  }
+
+  .ledger li:nth-child(5),
+  .home-timeline .home-timeline-step:nth-child(5) {
+    animation-range: entry 16% cover 38%;
+  }
+}
+
+/* Reduced motion: everything lands settled and still. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .hhv-dot-live,
+  .intake-diag-dot-live,
+  .intake-diag-scan-bar-live span,
+  .hero-scroll-cue::after {
+    animation: none !important;
+  }
+
+  .thread-rail {
+    display: none !important;
+  }
+}

@@ -17,9 +17,12 @@
 - Connect Resend notification email.
 - Add OpenAI-backed conversational turn handling if desired.
 - Add booking link behavior using `NEXT_PUBLIC_BOOKING_URL`.
-- Add sitemap and robots for the Next.js app.
 - Add stronger visual QA across mobile breakpoints.
-- Add unit tests for scoring and validation.
+
+## Completed in Follow-Up Passes
+
+- Added sitemap and robots routes for the Next.js app.
+- Added unit tests for storage, intake validation, and lead scoring.
 
 ## Later
 

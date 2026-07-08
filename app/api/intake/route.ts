@@ -23,6 +23,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     return NextResponse.json({
       message:
         "Thanks. Parkside has enough context to review the workflow and recommend the right next step.",
+      correlationId: record.correlation_id,
       record,
       integrations: {
         storage: storageResult,

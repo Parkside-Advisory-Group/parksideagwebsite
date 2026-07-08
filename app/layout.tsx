@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Inter_Tight, JetBrains_Mono, Newsreader } from "next/font/google";
 import "./globals.css";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
@@ -40,7 +41,15 @@ export const metadata: Metadata = {
     url: "https://parksideag.com",
     siteName: "Parkside Advisory Group",
     locale: "en_US",
-    type: "website"
+    type: "website",
+    images: [
+      {
+        url: "/assets/generated/og-operating-field.webp",
+        width: 1200,
+        height: 630,
+        alt: "Scattered gold particle streams resolving into ordered lines — the Parkside operating line"
+      }
+    ]
   },
   icons: {
     icon: "/brand/icons/favicon.svg",
@@ -50,9 +59,31 @@ export const metadata: Metadata = {
 
 const structuredData = createSitewideStructuredData(contactEmail);
 
+const serif = Newsreader({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  weight: "variable",
+  variable: "--font-newsreader",
+  display: "swap"
+});
+
+const sans = Inter_Tight({
+  subsets: ["latin"],
+  weight: "variable",
+  variable: "--font-inter-tight",
+  display: "swap"
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-jetbrains",
+  display: "swap"
+});
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${serif.variable} ${sans.variable} ${mono.variable}`}>
       <body>
         <JsonLd data={structuredData} />
         <Header />

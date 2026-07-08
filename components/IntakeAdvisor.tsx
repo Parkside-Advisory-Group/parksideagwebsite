@@ -1,7 +1,8 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { track } from "@vercel/analytics";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 interface IntakeFormState {
   name: string;
@@ -41,10 +42,89 @@ const initialState: IntakeFormState = {
   permissionToFollowUp: false
 };
 
+type IntakePhase = "idle" | "analyzing" | "received" | "error";
+
+interface Diagnostics {
+  completeness: number;
+  depth: number;
+  readiness: number;
+  readinessLabel: string;
+  signals: string[];
+}
+
+// Fields that meaningfully describe a workflow, used to score intake completeness.
+const scoredFields: (keyof IntakeFormState)[] = [
+  "name",
+  "email",
+  "businessName",
+  "industry",
+  "primaryPain",
+  "currentProcess",
+  "frequencyOfIssue",
+  "peopleInvolved",
+  "toolsUsed",
+  "estimatedBusinessImpact",
+  "desiredOutcome",
+  "urgency"
+];
+
+// Depth is a proxy for how much narrative context the operator has shared.
+const DEPTH_TARGET_CHARS = 480;
+
+const analyzingSteps = [
+  "Reading the workflow",
+  "Mapping the handoffs",
+  "Locating the likely leak",
+  "Scoring readiness"
+];
+
+function clamp01(value: number): number {
+  return Math.max(0, Math.min(1, value));
+}
+
+// Presentation-only. None of this is sent to the API — the payload stays exactly formState.
+function computeDiagnostics(formState: IntakeFormState): Diagnostics {
+  const filled = scoredFields.filter((field) => String(formState[field]).trim().length > 0).length;
+  const completeness = clamp01(filled / scoredFields.length);
+
+  const narrative =
+    formState.primaryPain + formState.currentProcess + formState.estimatedBusinessImpact + formState.desiredOutcome;
+  const depth = clamp01(narrative.trim().length / DEPTH_TARGET_CHARS);
+
+  const readiness = clamp01(completeness * 0.55 + depth * 0.45);
+  const readinessLabel = readiness < 0.34 ? "Early" : readiness < 0.68 ? "Forming" : "Strong";
+
+  const signals: string[] = [];
+  if (formState.primaryPain.trim().length > 40) signals.push("Bottleneck described");
+  if (formState.currentProcess.trim().length > 40) signals.push("Current path traced");
+  if (formState.frequencyOfIssue.trim().length > 0) signals.push("Recurrence noted");
+  if (formState.peopleInvolved.trim().length > 0) signals.push("Owners identified");
+  if (formState.toolsUsed.trim().length > 0) signals.push("Tooling mapped");
+  if (formState.estimatedBusinessImpact.trim().length > 20) signals.push("Impact framed");
+  if (formState.desiredOutcome.trim().length > 20) signals.push("Target outcome set");
+
+  return { completeness, depth, readiness, readinessLabel, signals };
+}
+
 export function IntakeAdvisor() {
   const [formState, setFormState] = useState<IntakeFormState>(initialState);
   const [status, setStatus] = useState<string>("");
   const [summary, setSummary] = useState<string>("");
+  const [phase, setPhase] = useState<IntakePhase>("idle");
+  const [stepIndex, setStepIndex] = useState<number>(0);
+  const reduceMotion = useReducedMotion();
+
+  const diagnostics = useMemo(() => computeDiagnostics(formState), [formState]);
+
+  // Cinematic "processing" micro-states while the request is in flight. Cosmetic only —
+  // the fetch below drives the real result and is never delayed by this.
+  useEffect(() => {
+    if (phase !== "analyzing") return;
+    const interval = setInterval(() => {
+      setStepIndex((current) => (current + 1) % analyzingSteps.length);
+    }, 900);
+    return () => clearInterval(interval);
+  }, [phase]);
 
   function updateField<T extends keyof IntakeFormState>(field: T, value: IntakeFormState[T]): void {
     setFormState((currentState) => ({ ...currentState, [field]: value }));
@@ -53,6 +133,8 @@ export function IntakeAdvisor() {
   async function submitIntake(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
     track("snapshot_form_submit_attempt", { source: "intake-advisor" });
+    setStepIndex(0);
+    setPhase("analyzing");
     setStatus("Preparing the Snapshot intake...");
     setSummary("");
 
@@ -65,17 +147,26 @@ export function IntakeAdvisor() {
 
     if (!response.ok) {
       track("snapshot_form_submit_error", { source: "intake-advisor", reason: "api_validation" });
+      setPhase("error");
       setStatus(payload.errors?.join(" ") ?? "The intake could not be submitted.");
       return;
     }
 
     track("snapshot_form_submit_success", { source: "intake-advisor" });
+    setPhase("received");
     setStatus("Snapshot request received. Parkside will review the workflow and follow up with the report or next question.");
     setSummary(payload.record?.internal_summary ?? "");
   }
 
   return (
     <form className="intake-form" onSubmit={submitIntake} aria-label="Parkside Intake Advisor">
+      <IntakeDiagnostic
+        diagnostics={diagnostics}
+        phase={phase}
+        stepLabel={analyzingSteps[stepIndex]}
+        reduceMotion={Boolean(reduceMotion)}
+      />
+
       <div className="notice">
         The free Snapshot starts with how work moves today. Do not submit passwords, private credentials, or
         confidential access details.
@@ -221,8 +312,8 @@ export function IntakeAdvisor() {
         <span>I give Parkside permission to follow up about this workflow.</span>
       </label>
 
-      <button className="btn" type="submit">
-        Request the Free Snapshot
+      <button className="btn intake-submit" type="submit" disabled={phase === "analyzing"}>
+        {phase === "analyzing" ? "Analyzing workflow…" : "Request the Free Snapshot"}
       </button>
       {status ? <p className="notice" role="status">{status}</p> : null}
       {summary ? <pre className="result-box">{summary}</pre> : null}
@@ -262,6 +353,92 @@ function Field({
         {required ? " *" : ""}
       </label>
       {children}
+    </div>
+  );
+}
+
+const DIAG_EASE = [0.16, 1, 0.3, 1] as const;
+
+function IntakeDiagnostic({
+  diagnostics,
+  phase,
+  stepLabel,
+  reduceMotion
+}: Readonly<{ diagnostics: Diagnostics; phase: IntakePhase; stepLabel: string; reduceMotion: boolean }>) {
+  const meters = [
+    { label: "Intake completeness", value: diagnostics.completeness, note: `${Math.round(diagnostics.completeness * 100)}%` },
+    { label: "Detail depth", value: diagnostics.depth, note: `${Math.round(diagnostics.depth * 100)}%` },
+    { label: "Readiness signal", value: diagnostics.readiness, note: diagnostics.readinessLabel }
+  ];
+
+  const refLabel = phase === "received" ? "Queued" : phase === "analyzing" ? "Analyzing" : "Draft";
+
+  return (
+    <div className="intake-diag" data-phase={phase} aria-hidden="true">
+      <div className="intake-diag-header">
+        <span className="intake-diag-kicker">
+          {/* motion.css stills the pulse under prefers-reduced-motion */}
+          <span className="intake-diag-dot intake-diag-dot-live" />
+          Live Snapshot diagnostic
+        </span>
+        <span className="intake-diag-ref">{refLabel}</span>
+      </div>
+
+      <div className="intake-diag-meters">
+        {meters.map((meter) => (
+          <div className="intake-diag-meter" key={meter.label}>
+            <div className="intake-diag-meter-top">
+              <span className="intake-diag-meter-label">{meter.label}</span>
+              <span className="intake-diag-meter-note">{meter.note}</span>
+            </div>
+            <span className="intake-diag-track">
+              <motion.span
+                className="intake-diag-fill"
+                initial={false}
+                animate={{ width: `${Math.max(3, meter.value * 100)}%` }}
+                transition={reduceMotion ? { duration: 0 } : { duration: 0.6, ease: DIAG_EASE }}
+              />
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <div className="intake-diag-signals">
+        <AnimatePresence initial={false}>
+          {diagnostics.signals.map((signal) => (
+            <motion.span
+              className="intake-diag-signal"
+              key={signal}
+              initial={reduceMotion ? false : { opacity: 0, y: 6, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.4, ease: DIAG_EASE }}
+            >
+              {signal}
+            </motion.span>
+          ))}
+        </AnimatePresence>
+        {diagnostics.signals.length === 0 ? (
+          <span className="intake-diag-empty">Signals surface here as you describe the workflow.</span>
+        ) : null}
+      </div>
+
+      <AnimatePresence>
+        {phase === "analyzing" ? (
+          <motion.div
+            className="intake-diag-scan"
+            initial={reduceMotion ? false : { opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.35, ease: DIAG_EASE }}
+          >
+            <span className="intake-diag-scan-label">{stepLabel}…</span>
+            <span className={reduceMotion ? "intake-diag-scan-bar" : "intake-diag-scan-bar intake-diag-scan-bar-live"}>
+              <span />
+            </span>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </div>
   );
 }

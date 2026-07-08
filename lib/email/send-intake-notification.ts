@@ -29,7 +29,7 @@ export async function sendIntakeNotification(record: IntakeRecord): Promise<Inta
       body: JSON.stringify({
         from: notificationSender,
         to: notificationRecipient,
-        subject: `New Parkside intake: ${record.business_name}`,
+        subject: `New Parkside intake [${record.correlation_id}]: ${record.business_name}`,
         text: record.internal_summary
       })
     });

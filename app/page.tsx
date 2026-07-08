@@ -4,6 +4,8 @@ import Link from "next/link";
 import { JsonLd } from "../components/JsonLd";
 import { HomeHeroVisualLoader } from "../components/HomeHeroVisualLoader";
 import { TrackedLink } from "../components/TrackedLink";
+import { OperatingField } from "../components/visuals/OperatingField";
+import { ThreadRail } from "../components/visuals/ThreadRail";
 import { primaryCta } from "../lib/content";
 import { fieldNotes } from "../lib/field-notes";
 import { createRouteMetadata } from "../lib/metadata";
@@ -23,6 +25,11 @@ export const metadata: Metadata = createRouteMetadata({
   path: "/"
 });
 
+interface LedgerEntry {
+  point: string;
+  flag: string;
+}
+
 interface NumberedItem {
   number: string;
   title: string;
@@ -30,20 +37,22 @@ interface NumberedItem {
 }
 
 interface WorkflowState {
+  state: string;
   title: string;
   items: string[];
 }
 
-const problemPoints: string[] = [
-  "New leads sit in an inbox until someone remembers to reply",
-  "Estimates age out because no one owns the next follow-up",
-  "Customer updates depend on texts, memory, and side conversations",
-  "Weekly reporting means rebuilding the same spreadsheet again",
-  "AI tools get tested once, then abandoned because no workflow owns them"
+const problemLedger: LedgerEntry[] = [
+  { point: "New leads sit in an inbox until someone remembers to reply", flag: "No owner" },
+  { point: "Estimates age out because no one owns the next follow-up", flag: "Decay" },
+  { point: "Customer updates depend on texts, memory, and side conversations", flag: "Untracked" },
+  { point: "Weekly reporting means rebuilding the same spreadsheet again", flag: "Rework" },
+  { point: "AI tools get tested once, then abandoned because no workflow owns them", flag: "Orphaned" }
 ];
 
 const workflowStates: WorkflowState[] = [
   {
+    state: "State A — As found",
     title: "Before Parkside",
     items: [
       "A missed call becomes a sticky note, then a text, then a forgotten task.",
@@ -52,6 +61,7 @@ const workflowStates: WorkflowState[] = [
     ]
   },
   {
+    state: "State B — After the first build",
     title: "After the first build",
     items: [
       "Requests are captured with the right details and routed to a clear owner.",
@@ -132,33 +142,26 @@ export default function HomePage() {
   return (
     <main>
       <JsonLd data={structuredData} />
-      <section className="hero home-hero">
-        <div className="hero-media home-hero-media">
-          <Image
-            src="/assets/DSC04055+copy.jpg.webp"
-            alt="Tree-lined path at sunrise"
-            fill
-            priority
-            sizes="100vw"
-          />
-        </div>
-        <div className="container hero-content home-hero-content">
+      <ThreadRail />
+
+      <section className="hero home-hero" data-register="PS·00 · Survey">
+        <OperatingField />
+        <div className="container home-hero-content">
           <div className="hero-copy">
-            <p className="eyebrow light">Free AI Workflow Savings Snapshot</p>
-            <h1 className="page-title">Find the workflow leak before buying another AI tool.</h1>
+            <p className="hero-register">
+              Free AI Workflow Savings Snapshot <span>· PS·00 / FIELD SURVEY</span>
+            </p>
+            <h1 className="page-title">
+              Find the workflow <em>leak</em> before buying another AI tool.
+            </h1>
             <p className="lede">
-              Get a free AI Workflow Savings Snapshot for one messy, repetitive business process. Parkside reviews the
-              handoff, names likely leaks, and shows the first practical AI or automation opportunity.
+              A free Snapshot for one messy, repetitive business process. Parkside reviews the handoff, names likely
+              leaks, and shows the first practical AI or automation opportunity.
             </p>
             <p className="hero-trust">
-              No charge. No obligation. Built for small and mid-sized businesses that want useful AI without agency-bro
-              hype or a bloated transformation project.
+              No charge, no obligation, and a reply within 1–2 business days. If the workflow is not ready for
+              automation, the Snapshot says so — and names what to fix first.
             </p>
-            <div className="hero-signal" aria-label="Common Parkside starting points">
-              <span>Lead intake</span>
-              <span>Estimate follow-up</span>
-              <span>Manual reporting</span>
-            </div>
             <div className="button-row">
               <Link className="btn" href="/intake">
                 {primaryCta}
@@ -167,49 +170,79 @@ export default function HomePage() {
                 className="btn secondary"
                 href="/opportunity-estimator"
                 eventName="secondary_cta_click"
-                eventProperties={{ location: "home_hero", cta: "Estimate the Opportunity" }}
+                eventProperties={{ location: "home_hero", cta: "Score Your Workflow in 2 Minutes" }}
               >
-                Estimate the Opportunity
+                Score Your Workflow in 2 Minutes
               </TrackedLink>
             </div>
           </div>
-          <HomeHeroVisualLoader />
         </div>
-        <div className="hero-baseline" />
+        <div className="hero-strip" aria-label="Common Parkside starting points">
+          <div className="hero-strip-inner">
+            <div className="hero-strip-cell">
+              <span className="hero-strip-label">Starting point 01</span>
+              <span className="hero-strip-value">Lead intake</span>
+            </div>
+            <div className="hero-strip-cell">
+              <span className="hero-strip-label">Starting point 02</span>
+              <span className="hero-strip-value">Estimate follow-up</span>
+            </div>
+            <div className="hero-strip-cell is-flag">
+              <span className="hero-strip-label">Starting point 03</span>
+              <span className="hero-strip-value">Manual reporting</span>
+            </div>
+            <div className="hero-scroll-cue">Survey begins</div>
+          </div>
+        </div>
       </section>
 
-      <section className="section home-problem-section">
+      <section
+        className="section section-plotted home-problem-section"
+        data-register="PS·01 · Problem"
+      >
+        <span className="section-register" aria-hidden="true">
+          PS·01 / Problem
+        </span>
         <div className="container split home-section-split">
           <div>
             <p className="eyebrow">The Problem</p>
-            <h2 className="section-title">Most businesses do not have an AI problem. They have a handoff problem.</h2>
+            <h2 className="section-title">
+              Most businesses do not have an AI problem. They have a <em>handoff</em> problem.
+            </h2>
             <div className="home-editorial-image">
               <Image
-                src="/assets/DSC02953-2+Medium.jpeg.webp"
-                alt="Foggy road representing unclear handoffs and hidden workflow delays"
+                src="/assets/generated/editorial-desk.webp"
+                alt="Cluttered desk of paper invoices and sticky notes under warm lamp light"
                 fill
                 loading="eager"
                 sizes="(max-width: 900px) 100vw, 42vw"
               />
             </div>
+            <p className="image-caption">
+              <span>Fig. 01 — Work, as found</span>
+              <span>Scattered</span>
+            </p>
           </div>
-          <ul className="home-stagger-list premium-list" aria-label="Common operating problems">
-            {problemPoints.map((point, index) => (
-              <li key={point}>
-                <span className="home-list-index">{String(index + 1).padStart(2, "0")}</span>
-                <span>{point}</span>
+          <ul className="ledger" aria-label="Common operating problems">
+            {problemLedger.map((entry, index) => (
+              <li key={entry.point}>
+                <span className="ledger-index">{String(index + 1).padStart(2, "0")}</span>
+                <span>{entry.point}</span>
+                <span className="ledger-flag">{entry.flag}</span>
               </li>
             ))}
           </ul>
         </div>
       </section>
 
-      <section className="section home-reframe-section">
+      <section className="section home-reframe-section" data-register="PS·02 · Reframe">
         <div className="container">
           <div className="reframe-panel reveal-on-scroll">
             <div>
               <p className="eyebrow light">The Reframe</p>
-              <p className="reframe-copy">A better tool will not fix an unclear next step.</p>
+              <p className="reframe-copy">
+                A better tool will not fix an <em>unclear next step</em>.
+              </p>
             </div>
             <div className="reframe-detail">
               <p>Parkside starts with the moment work gets dropped.</p>
@@ -220,13 +253,24 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section section-plotted" data-register="PS·03 · Changes">
+        <span className="section-register" aria-hidden="true">
+          PS·03 / Comparison
+        </span>
         <div className="container">
           <p className="eyebrow">What Changes</p>
           <h2 className="section-title">From scattered work to a workflow your team can actually run.</h2>
           <div className="workflow-comparison" aria-label="Workflow before and after Parkside">
-            {workflowStates.map((state) => (
-              <article className="workflow-column reveal-on-scroll" key={state.title}>
+            {workflowStates.map((state, index) => (
+              <article className="workflow-column" key={state.title}>
+                <span className="workflow-state">{state.state}</span>
+                <svg className="workflow-line" viewBox="0 0 400 44" preserveAspectRatio="none" aria-hidden="true">
+                  {index === 0 ? (
+                    <path pathLength="1" d="M 0 22 C 30 4, 44 42, 70 20 S 108 2, 132 30 S 178 44, 204 12 S 246 38, 276 18 S 330 40, 356 14 S 388 30, 400 22" />
+                  ) : (
+                    <path pathLength="1" d="M 0 30 C 80 30, 120 22, 200 22 S 340 22, 400 22" />
+                  )}
+                </svg>
                 <h3>{state.title}</h3>
                 <ul>
                   {state.items.map((item) => (
@@ -239,7 +283,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section dark-band home-process-band" id="how-it-works">
+      <section className="section dark-band home-process-band" id="how-it-works" data-register="PS·04 · Method">
+        <span className="section-register" aria-hidden="true">
+          PS·04 / Method
+        </span>
         <div className="container process-editorial">
           <div className="process-narrative">
             <p className="eyebrow light">How It Works</p>
@@ -248,10 +295,13 @@ export default function HomePage() {
               The free Snapshot does not start with a software recommendation. It starts with the actual path from first
               contact to done, then points to the first practical AI or workflow opportunity.
             </p>
+            <div className="process-instrument">
+              <HomeHeroVisualLoader />
+            </div>
           </div>
           <div className="home-timeline" aria-label="How Parkside builds operating systems">
             {processSteps.map((step) => (
-              <article className="home-timeline-step reveal-on-scroll" key={step.title}>
+              <article className="home-timeline-step" key={step.title}>
                 <span>{step.number}</span>
                 <div>
                   <h3>{step.title}</h3>
@@ -263,16 +313,19 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section home-ai-fit-section">
+      <section className="section home-ai-fit-section" data-register="PS·05 · Inspection">
+        <span className="section-register" aria-hidden="true">
+          PS·05 / Inspection
+        </span>
         <div className="container split home-section-split">
           <div>
             <p className="eyebrow">What We Inspect</p>
             <h2 className="section-title">The everyday operating points where work usually slips.</h2>
           </div>
-          <ul className="home-clean-list premium-list ai-fit-list reveal-on-scroll" aria-label="Operating points Parkside inspects">
+          <ul className="ledger" aria-label="Operating points Parkside inspects">
             {inspectionPoints.map((point, index) => (
               <li key={point}>
-                <span className="home-list-index">{String(index + 1).padStart(2, "0")}</span>
+                <span className="ledger-index">{String(index + 1).padStart(2, "0")}</span>
                 <span>{point}</span>
               </li>
             ))}
@@ -280,14 +333,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section use-case-section">
+      <section className="section use-case-section" data-register="PS·06 · Guardrails">
+        <span className="section-register" aria-hidden="true">
+          PS·06 / Guardrails
+        </span>
         <div className="container">
           <p className="eyebrow">What We Will Not Automate</p>
           <h2 className="section-title">Not every slow step should become software.</h2>
           <div className="use-case-map" aria-label="Work Parkside will not automate without guardrails">
             {doNotAutomatePoints.map((point, index) => (
-              <article className="use-case-column reveal-on-scroll" key={point}>
-                <span className="meta">{String(index + 1).padStart(2, "0")}</span>
+              <article className="use-case-column" key={point}>
+                <span className="meta">Guardrail {String(index + 1).padStart(2, "0")}</span>
                 <h3>{point}</h3>
                 <ul>
                   <li>Keep the person, fix the process, or add review before AI touches it.</li>
@@ -298,38 +354,45 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section home-audit-section">
+      <section
+        className="section section-plotted home-audit-section"
+        data-register="PS·07 · Snapshot"
+      >
+        <span className="section-register" aria-hidden="true">
+          PS·07 / Snapshot
+        </span>
         <div className="container split home-section-split">
           <div>
             <p className="eyebrow">Primary Next Step</p>
             <h2 className="section-title">The free Snapshot gives you a useful answer before you spend money.</h2>
             <div className="home-editorial-image">
               <Image
-                src="/assets/DSC07222.jpeg.webp"
-                alt="City street at sunset representing daily business activity and follow-up"
+                src="/assets/generated/editorial-drafting.webp"
+                alt="Brass drafting instruments over a plotted gold curve on cream vellum"
                 fill
-                loading="eager"
+                loading="lazy"
                 sizes="(max-width: 900px) 100vw, 42vw"
               />
             </div>
+            <p className="image-caption">
+              <span>Fig. 02 — The first build, drawn</span>
+              <span>Plotted</span>
+            </p>
             <div className="button-row">
               <Link className="btn" href="/intake">
                 {primaryCta}
               </Link>
             </div>
           </div>
-          <ul className="audit-checklist home-audit-list premium-list reveal-on-scroll" aria-label="What a good first build defines">
-            {auditPoints.map((point, index) => (
-              <li key={point}>
-                <span className="home-list-index">{String(index + 1).padStart(2, "0")}</span>
-                <span>{point}</span>
-              </li>
+          <ul className="audit-checklist" aria-label="What a good first build defines">
+            {auditPoints.map((point) => (
+              <li key={point}>{point}</li>
             ))}
           </ul>
         </div>
       </section>
 
-      <section className="section home-estimator-section">
+      <section className="section home-estimator-section" data-register="PS·08 · Estimator">
         <div className="container split home-section-split">
           <div>
             <p className="eyebrow">Opportunity Estimator</p>
@@ -337,38 +400,45 @@ export default function HomePage() {
           </div>
           <div className="panel">
             <p>
-              Parkside now has a lightweight estimator for the same questions a good first conversation should answer:
-              repeat volume, owner, tools, recent examples, business impact, and urgency. It points the visitor toward a
-              Snapshot, a deeper Blueprint conversation, or preparation before automation.
+              Answer eight short questions about the workflow — repeat volume, owner, tools, recent examples, business
+              impact, and urgency — and get a straight recommendation: request the Snapshot, narrow the workflow first,
+              or prepare before automating anything.
             </p>
             <div className="button-row">
               <Link className="btn ghost" href="/opportunity-estimator">
-                Estimate the Opportunity
+                Score Your Workflow in 2 Minutes
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="section home-enable-section">
+      <section className="section section-plotted home-enable-section" data-register="PS·09 · Enablement">
+        <span className="section-register" aria-hidden="true">
+          PS·09 / Enablement
+        </span>
         <div className="container split home-section-split">
           <div>
             <p className="eyebrow">Team Enablement</p>
             <h2 className="section-title">What Parkside needs from your team.</h2>
             <div className="home-editorial-image">
               <Image
-                src="/assets/AA396370-3ADB-4787-B619-969589BB3CFA.jpg.webp"
-                alt="Business district at sunset representing Parkside's operating base"
+                src="/assets/generated/editorial-study.webp"
+                alt="Dark study wall of pinned schedules and plotted curves under lamp light"
                 fill
-                loading="eager"
+                loading="lazy"
                 sizes="(max-width: 900px) 100vw, 42vw"
               />
             </div>
+            <p className="image-caption">
+              <span>Fig. 03 — The operating room</span>
+              <span>Instrumented</span>
+            </p>
           </div>
-          <ul className="home-clean-list premium-list team-list reveal-on-scroll" aria-label="How Parkside enables teams">
+          <ul className="ledger" aria-label="How Parkside enables teams">
             {enablementPoints.map((point, index) => (
               <li key={point}>
-                <span className="home-list-index">{String(index + 1).padStart(2, "0")}</span>
+                <span className="ledger-index">{String(index + 1).padStart(2, "0")}</span>
                 <span>{point}</span>
               </li>
             ))}
@@ -376,7 +446,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section field-notes-preview-section">
+      <section className="section field-notes-preview-section" data-register="PS·10 · Notes">
         <div className="container">
           <div className="section-heading-row">
             <div>
@@ -389,7 +459,7 @@ export default function HomePage() {
           </div>
           <div className="field-notes-grid preview-grid">
             {fieldNotes.slice(0, 3).map((note) => (
-              <article className="field-note-card reveal-on-scroll" key={note.slug}>
+              <article className="field-note-card" key={note.slug}>
                 <p className="eyebrow">{note.category}</p>
                 <h3>{note.title}</h3>
                 <p>{note.description}</p>
@@ -402,9 +472,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section dark-band home-final-cta">
+      <section className="section dark-band home-final-cta" data-register="PS·11 · Resolution">
         <div className="container narrow-container reveal-on-scroll">
-          <h2 className="section-title">If the team is still chasing the same work every week, start with the Snapshot.</h2>
+          <svg className="resolved-line" viewBox="0 0 900 60" preserveAspectRatio="none" aria-hidden="true">
+            <path pathLength="1" d="M 0 30 C 40 6, 70 52, 110 28 S 170 8, 210 34 S 280 50, 330 26 C 420 30, 520 30, 620 30 S 820 30, 900 30" />
+          </svg>
+          <h2 className="section-title">
+            If the team is still chasing the same work every week, start with the <em>Snapshot</em>.
+          </h2>
           <p className="lede">Share the workflow. See the likely leaks. Decide what is worth building next.</p>
           <div className="button-row">
             <TrackedLink
@@ -416,6 +491,7 @@ export default function HomePage() {
               {primaryCta}
             </TrackedLink>
           </div>
+          <p className="cta-assurance">Reviewed personally · Reply within 1–2 business days · No obligation</p>
         </div>
       </section>
     </main>

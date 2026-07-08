@@ -15,7 +15,7 @@ import {
 export const metadata: Metadata = createRouteMetadata({
   title: "Services",
   description:
-    "Blueprint audits, workflow automation, AI agent builds, and operating support from Parkside Advisory Group.",
+    "The free AI Workflow Savings Snapshot, paid AI Operations Blueprint, workflow automation sprints, AI agent builds, and ongoing operating support from Parkside Advisory Group.",
   path: "/services"
 });
 
@@ -171,10 +171,13 @@ export default function ServicesPage() {
             </ul>
           </div>
         </div>
-        <div className="container button-row">
-          <Link className="btn" href="/intake">
-            {primaryCta}
-          </Link>
+        <div className="container">
+          <div className="button-row">
+            <Link className="btn" href="/intake">
+              {primaryCta}
+            </Link>
+          </div>
+          <p className="cta-assurance">Every engagement starts with the free Snapshot · No pricing before scope is clear</p>
         </div>
       </section>
     </main>
