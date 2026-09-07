@@ -10,7 +10,7 @@ import { createSitewideStructuredData } from "../lib/structured-data";
 
 export const metadata: Metadata = {
   title: {
-    default: "Parkside Advisory Group | Make room for what matters",
+    default: "AI & Workflow Automation for Small Businesses | Parkside",
     template: "%s | Parkside Advisory Group",
   },
   description:
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     "AI operations blueprint",
   ],
   openGraph: {
-    title: "Parkside Advisory Group | Free AI Workflow Savings Snapshot",
+    title: "AI & Workflow Automation for Small Businesses | Parkside",
     description:
       "Get a free AI Workflow Savings Snapshot for one messy business process, then decide if a paid Blueprint or implementation sprint is worth it.",
     url: "https://parksideag.com",
@@ -62,7 +62,7 @@ const structuredData = createSitewideStructuredData(contactEmail);
 const serif = Newsreader({
   subsets: ["latin"],
   style: ["normal", "italic"],
-  weight: "variable",
+  weight: "400",
   variable: "--font-newsreader",
   display: "swap",
 });
@@ -78,6 +78,7 @@ const mono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
   variable: "--font-jetbrains",
+  preload: false,
   display: "swap",
 });
 

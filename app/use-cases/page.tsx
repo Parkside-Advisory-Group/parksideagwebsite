@@ -21,25 +21,37 @@ export const metadata: Metadata = createRouteMetadata({
 const useCaseAnswer =
   "Parkside use cases are recurring operating workflows where better capture, routing, follow-up, drafting, or visibility can reduce manual coordination while keeping ownership and review clear.";
 
-const useCaseInputs = [
-  "A repeated process with enough examples to define patterns",
-  "A clear owner for the next action",
-  "Known timing expectations, customer promises, or service standards",
-  "Access to the current tools, records, and reporting sources during implementation"
+const illustrativeWorkflow = [
+  "An estimate is marked sent, with the customer, owner, and next follow-up date recorded.",
+  "The system checks for a reply or status change before preparing a reminder.",
+  "The owner reviews the message and any customer-specific context before sending.",
+  "Accepted, declined, or paused estimates leave the follow-up queue; unclear cases return to the owner."
 ];
 
-const useCaseOutputs = [
-  "A more complete request or work record",
-  "A visible owner, status, next action, and review path",
-  "Automated reminders, summaries, drafts, routing, or reporting where useful",
-  "A practical exception path when AI or automation is uncertain"
+const evaluationMeasures = [
+  "Follow-up coverage: estimates with a recorded next action, compared with all open estimates.",
+  "Response time: time from the agreed follow-up date to the owner’s completed action.",
+  "Review effort: time spent checking and correcting drafts, including exceptions.",
+  "Quality: missed replies, duplicate reminders, and incorrect statuses found during review."
 ];
 
-const representativeQuestions = [
-  "Can AI help a service business respond faster to new leads?",
-  "How should estimate follow-up be automated without losing human judgment?",
-  "What business workflows are good first candidates for AI automation?",
-  "How can managers see stalled work without rebuilding reports by hand?"
+const useCaseQuestions = [
+  {
+    question: "Can AI help a service business respond to new leads?",
+    answer: "AI can help summarize an inquiry and draft a response; ordinary automation can record it, assign an owner, and flag missing information. A person should review unclear requests and customer commitments. Start by measuring how long inquiries wait for an owner and a useful first response."
+  },
+  {
+    question: "How can estimate follow-up be automated without losing human judgment?",
+    answer: "Automate the queue and reminders around a named owner. Check for replies and estimate status before preparing a follow-up, and have the owner review pricing, timing, or other commitments. Stop reminders when the estimate is accepted, declined, or paused."
+  },
+  {
+    question: "Which business workflow should be automated first?",
+    answer: "Choose a frequent, clearly owned workflow with observable delays and enough examples to test. A bounded step such as routing requests or preparing a recurring summary is easier to evaluate than an entire department. Agree on the baseline, exception path, and success measures before building."
+  },
+  {
+    question: "How can managers see stalled work without rebuilding reports?",
+    answer: "Bring the owner, status, next action, and last update into a consistent view of existing records. Flag items that exceed the team’s agreed timing expectations. The view is only as reliable as its source data, so missing or conflicting records need a visible review queue."
+  }
 ];
 
 const notAFitSignals = [
@@ -106,19 +118,21 @@ export default function UseCasesPage() {
       <section className="section">
         <div className="container evidence-grid">
           <div>
-            <p className="eyebrow">Inputs</p>
-            <h2 className="section-title">What a use case needs before it can become a system.</h2>
+            <p className="eyebrow">Illustrative Workflow</p>
+            <h2 className="section-title">An estimate sent. A next step kept.</h2>
+            <p>A possible follow-up sequence, not a client result. The final design depends on the team’s tools and review requirements.</p>
             <ul className="audit-checklist">
-              {useCaseInputs.map((input) => (
+              {illustrativeWorkflow.map((input) => (
                 <li key={input}>{input}</li>
               ))}
             </ul>
           </div>
           <div>
-            <p className="eyebrow">Outputs</p>
-            <h2 className="section-title">What a useful implementation should create.</h2>
+            <p className="eyebrow">How to Evaluate It</p>
+            <h2 className="section-title">Measure the work, including the review.</h2>
+            <p>Compare a representative sample before and after a pilot. Include exception handling and reviewer time; a faster draft alone does not prove the workflow improved.</p>
             <ul className="audit-checklist">
-              {useCaseOutputs.map((output) => (
+              {evaluationMeasures.map((output) => (
                 <li key={output}>{output}</li>
               ))}
             </ul>
@@ -128,12 +142,13 @@ export default function UseCasesPage() {
 
       <section className="section" style={{ background: "var(--cream-deep)" }}>
         <div className="container">
-          <p className="eyebrow">Representative Questions</p>
-          <h2 className="section-title">Questions these use cases are meant to answer.</h2>
+          <p className="eyebrow">Common Questions</p>
+          <h2 className="section-title">Practical answers, before the build.</h2>
           <div className="grid-2 compact-grid">
-            {representativeQuestions.map((question) => (
+            {useCaseQuestions.map(({ question, answer }) => (
               <article className="compact-card" key={question}>
-                <p>{question}</p>
+                <h3>{question}</h3>
+                <p>{answer}</p>
               </article>
             ))}
           </div>

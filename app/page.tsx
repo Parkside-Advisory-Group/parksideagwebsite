@@ -19,9 +19,9 @@ import {
 } from "../lib/structured-data";
 
 export const metadata: Metadata = createRouteMetadata({
-  title: "Parkside Advisory Group | Make room for what matters",
+  title: "AI & Workflow Automation for Small Businesses | Parkside",
   description:
-    "Practical AI, thoughtful automation, and clearer operations. Parkside helps you make room for the work that matters. Start with a free Workflow Savings Snapshot.",
+    "Parkside helps small and mid-sized businesses improve intake, follow-up and reporting with practical AI and workflow automation. Start with a free Workflow Snapshot.",
   path: "/",
 });
 
@@ -82,7 +82,7 @@ export default function HomePage() {
             INDEPENDENT THINKING. CONNECTED SYSTEMS.
           </span>
         </div>
-        <div className="atelier-hero-art" aria-hidden="true">
+        <div className="atelier-hero-art">
           <div className="sculpture-fallback">
             <Image
               src="/assets/atelier/sculpture.webp"
@@ -90,14 +90,15 @@ export default function HomePage() {
               fill
               sizes="(max-width: 760px) 100vw, 67vw"
               priority
+              fetchPriority="high"
             />
           </div>
           <SculptureLoader />
         </div>
         <div className="atelier-hero-copy">
           <h1 id="hero-title">
-            <span className="hero-line">Make room</span>
-            <span className="hero-line hero-line-second">for what</span>
+            <span className="hero-line">Make room</span>{" "}
+            <span className="hero-line hero-line-second">for what</span>{" "}
             <span className="hero-line hero-line-last">
               <em>matters.</em>
             </span>
@@ -136,6 +137,7 @@ export default function HomePage() {
               <br />
               BUILT AROUND YOUR BUSINESS
             </span>
+            <div id="sculpture-control" />
             <MotionToggle />
           </div>
         </div>
@@ -163,9 +165,8 @@ export default function HomePage() {
             what they do best.
           </p>
           <p>
-            Clearer processes. Carefully applied AI.
-            <br />
-            Systems that carry their share.
+            AI and workflow automation for small and mid-sized businesses. Based in
+            Northwest Indiana, working with teams across Chicagoland and the United States.
           </p>
         </div>
       </section>

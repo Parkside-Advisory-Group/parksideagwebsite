@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { absoluteUrl } from "../lib/structured-data";
 
 const explicitlyAllowedCrawlers = [
   "GPTBot",
@@ -23,6 +24,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/"
       }))
     ],
-    sitemap: "https://parksideag.com/sitemap.xml"
+    sitemap: absoluteUrl("/sitemap.xml")
   };
 }

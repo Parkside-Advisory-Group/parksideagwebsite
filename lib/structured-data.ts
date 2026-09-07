@@ -1,10 +1,17 @@
 import type { Offer, UseCase } from "./content";
+import type { FieldNote } from "./field-notes";
 
 export const siteUrl = "https://parksideag.com";
 export const organizationId = `${siteUrl}/#organization`;
 export const professionalServiceId = `${siteUrl}/#service`;
 export const offerCatalogId = `${siteUrl}/#offers`;
 export const websiteId = `${siteUrl}/#website`;
+export const fieldNoteAuthor = {
+  id: `${siteUrl}/about#anthony-mora`,
+  name: "Anthony Mora",
+  jobTitle: "Consulting Partner",
+  url: `${siteUrl}/about`,
+};
 
 type JsonPrimitive = string | number | boolean | null;
 export type JsonValue = JsonPrimitive | JsonValue[] | JsonObject;
@@ -71,20 +78,21 @@ export function createSitewideStructuredData(contactEmail: string): StructuredDa
         url: siteUrl,
         email: contactEmail,
         logo: `${siteUrl}/brand/icons/favicon.svg`,
+        hasOfferCatalog: { "@id": offerCatalogId },
         areaServed: [
           { "@type": "Country", name: "United States" },
-          { "@type": "City", name: "Crown Point" },
           { "@type": "State", name: "Indiana" },
           { "@type": "AdministrativeArea", name: "Northwest Indiana" },
           { "@type": "AdministrativeArea", name: "Greater Chicagoland" }
         ]
       },
       {
-        "@type": "ProfessionalService",
+        "@type": "Service",
         "@id": professionalServiceId,
         name: "Parkside Advisory Group",
         url: siteUrl,
         provider: { "@id": organizationId },
+        hasOfferCatalog: { "@id": offerCatalogId },
         serviceType: [
           "AI automation consulting",
           "Workflow automation",
@@ -141,11 +149,16 @@ export function createPageStructuredData(input: PageStructuredDataInput): Struct
     pageNode.potentialAction = input.potentialAction;
   }
 
+  const hasBreadcrumbs = input.breadcrumbItems.length > 1;
+  if (hasBreadcrumbs) {
+    pageNode.breadcrumb = { "@id": `${input.id}-breadcrumb` };
+  }
+
   return {
     "@context": "https://schema.org",
     "@graph": [
       pageNode,
-      createBreadcrumbList(input.id, input.breadcrumbItems),
+      ...(hasBreadcrumbs ? [createBreadcrumbList(input.id, input.breadcrumbItems)] : []),
       ...(input.extraNodes ?? [])
     ]
   };
@@ -160,7 +173,7 @@ export function createOfferServiceNode(offer: Offer, path: string): JsonValue {
     description: offer.summary,
     provider: { "@id": organizationId },
     serviceType: offer.name,
-    audience: offer.bestFor,
+    audience: { "@type": "Audience", audienceType: offer.bestFor },
     areaServed: "United States",
     url: absoluteUrl(path)
   };
@@ -198,11 +211,53 @@ export function createUseCaseItemList(useCases: UseCase[]): JsonValue {
       item: {
         "@type": "Thing",
         name: useCase.title,
-        description: useCase.description,
-        additionalType: useCase.category
+        description: useCase.description
       }
     }))
   };
+}
+
+/** Connects an article to its visible author, original publication date, and reading trail. */
+export function createFieldNoteStructuredData(note: FieldNote): StructuredDataGraph {
+  const path = `/field-notes/${note.slug}`;
+  const url = absoluteUrl(path);
+  const articleId = `${url}#article`;
+  const pageId = `${url}#webpage`;
+  return createPageStructuredData({
+    id: pageId,
+    path,
+    name: note.title,
+    description: note.description,
+    breadcrumbItems: [
+      homeBreadcrumb,
+      { name: "Field Notes", path: "/field-notes" },
+      { name: note.title, path },
+    ],
+    mainEntity: referenceNode(articleId),
+    extraNodes: [
+      {
+        "@type": "BlogPosting",
+        "@id": articleId,
+        url,
+        headline: note.title,
+        description: note.description,
+        datePublished: note.date,
+        author: referenceNode(fieldNoteAuthor.id),
+        publisher: referenceNode(organizationId),
+        mainEntityOfPage: referenceNode(pageId),
+        articleSection: note.category,
+        inLanguage: "en-US",
+      },
+      {
+        "@type": "Person",
+        "@id": fieldNoteAuthor.id,
+        name: fieldNoteAuthor.name,
+        jobTitle: fieldNoteAuthor.jobTitle,
+        url: fieldNoteAuthor.url,
+        worksFor: referenceNode(organizationId),
+      },
+    ],
+  });
 }
 
 /** Creates the homepage breadcrumb trail. */

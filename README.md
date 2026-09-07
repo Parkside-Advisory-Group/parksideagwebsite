@@ -80,3 +80,26 @@ To persist correlation IDs in a dedicated Supabase column, run:
 
 - `amora@parksideag.com` - direct work email.
 - `info@parksideag.com` - general public inbox and intake notification target.
+
+## Search readiness and quality checks
+
+Public pages are prerendered with canonical URLs, shared Organization/Service data,
+and article-specific authorship and publication metadata. The sitemap covers all
+17 public pages and articles. FAQs and illustrative workflows are visible HTML.
+`llms.txt` is a supplementary directory, not a requirement or ranking guarantee.
+
+Touch screens and data-saving connections receive the sculpture artwork first;
+visitors can enable the full 3D renderer with the visible control. Desktop retains
+live 3D. Reduced-motion preferences and graphics failure fallbacks are supported.
+The site uses only the Newsreader weight it renders and avoids preloading the
+secondary monospace font. Analytics components run in Vercel environments, where
+their first-party collection endpoints exist.
+
+`npm test` includes sitemap inventory and metadata/schema regression checks.
+`npm run test:browser` verifies the production server on port 3017 (override with
+`PREVIEW_URL`). GitHub's Site quality workflow runs lint, tests, build, typecheck,
+and browser verification on pushes and pull requests.
+
+Search Console indexing, search traffic, AI citations, and real-user Core Web
+Vitals must be evaluated on the deployed domain. Local Lighthouse scores are lab
+measurements and do not establish rankings or field performance.

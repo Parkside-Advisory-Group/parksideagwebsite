@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { JsonLd } from "../../../components/JsonLd";
 import { fieldNotes, getFieldNote } from "../../../lib/field-notes";
 import { createRouteMetadata } from "../../../lib/metadata";
-import { organizationId, siteUrl } from "../../../lib/structured-data";
+import { createFieldNoteStructuredData, fieldNoteAuthor } from "../../../lib/structured-data";
 
 interface FieldNotePageProps {
   params: Promise<{
@@ -21,17 +21,18 @@ export async function generateMetadata({ params }: FieldNotePageProps): Promise<
   const note = getFieldNote(slug);
 
   if (!note) {
-    return createRouteMetadata({
-      title: "Field Note Not Found",
-      description: "The requested Parkside field note could not be found.",
-      path: "/field-notes"
-    });
+    notFound();
   }
 
   return createRouteMetadata({
     title: note.title,
     description: note.description,
-    path: `/field-notes/${note.slug}`
+    path: `/field-notes/${note.slug}`,
+    article: {
+      publishedTime: note.date,
+      author: { name: fieldNoteAuthor.name, url: fieldNoteAuthor.url },
+      section: note.category,
+    },
   });
 }
 
@@ -43,24 +44,7 @@ export default async function FieldNotePage({ params }: FieldNotePageProps) {
     notFound();
   }
 
-  const articleStructuredData = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "@id": `${siteUrl}/field-notes/${note.slug}#article`,
-    headline: note.title,
-    description: note.description,
-    datePublished: note.date,
-    dateModified: note.date,
-    author: {
-      "@type": "Person",
-      name: "Anthony Mora",
-      jobTitle: "Consulting Partner",
-      worksFor: { "@id": organizationId }
-    },
-    publisher: { "@id": organizationId },
-    mainEntityOfPage: `${siteUrl}/field-notes/${note.slug}`,
-    articleSection: note.category
-  };
+  const articleStructuredData = createFieldNoteStructuredData(note);
 
   return (
     <main>
@@ -72,7 +56,8 @@ export default async function FieldNotePage({ params }: FieldNotePageProps) {
             <h1 className="page-title">{note.title}</h1>
             <p className="lede">{note.intro}</p>
             <div className="field-note-meta article-meta">
-              <span>{note.date}</span>
+              <span>By <Link href="/about">{fieldNoteAuthor.name}</Link></span>
+              <time dateTime={note.date}>{note.date}</time>
               <span>{note.readTime}</span>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { siteUrl } from "./structured-data";
+import { absoluteUrl } from "./structured-data";
 
 const siteName = "Parkside Advisory Group";
 const defaultImage = "/assets/atelier/social-cover.jpg";
@@ -10,11 +10,16 @@ interface RouteMetadataInput {
   description: string;
   path: string;
   imageAlt?: string;
+  article?: {
+    publishedTime: string;
+    author: { name: string; url: string };
+    section: string;
+  };
 }
 
 /** Builds route-specific metadata for canonical, Open Graph, and Twitter previews. */
 export function createRouteMetadata(input: RouteMetadataInput): Metadata {
-  const url = input.path === "/" ? siteUrl : `${siteUrl}${input.path}`;
+  const url = absoluteUrl(input.path);
   const title =
     input.path === "/" ? input.title : `${input.title} | ${siteName}`;
   const imageAlt =
@@ -22,10 +27,11 @@ export function createRouteMetadata(input: RouteMetadataInput): Metadata {
     `${siteName} — Make room for what matters, with a sculptural gold ribbon on burgundy`;
 
   return {
-    title: input.title,
+    title: input.path === "/" ? { absolute: input.title } : input.title,
     description: input.description,
+    ...(input.article ? { authors: [input.article.author] } : {}),
     alternates: {
-      canonical: input.path,
+      canonical: url,
     },
     openGraph: {
       title,
@@ -34,20 +40,27 @@ export function createRouteMetadata(input: RouteMetadataInput): Metadata {
       siteName,
       images: [
         {
-          url: defaultImage,
+          url: absoluteUrl(defaultImage),
           width: 1200,
           height: 630,
           alt: imageAlt,
         },
       ],
       locale: "en_US",
-      type: "website",
+      ...(input.article
+        ? {
+            type: "article" as const,
+            publishedTime: input.article.publishedTime,
+            authors: [input.article.author.url],
+            section: input.article.section,
+          }
+        : { type: "website" as const }),
     },
     twitter: {
       card: "summary_large_image",
       title,
       description: input.description,
-      images: [defaultImage],
+      images: [{ url: absoluteUrl(defaultImage), alt: imageAlt }],
     },
   };
 }

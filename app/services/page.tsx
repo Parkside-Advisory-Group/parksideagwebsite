@@ -22,11 +22,23 @@ export const metadata: Metadata = createRouteMetadata({
 const serviceAnswer =
   "Parkside Advisory Group provides practical AI automation services for recurring business workflows where work is already valuable but gets slowed by manual capture, unclear ownership, missed follow-up, or scattered reporting.";
 
-const serviceExamples = [
-  "A new request arrives by form, call, or email and needs to become a complete record with a clear owner.",
-  "An estimate or proposal needs scheduled follow-up before the opportunity goes stale.",
-  "A manager needs a reliable view of open work, blocked handoffs, and aging items without rebuilding a spreadsheet.",
-  "A team needs AI-assisted drafts or summaries, with human review before anything sensitive is sent."
+const serviceQuestions = [
+  {
+    question: "Who are Parkside’s AI automation services for?",
+    answer: "Parkside works with business owners and operating teams responsible for repeated work: customer requests, estimates, reporting, handoffs, and document preparation. The strongest starting point is a specific process with a named owner, recurring friction, and examples the team can review together."
+  },
+  {
+    question: "Do we need to replace our existing software?",
+    answer: "Not necessarily. The first step is to review the tools and records you already use, along with their integration options and access controls. A useful solution may connect existing steps or simplify the process. Any need for a new tool should follow from the workflow, not precede it."
+  },
+  {
+    question: "What is the difference between the Snapshot and the Blueprint?",
+    answer: "The free AI Workflow Savings Snapshot reviews one painful workflow and identifies a practical starting point. The paid AI Operations Blueprint goes deeper into the steps, owners, constraints, and proposed build. Implementation scope is agreed after that work is understood."
+  },
+  {
+    question: "How do we decide whether an automation is worth keeping?",
+    answer: "Agree on a baseline and a small set of measures before rollout: handling time, missed follow-ups, rework, or visibility into open work. Include the time people spend reviewing output and resolving exceptions. Review the pilot against those measures before expanding it."
+  }
 ];
 
 const serviceInputs = [
@@ -77,8 +89,8 @@ export default function ServicesPage() {
           <p className="eyebrow">Services</p>
           <h1 className="page-title">Start with the workflow that keeps costing attention.</h1>
           <p className="lede">
-            Parkside does not sell a generic AI package. We inspect the handoff, define the owner and next action, then
-            build the narrow system that makes the repeated work easier to run.
+            Practical AI and workflow automation for business owners and operating teams. We inspect the handoff,
+            define the owner and next action, then build the system that makes repeated work easier to run.
           </p>
         </div>
       </section>
@@ -115,12 +127,13 @@ export default function ServicesPage() {
 
       <section className="section">
         <div className="container">
-          <p className="eyebrow">Examples</p>
-          <h2 className="section-title">Typical workflows Parkside is asked to improve.</h2>
+          <p className="eyebrow">Common Questions</p>
+          <h2 className="section-title">A clear starting point.</h2>
           <div className="grid-2 compact-grid">
-            {serviceExamples.map((example) => (
-              <article className="compact-card" key={example}>
-                <p>{example}</p>
+            {serviceQuestions.map(({ question, answer }) => (
+              <article className="compact-card" key={question}>
+                <h3>{question}</h3>
+                <p>{answer}</p>
               </article>
             ))}
           </div>

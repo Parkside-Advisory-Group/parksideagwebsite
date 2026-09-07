@@ -153,6 +153,13 @@ const mobile = await browser.newPage({
   hasTouch: true,
 });
 await mobile.goto(base, { waitUntil: "networkidle" });
+await check("Mobile starts light and enables the real sculpture on request", async () => {
+  assert.equal(await mobile.locator(".atelier-hero-art canvas").count(), 0);
+  await mobile.getByRole("button", { name: "Explore in 3D" }).click();
+  await mobile.waitForSelector('[data-webgl-state="ready"]');
+  assert.equal(await mobile.locator(".atelier-hero-art canvas").count(), 1);
+});
+
 await check(
   "Mobile menu opens, traps focus, escapes, and navigates",
   async () => {
@@ -262,6 +269,7 @@ await check(
   "Reduced motion has a still sculpture, visible content and honest control",
   async () => {
     await reduced.goto(base, { waitUntil: "networkidle" });
+    await reduced.getByRole("button", { name: "Explore in 3D" }).click();
     await reduced.waitForSelector('[data-webgl-state="ready"]');
     assert.equal(
       await reduced
@@ -304,6 +312,7 @@ await check("WebGL failure retains a visible static artwork", async () => {
     };
   });
   await p.goto(base, { waitUntil: "networkidle" });
+  await p.getByRole("button", { name: "Explore in 3D" }).click();
   await p.waitForSelector('[data-webgl-state="unavailable"]');
   assert.equal(
     await p

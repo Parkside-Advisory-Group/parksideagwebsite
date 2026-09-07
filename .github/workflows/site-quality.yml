@@ -1,0 +1,42 @@
+name: Site quality
+on:
+  push:
+    branches: [main, redesign/astra-atelier]
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: site-quality-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+      - run: npm run typecheck
+      - run: npx playwright install --with-deps chromium
+      - name: Verify production browser workflows
+        run: |
+          npm run start -- --port 3017 > /tmp/parkside-server.log 2>&1 &
+          trap 'kill $!' EXIT
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://localhost:3017/ > /dev/null; then break; fi
+            sleep 1
+          done
+          npm run test:browser
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-verification
+          path: |
+            work/astra/verification/
+            /tmp/parkside-server.log

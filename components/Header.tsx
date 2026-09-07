@@ -90,7 +90,6 @@ export function Header() {
         <Link
           href="/"
           className="atelier-brand"
-          aria-label="Parkside Advisory Group home"
           onClick={() => navigate("Home", "/")}
         >
           <span className="atelier-mark" aria-hidden="true">
@@ -99,7 +98,7 @@ export function Header() {
             <i />
           </span>
           <span>
-            Parkside<span className="atelier-brand-sub">ADVISORY GROUP</span>
+            Parkside{" "}<span className="atelier-brand-sub">ADVISORY GROUP</span>
           </span>
         </Link>
         <nav className="atelier-desktop-nav" aria-label="Primary navigation">
