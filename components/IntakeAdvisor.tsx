@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { track } from "@vercel/analytics";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { contactEmail } from "../lib/content";
 
 interface IntakeFormState {
   name: string;
@@ -39,7 +40,7 @@ const initialState: IntakeFormState = {
   estimatedBusinessImpact: "",
   desiredOutcome: "",
   urgency: "",
-  permissionToFollowUp: false
+  permissionToFollowUp: false,
 };
 
 type IntakePhase = "idle" | "analyzing" | "received" | "error";
@@ -65,7 +66,7 @@ const scoredFields: (keyof IntakeFormState)[] = [
   "toolsUsed",
   "estimatedBusinessImpact",
   "desiredOutcome",
-  "urgency"
+  "urgency",
 ];
 
 // Depth is a proxy for how much narrative context the operator has shared.
@@ -75,7 +76,7 @@ const analyzingSteps = [
   "Reading the workflow",
   "Mapping the handoffs",
   "Locating the likely leak",
-  "Scoring readiness"
+  "Scoring readiness",
 ];
 
 function clamp01(value: number): number {
@@ -84,24 +85,36 @@ function clamp01(value: number): number {
 
 // Presentation-only. None of this is sent to the API — the payload stays exactly formState.
 function computeDiagnostics(formState: IntakeFormState): Diagnostics {
-  const filled = scoredFields.filter((field) => String(formState[field]).trim().length > 0).length;
+  const filled = scoredFields.filter(
+    (field) => String(formState[field]).trim().length > 0,
+  ).length;
   const completeness = clamp01(filled / scoredFields.length);
 
   const narrative =
-    formState.primaryPain + formState.currentProcess + formState.estimatedBusinessImpact + formState.desiredOutcome;
+    formState.primaryPain +
+    formState.currentProcess +
+    formState.estimatedBusinessImpact +
+    formState.desiredOutcome;
   const depth = clamp01(narrative.trim().length / DEPTH_TARGET_CHARS);
 
   const readiness = clamp01(completeness * 0.55 + depth * 0.45);
-  const readinessLabel = readiness < 0.34 ? "Early" : readiness < 0.68 ? "Forming" : "Strong";
+  const readinessLabel =
+    readiness < 0.34 ? "Early" : readiness < 0.68 ? "Forming" : "Strong";
 
   const signals: string[] = [];
-  if (formState.primaryPain.trim().length > 40) signals.push("Bottleneck described");
-  if (formState.currentProcess.trim().length > 40) signals.push("Current path traced");
-  if (formState.frequencyOfIssue.trim().length > 0) signals.push("Recurrence noted");
-  if (formState.peopleInvolved.trim().length > 0) signals.push("Owners identified");
+  if (formState.primaryPain.trim().length > 40)
+    signals.push("Bottleneck described");
+  if (formState.currentProcess.trim().length > 40)
+    signals.push("Current path traced");
+  if (formState.frequencyOfIssue.trim().length > 0)
+    signals.push("Recurrence noted");
+  if (formState.peopleInvolved.trim().length > 0)
+    signals.push("Owners identified");
   if (formState.toolsUsed.trim().length > 0) signals.push("Tooling mapped");
-  if (formState.estimatedBusinessImpact.trim().length > 20) signals.push("Impact framed");
-  if (formState.desiredOutcome.trim().length > 20) signals.push("Target outcome set");
+  if (formState.estimatedBusinessImpact.trim().length > 20)
+    signals.push("Impact framed");
+  if (formState.desiredOutcome.trim().length > 20)
+    signals.push("Target outcome set");
 
   return { completeness, depth, readiness, readinessLabel, signals };
 }
@@ -126,11 +139,16 @@ export function IntakeAdvisor() {
     return () => clearInterval(interval);
   }, [phase]);
 
-  function updateField<T extends keyof IntakeFormState>(field: T, value: IntakeFormState[T]): void {
+  function updateField<T extends keyof IntakeFormState>(
+    field: T,
+    value: IntakeFormState[T],
+  ): void {
     setFormState((currentState) => ({ ...currentState, [field]: value }));
   }
 
-  async function submitIntake(event: FormEvent<HTMLFormElement>): Promise<void> {
+  async function submitIntake(
+    event: FormEvent<HTMLFormElement>,
+  ): Promise<void> {
     event.preventDefault();
     track("snapshot_form_submit_attempt", { source: "intake-advisor" });
     setStepIndex(0);
@@ -138,28 +156,72 @@ export function IntakeAdvisor() {
     setStatus("Preparing the Snapshot intake...");
     setSummary("");
 
-    const response = await fetch("/api/intake", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formState)
-    });
-    const payload = (await response.json()) as { errors?: string[]; record?: { internal_summary: string } };
+    try {
+      const response = await fetch("/api/intake", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formState),
+      });
+      const payload: unknown = await response.json();
+      if (
+        typeof payload !== "object" ||
+        payload === null ||
+        Array.isArray(payload)
+      ) {
+        throw new Error("Unexpected intake response");
+      }
 
-    if (!response.ok) {
-      track("snapshot_form_submit_error", { source: "intake-advisor", reason: "api_validation" });
+      if (!response.ok) {
+        const errors =
+          "errors" in payload && Array.isArray(payload.errors)
+            ? payload.errors.filter(
+                (error): error is string => typeof error === "string",
+              )
+            : [];
+        track("snapshot_form_submit_error", {
+          source: "intake-advisor",
+          reason: "api_validation",
+        });
+        setPhase("error");
+        setStatus(
+          errors.join(" ") ||
+            "The intake could not be submitted. Please try again.",
+        );
+        return;
+      }
+
+      track("snapshot_form_submit_success", { source: "intake-advisor" });
+      setPhase("received");
+      setStatus(
+        "Snapshot request received. Parkside will review the workflow and follow up with the report or next question.",
+      );
+      const record = "record" in payload ? payload.record : undefined;
+      setSummary(
+        typeof record === "object" &&
+          record !== null &&
+          "internal_summary" in record &&
+          typeof record.internal_summary === "string"
+          ? record.internal_summary
+          : "",
+      );
+    } catch {
+      track("snapshot_form_submit_error", {
+        source: "intake-advisor",
+        reason: "network_or_response",
+      });
       setPhase("error");
-      setStatus(payload.errors?.join(" ") ?? "The intake could not be submitted.");
-      return;
+      setStatus(
+        `We could not confirm your request. Your answers are still here. Please try again or email ${contactEmail}.`,
+      );
     }
-
-    track("snapshot_form_submit_success", { source: "intake-advisor" });
-    setPhase("received");
-    setStatus("Snapshot request received. Parkside will review the workflow and follow up with the report or next question.");
-    setSummary(payload.record?.internal_summary ?? "");
   }
 
   return (
-    <form className="intake-form" onSubmit={submitIntake} aria-label="Parkside Intake Advisor">
+    <form
+      className="intake-form"
+      onSubmit={submitIntake}
+      aria-label="Parkside Intake Advisor"
+    >
       <IntakeDiagnostic
         diagnostics={diagnostics}
         phase={phase}
@@ -168,8 +230,8 @@ export function IntakeAdvisor() {
       />
 
       <div className="notice">
-        The free Snapshot starts with how work moves today. Do not submit passwords, private credentials, or
-        confidential access details.
+        The free Snapshot starts with how work moves today. Do not submit
+        passwords, private credentials, or confidential access details.
       </div>
 
       <FormSection
@@ -195,18 +257,28 @@ export function IntakeAdvisor() {
           />
         </Field>
         <Field id="phone" label="Phone (optional)">
-          <input id="phone" value={formState.phone} onChange={(event) => updateField("phone", event.target.value)} />
+          <input
+            id="phone"
+            value={formState.phone}
+            onChange={(event) => updateField("phone", event.target.value)}
+          />
         </Field>
         <Field id="business-name" label="Business name" required>
           <input
             id="business-name"
             value={formState.businessName}
-            onChange={(event) => updateField("businessName", event.target.value)}
+            onChange={(event) =>
+              updateField("businessName", event.target.value)
+            }
             required
           />
         </Field>
         <Field id="website" label="Website">
-          <input id="website" value={formState.website} onChange={(event) => updateField("website", event.target.value)} />
+          <input
+            id="website"
+            value={formState.website}
+            onChange={(event) => updateField("website", event.target.value)}
+          />
         </Field>
         <Field id="industry" label="Industry or business type" required>
           <input
@@ -223,7 +295,12 @@ export function IntakeAdvisor() {
         title="Current Bottlenecks"
         description="Point to the repeated work, missed handoffs, or slow response points that need a clearer system."
       >
-        <Field id="primary-pain" label="What process feels most manual, repetitive, or hard to keep up with?" required full>
+        <Field
+          id="primary-pain"
+          label="What process feels most manual, repetitive, or hard to keep up with?"
+          required
+          full
+        >
           <textarea
             id="primary-pain"
             value={formState.primaryPain}
@@ -235,15 +312,24 @@ export function IntakeAdvisor() {
           <input
             id="frequency-of-issue"
             value={formState.frequencyOfIssue}
-            onChange={(event) => updateField("frequencyOfIssue", event.target.value)}
+            onChange={(event) =>
+              updateField("frequencyOfIssue", event.target.value)
+            }
             placeholder="Daily, weekly, during busy season, after every new lead..."
           />
         </Field>
-        <Field id="current-process" label="How is the process handled today?" required full>
+        <Field
+          id="current-process"
+          label="How is the process handled today?"
+          required
+          full
+        >
           <textarea
             id="current-process"
             value={formState.currentProcess}
-            onChange={(event) => updateField("currentProcess", event.target.value)}
+            onChange={(event) =>
+              updateField("currentProcess", event.target.value)
+            }
             required
           />
         </Field>
@@ -251,7 +337,9 @@ export function IntakeAdvisor() {
           <input
             id="people-involved"
             value={formState.peopleInvolved}
-            onChange={(event) => updateField("peopleInvolved", event.target.value)}
+            onChange={(event) =>
+              updateField("peopleInvolved", event.target.value)
+            }
           />
         </Field>
       </FormSection>
@@ -273,14 +361,22 @@ export function IntakeAdvisor() {
           <input
             id="estimated-time-lost"
             value={formState.estimatedTimeLost}
-            onChange={(event) => updateField("estimatedTimeLost", event.target.value)}
+            onChange={(event) =>
+              updateField("estimatedTimeLost", event.target.value)
+            }
           />
         </Field>
-        <Field id="estimated-business-impact" label="Estimated revenue, customer, delay, or follow-up impact" full>
+        <Field
+          id="estimated-business-impact"
+          label="Estimated revenue, customer, delay, or follow-up impact"
+          full
+        >
           <textarea
             id="estimated-business-impact"
             value={formState.estimatedBusinessImpact}
-            onChange={(event) => updateField("estimatedBusinessImpact", event.target.value)}
+            onChange={(event) =>
+              updateField("estimatedBusinessImpact", event.target.value)
+            }
           />
         </Field>
       </FormSection>
@@ -290,15 +386,25 @@ export function IntakeAdvisor() {
         title="Desired Outcomes"
         description="Describe what should be more repeatable after the Snapshot and how soon the issue matters."
       >
-        <Field id="desired-outcome" label="What would a better outcome look like?" full>
+        <Field
+          id="desired-outcome"
+          label="What would a better outcome look like?"
+          full
+        >
           <textarea
             id="desired-outcome"
             value={formState.desiredOutcome}
-            onChange={(event) => updateField("desiredOutcome", event.target.value)}
+            onChange={(event) =>
+              updateField("desiredOutcome", event.target.value)
+            }
           />
         </Field>
         <Field id="urgency" label="Timeline or urgency" full>
-          <input id="urgency" value={formState.urgency} onChange={(event) => updateField("urgency", event.target.value)} />
+          <input
+            id="urgency"
+            value={formState.urgency}
+            onChange={(event) => updateField("urgency", event.target.value)}
+          />
         </Field>
       </FormSection>
 
@@ -306,16 +412,30 @@ export function IntakeAdvisor() {
         <input
           type="checkbox"
           checked={formState.permissionToFollowUp}
-          onChange={(event) => updateField("permissionToFollowUp", event.target.checked)}
+          onChange={(event) =>
+            updateField("permissionToFollowUp", event.target.checked)
+          }
           required
         />
-        <span>I give Parkside permission to follow up about this workflow.</span>
+        <span>
+          I give Parkside permission to follow up about this workflow.
+        </span>
       </label>
 
-      <button className="btn intake-submit" type="submit" disabled={phase === "analyzing"}>
-        {phase === "analyzing" ? "Analyzing workflow…" : "Request the Free Snapshot"}
+      <button
+        className="btn intake-submit"
+        type="submit"
+        disabled={phase === "analyzing"}
+      >
+        {phase === "analyzing"
+          ? "Analyzing workflow…"
+          : "Request the Free Snapshot"}
       </button>
-      {status ? <p className="notice" role="status">{status}</p> : null}
+      {status ? (
+        <p className="notice" role="status">
+          {status}
+        </p>
+      ) : null}
       {summary ? <pre className="result-box">{summary}</pre> : null}
     </form>
   );
@@ -325,13 +445,23 @@ function FormSection({
   step,
   title,
   description,
-  children
-}: Readonly<{ step: string; title: string; description: string; children: React.ReactNode }>) {
+  children,
+}: Readonly<{
+  step: string;
+  title: string;
+  description: string;
+  children: React.ReactNode;
+}>) {
   return (
-    <section className="form-section" aria-labelledby={`${title.toLowerCase().replaceAll(" ", "-")}-heading`}>
+    <section
+      className="form-section"
+      aria-labelledby={`${title.toLowerCase().replaceAll(" ", "-")}-heading`}
+    >
       <div className="form-section-header">
         <span className="meta">{step}</span>
-        <h2 id={`${title.toLowerCase().replaceAll(" ", "-")}-heading`}>{title}</h2>
+        <h2 id={`${title.toLowerCase().replaceAll(" ", "-")}-heading`}>
+          {title}
+        </h2>
         <p>{description}</p>
       </div>
       <div className="field-grid">{children}</div>
@@ -344,8 +474,14 @@ function Field({
   label,
   required,
   full,
-  children
-}: Readonly<{ id: string; label: string; required?: boolean; full?: boolean; children: React.ReactNode }>) {
+  children,
+}: Readonly<{
+  id: string;
+  label: string;
+  required?: boolean;
+  full?: boolean;
+  children: React.ReactNode;
+}>) {
   return (
     <div className={full ? "field full" : "field"}>
       <label htmlFor={id}>
@@ -363,15 +499,37 @@ function IntakeDiagnostic({
   diagnostics,
   phase,
   stepLabel,
-  reduceMotion
-}: Readonly<{ diagnostics: Diagnostics; phase: IntakePhase; stepLabel: string; reduceMotion: boolean }>) {
+  reduceMotion,
+}: Readonly<{
+  diagnostics: Diagnostics;
+  phase: IntakePhase;
+  stepLabel: string;
+  reduceMotion: boolean;
+}>) {
   const meters = [
-    { label: "Intake completeness", value: diagnostics.completeness, note: `${Math.round(diagnostics.completeness * 100)}%` },
-    { label: "Detail depth", value: diagnostics.depth, note: `${Math.round(diagnostics.depth * 100)}%` },
-    { label: "Readiness signal", value: diagnostics.readiness, note: diagnostics.readinessLabel }
+    {
+      label: "Intake completeness",
+      value: diagnostics.completeness,
+      note: `${Math.round(diagnostics.completeness * 100)}%`,
+    },
+    {
+      label: "Detail depth",
+      value: diagnostics.depth,
+      note: `${Math.round(diagnostics.depth * 100)}%`,
+    },
+    {
+      label: "Readiness signal",
+      value: diagnostics.readiness,
+      note: diagnostics.readinessLabel,
+    },
   ];
 
-  const refLabel = phase === "received" ? "Queued" : phase === "analyzing" ? "Analyzing" : "Draft";
+  const refLabel =
+    phase === "received"
+      ? "Queued"
+      : phase === "analyzing"
+        ? "Analyzing"
+        : "Draft";
 
   return (
     <div className="intake-diag" data-phase={phase} aria-hidden="true">
@@ -396,7 +554,11 @@ function IntakeDiagnostic({
                 className="intake-diag-fill"
                 initial={false}
                 animate={{ width: `${Math.max(3, meter.value * 100)}%` }}
-                transition={reduceMotion ? { duration: 0 } : { duration: 0.6, ease: DIAG_EASE }}
+                transition={
+                  reduceMotion
+                    ? { duration: 0 }
+                    : { duration: 0.6, ease: DIAG_EASE }
+                }
               />
             </span>
           </div>
@@ -412,14 +574,16 @@ function IntakeDiagnostic({
               initial={reduceMotion ? false : { opacity: 0, y: 6, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.4, ease: DIAG_EASE }}
+              transition={{ duration: reduceMotion ? 0 : 0.4, ease: DIAG_EASE }}
             >
               {signal}
             </motion.span>
           ))}
         </AnimatePresence>
         {diagnostics.signals.length === 0 ? (
-          <span className="intake-diag-empty">Signals surface here as you describe the workflow.</span>
+          <span className="intake-diag-empty">
+            Signals surface here as you describe the workflow.
+          </span>
         ) : null}
       </div>
 
@@ -429,11 +593,17 @@ function IntakeDiagnostic({
             className="intake-diag-scan"
             initial={reduceMotion ? false : { opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.35, ease: DIAG_EASE }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
+            transition={{ duration: reduceMotion ? 0 : 0.35, ease: DIAG_EASE }}
           >
             <span className="intake-diag-scan-label">{stepLabel}…</span>
-            <span className={reduceMotion ? "intake-diag-scan-bar" : "intake-diag-scan-bar intake-diag-scan-bar-live"}>
+            <span
+              className={
+                reduceMotion
+                  ? "intake-diag-scan-bar"
+                  : "intake-diag-scan-bar intake-diag-scan-bar-live"
+              }
+            >
               <span />
             </span>
           </motion.div>

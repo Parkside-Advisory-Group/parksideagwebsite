@@ -1,0 +1,418 @@
+/* The quieter editorial chapters of the Parkside atelier.
+   Scoped to content pages so the homepage keeps its own visual composition. */
+main:not(.atelier-home) {
+  --rule: rgba(122, 31, 43, 0.16);
+  --rule-strong: rgba(122, 31, 43, 0.3);
+  background: var(--cream);
+}
+
+main:not(.atelier-home) .page-hero {
+  background: var(--cream);
+  border: 0;
+  padding: clamp(88px, 10vw, 152px) 0 clamp(64px, 8vw, 112px);
+}
+
+main:not(.atelier-home) .page-title {
+  color: var(--burgundy);
+  font-size: clamp(48px, 6.4vw, 88px);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 0.99;
+  max-width: 21ch;
+}
+
+main:not(.atelier-home) .section-title {
+  font-size: clamp(34px, 4.2vw, 56px);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.07;
+}
+
+main:not(.atelier-home) .section {
+  padding-block: clamp(72px, 9vw, 128px);
+}
+
+main:not(.atelier-home) .eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+main:not(.atelier-home)
+  :is(
+    .eyebrow,
+    .panel,
+    .card,
+    .compact-card,
+    .answer-panel,
+    .blueprint-card,
+    .form-section,
+    .estimator-section,
+    .intake-diag,
+    .dark-band,
+    .btn
+  )::before {
+  display: none;
+}
+
+main:not(.atelier-home) :is(.plotted, .section-plotted) {
+  background-image: none;
+}
+main:not(.atelier-home) .lede {
+  font-size: clamp(17px, 1.5vw, 19px);
+  line-height: 1.8;
+}
+main:not(.atelier-home) .page-hero > .split {
+  align-items: start;
+}
+
+main:not(.atelier-home) :is(.panel, .card, .compact-card, .blueprint-card) {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--rule-strong);
+  box-shadow: none;
+  padding: clamp(24px, 3vw, 40px) 0;
+}
+
+main:not(.atelier-home) .card:hover {
+  box-shadow: none;
+  transform: none;
+}
+main:not(.atelier-home) .card h3 {
+  color: var(--burgundy);
+  font-size: clamp(28px, 3vw, 38px);
+  font-weight: 400;
+}
+main:not(.atelier-home) .card :is(p, li) {
+  font-size: 16px;
+  line-height: 1.75;
+}
+main:not(.atelier-home) :is(.grid-2, .grid-3) {
+  gap: clamp(28px, 4vw, 56px);
+}
+main:not(.atelier-home) .answer-band {
+  background: var(--cream-deep);
+}
+main:not(.atelier-home) .answer-panel {
+  background: transparent;
+  border: 0;
+  border-left: 1px solid var(--gold);
+  padding: 0 0 0 clamp(24px, 3vw, 44px);
+}
+main:not(.atelier-home) .answer-panel p {
+  color: var(--burgundy);
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+main:not(.atelier-home) :is(.dark-band, .page-hero.dark-band) {
+  background: var(--burgundy);
+  color: var(--cream);
+}
+
+main:not(.atelier-home) .dark-band :is(.page-title, .section-title, .card h3) {
+  color: var(--cream);
+}
+main:not(.atelier-home) .dark-band .eyebrow {
+  color: var(--gold-light);
+}
+main:not(.atelier-home) .dark-band .btn:not(.secondary):not(.ghost) {
+  background: var(--cream);
+  border-color: var(--cream);
+  color: var(--burgundy);
+}
+main:not(.atelier-home) .dark-band .btn:not(.secondary):not(.ghost):hover {
+  background: var(--cream-deep);
+}
+main:not(.atelier-home) .dark-band :is(.card, .panel) {
+  background: transparent;
+  border-color: var(--rule-light);
+}
+
+main:not(.atelier-home) .btn {
+  border-radius: 2px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+  min-height: 52px;
+  padding: 16px 24px;
+  text-transform: none;
+}
+
+main:not(.atelier-home) .btn::after {
+  background: none;
+  content: "↗" / "";
+  height: auto;
+  width: auto;
+  font-size: 18px;
+  line-height: 1;
+}
+main:not(.atelier-home) .btn:hover {
+  box-shadow: none;
+}
+main:not(.atelier-home) .text-link {
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+main:not(.atelier-home) :is(.intake-shell, .estimator-shell) {
+  gap: clamp(32px, 5vw, 72px);
+}
+main:not(.atelier-home) .intake-shell .page-title {
+  font-size: clamp(45px, 4.8vw, 68px);
+}
+main:not(.atelier-home) .intake-shell .lede {
+  font-size: 17px;
+}
+main:not(.atelier-home) .intake-proof-panel {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--rule);
+  padding: 28px 0;
+}
+main:not(.atelier-home) :is(.intake-form, .estimator-form) {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  gap: 28px;
+  padding: 0;
+}
+/* Inputs must remain stationary while the visitor focuses or scrolls them. */
+main:not(.atelier-home) .intake-form {
+  animation: none;
+}
+main:not(.atelier-home) :is(.form-section, .estimator-section) {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--rule-strong);
+  gap: 24px;
+  padding: 28px 0 8px;
+}
+main:not(.atelier-home) .form-section-header {
+  border: 0;
+  padding-bottom: 4px;
+}
+main:not(.atelier-home) :is(.form-section, .estimator-section) h2 {
+  color: var(--burgundy);
+  font-size: 32px;
+  font-weight: 400;
+}
+main:not(.atelier-home) .field-grid {
+  gap: 22px 18px;
+}
+main:not(.atelier-home)
+  :is(.field label, .checkbox-row, .estimator-fieldset legend) {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.5;
+  text-transform: none;
+}
+main:not(.atelier-home) .field :is(input, select, textarea) {
+  background: rgba(255, 255, 255, 0.4);
+  border-color: var(--rule-strong);
+  border-radius: 2px;
+  font-size: 16px;
+  min-height: 52px;
+}
+main:not(.atelier-home) .field textarea {
+  min-height: 120px;
+}
+main:not(.atelier-home) .checkbox-row {
+  align-items: center;
+  min-height: 44px;
+}
+main:not(.atelier-home) .checkbox-row input {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+main:not(.atelier-home) .notice {
+  background: var(--cream-deep);
+  border: 0;
+  font-size: 13px;
+  line-height: 1.7;
+  padding: 20px 24px;
+}
+main:not(.atelier-home) .notice[role="status"] {
+  border-left: 2px solid var(--burgundy);
+}
+main:not(.atelier-home) .intake-diag {
+  background: var(--burgundy);
+  border: 0;
+  box-shadow: none;
+}
+main:not(.atelier-home) .intake-diag-header {
+  gap: 12px;
+  flex-wrap: wrap;
+}
+main:not(.atelier-home) .intake-diag-kicker {
+  font-size: 10px;
+  letter-spacing: 0.05em;
+}
+main:not(.atelier-home) :is(.intake-diag-ref, .intake-diag-empty) {
+  color: rgba(246, 241, 232, 0.78);
+}
+
+main:not(.atelier-home) .estimator-result {
+  background: var(--cream-deep);
+  border: 0;
+  box-shadow: none;
+  padding: clamp(24px, 3vw, 40px);
+}
+main:not(.atelier-home) .estimator-score span {
+  font-family: var(--serif);
+  font-size: 44px;
+  font-weight: 400;
+}
+main:not(.atelier-home) .estimator-fieldset legend {
+  margin-bottom: 12px;
+}
+main:not(.atelier-home) .option-card {
+  background: transparent;
+  border-color: var(--rule-strong);
+  border-radius: 2px;
+  min-height: 60px;
+}
+main:not(.atelier-home) .option-card:hover {
+  border-color: var(--burgundy);
+  box-shadow: none;
+  transform: none;
+}
+main:not(.atelier-home) .option-card:has(input:checked) {
+  background: var(--burgundy);
+  border-color: var(--burgundy);
+  color: var(--cream);
+}
+main:not(.atelier-home) .option-card:has(input:checked) input {
+  accent-color: var(--cream);
+}
+main:not(.atelier-home) .option-card:has(input:focus-visible) {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+main:not(.atelier-home) .article-body {
+  max-width: 800px;
+}
+main:not(.atelier-home) .article-section p {
+  font-size: 18px;
+  line-height: 1.85;
+}
+main:not(.atelier-home) :is(.article-takeaway, .article-cta) {
+  background: var(--cream-deep);
+  border: 0;
+  padding: clamp(28px, 4vw, 48px);
+}
+main:not(.atelier-home) .article-takeaway p:last-child {
+  color: var(--burgundy);
+  line-height: 1.25;
+}
+main:not(.atelier-home) .field-notes-hero + .section {
+  padding-top: 24px;
+}
+main:not(.atelier-home) .field-notes-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 48px 72px;
+}
+main:not(.atelier-home) .field-note-card {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--rule-strong);
+  padding: 28px 0 0;
+  gap: 20px;
+}
+main:not(.atelier-home) .field-note-card::before {
+  display: none;
+}
+main:not(.atelier-home) .field-note-card:hover {
+  box-shadow: none;
+  transform: none;
+}
+main:not(.atelier-home) .field-note-card h2 {
+  color: var(--burgundy);
+  font-size: clamp(30px, 3vw, 42px);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+main:not(.atelier-home) .field-note-card > p:not(.eyebrow) {
+  line-height: 1.8;
+}
+main:not(.atelier-home) .field-note-meta {
+  font-size: 10px;
+  padding-top: 8px;
+}
+main:not(.atelier-home) .deliverable-item {
+  min-height: 180px;
+  padding-block: 32px;
+}
+main:not(.atelier-home) .deliverable-item h3 {
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+@media (min-width: 1100px) {
+  main:not(.atelier-home) .intake-shell > div:first-child {
+    position: sticky;
+    top: calc(var(--nav-height) + 48px);
+  }
+}
+
+@media (max-width: 900px) {
+  main:not(.atelier-home) .page-hero {
+    padding-top: 64px;
+  }
+  main:not(.atelier-home) .page-title {
+    font-size: clamp(44px, 9vw, 68px);
+    max-width: 22ch;
+  }
+  main:not(.atelier-home) :is(.intake-shell, .estimator-shell) {
+    gap: 40px;
+  }
+  main:not(.atelier-home) .estimator-result {
+    position: static;
+  }
+  main:not(.atelier-home) .answer-panel {
+    padding-left: 24px;
+  }
+  main:not(.atelier-home) .intake-diag-meters {
+    grid-template-columns: 1fr;
+  }
+  main:not(.atelier-home) .field-notes-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main:not(.atelier-home) *,
+  main:not(.atelier-home) *::before,
+  main:not(.atelier-home) *::after {
+    animation: none !important;
+  }
+  main:not(.atelier-home) :is(.btn, .card, .option-card) {
+    transition: none;
+  }
+}
+
+/* Small text uses cream: brand gold on brand burgundy falls just below AA. */
+main:not(.atelier-home)
+  :is(
+    .eyebrow.light,
+    .intake-diag-kicker,
+    .intake-diag-meter-note,
+    .intake-diag-signal-title
+  ) {
+  color: var(--cream);
+}
+
+/* Fixed site navigation must never cover the first editorial label. */
+main:not(.atelier-home) .page-hero {
+  padding-top: calc(var(--nav-height) + clamp(64px, 6vw, 88px));
+}

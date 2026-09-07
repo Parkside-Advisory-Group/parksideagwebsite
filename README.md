@@ -2,6 +2,17 @@
 
 Vercel-ready Next.js site for Parkside Advisory Group, including public marketing pages, the Parkside Intake Advisor flow, intake persistence/notification integrations, and supporting operational docs.
 
+## Astra redesign — Room for what matters
+
+The `redesign/astra-atelier` branch rebuilds the public visual experience around the existing burgundy, cream, and gold palette. It includes a live Three.js ribbon sculpture, original architectural artwork, responsive editorial layouts, a workflow explorer, and consistent secondary-page styling.
+
+- `components/experience/` owns the WebGL, progressive reveals, workflow explorer, and motion preference control.
+- `app/styles/atelier.css` and `atelier-pages.css` define the new visual system.
+- `public/assets/atelier/` contains optimized, local artwork and the social-sharing image. The sculpture still is rendered from the actual geometry.
+- `tasks/astra-iterations.md` records the three design passes and final navigation fixes.
+
+Motion respects the operating-system preference and a visitor pause control. The 3D renderer pauses offscreen and falls back to a static image when WebGL is unavailable. Run `npm run build` followed by `npm run start -- --port 3017` for the production-build preview. This branch has not been published to the live site.
+
 ## Run locally
 
 ```bash
@@ -19,6 +30,8 @@ npm run lint
 npm run typecheck
 npm run build
 ```
+
+With a local server running on port 3017, run `npm run test:browser` for the 15 grouped browser regression checks. Set `PREVIEW_URL` to test another local preview. Playwright Chromium must be installed. These checks do not submit a real lead.
 
 ## Key structure
 

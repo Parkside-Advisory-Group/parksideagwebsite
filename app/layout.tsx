@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter_Tight, JetBrains_Mono, Newsreader } from "next/font/google";
+import { Manrope, JetBrains_Mono, Newsreader } from "next/font/google";
 import "./globals.css";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
@@ -10,14 +10,14 @@ import { createSitewideStructuredData } from "../lib/structured-data";
 
 export const metadata: Metadata = {
   title: {
-    default: "Parkside Advisory Group | Free AI Workflow Savings Snapshot",
-    template: "%s | Parkside Advisory Group"
+    default: "Parkside Advisory Group | Make room for what matters",
+    template: "%s | Parkside Advisory Group",
   },
   description:
     "Parkside helps small and mid-sized businesses use practical AI and workflow automation to reduce manual work, improve follow-up, and see what is happening across recurring workflows.",
   metadataBase: new URL("https://parksideag.com"),
   alternates: {
-    canonical: "https://parksideag.com/"
+    canonical: "https://parksideag.com/",
   },
   keywords: [
     "AI automation consulting",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     "Indiana AI consultant",
     "Northwest Indiana workflow automation",
     "Greater Chicagoland AI consultant",
-    "AI operations blueprint"
+    "AI operations blueprint",
   ],
   openGraph: {
     title: "Parkside Advisory Group | Free AI Workflow Savings Snapshot",
@@ -44,17 +44,17 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/assets/generated/og-operating-field.webp",
+        url: "/assets/atelier/social-cover.jpg",
         width: 1200,
         height: 630,
-        alt: "Scattered gold particle streams resolving into ordered lines — the Parkside operating line"
-      }
-    ]
+        alt: "Make room for what matters — a sculptural gold ribbon on Parkside burgundy",
+      },
+    ],
   },
   icons: {
     icon: "/brand/icons/favicon.svg",
-    apple: "/brand/icons/apple-touch-icon.png"
-  }
+    apple: "/brand/icons/apple-touch-icon.png",
+  },
 };
 
 const structuredData = createSitewideStructuredData(contactEmail);
@@ -64,30 +64,37 @@ const serif = Newsreader({
   style: ["normal", "italic"],
   weight: "variable",
   variable: "--font-newsreader",
-  display: "swap"
+  display: "swap",
 });
 
-const sans = Inter_Tight({
+const sans = Manrope({
   subsets: ["latin"],
   weight: "variable",
   variable: "--font-inter-tight",
-  display: "swap"
+  display: "swap",
 });
 
 const mono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
   variable: "--font-jetbrains",
-  display: "swap"
+  display: "swap",
 });
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable} ${mono.variable}`}>
+    <html
+      lang="en"
+      className={`${serif.variable} ${sans.variable} ${mono.variable}`}
+    >
       <body>
         <JsonLd data={structuredData} />
         <Header />
-        {children}
+        <div id="main-content" tabIndex={-1}>
+          {children}
+        </div>
         <Footer />
         <SiteAnalytics />
       </body>

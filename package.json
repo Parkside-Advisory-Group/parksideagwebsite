@@ -9,7 +9,8 @@
     "lint": "eslint . --max-warnings=0",
     "monitor:canonical-host": "node scripts/verify-canonical-host.mjs",
     "test": "tsx --test tests/*.test.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:browser": "node scripts/verify-astra.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
@@ -17,13 +18,15 @@
     "motion": "^12.42.2",
     "next": "16.2.6",
     "react": "19.2.5",
-    "react-dom": "19.2.5"
+    "react-dom": "19.2.5",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.2",
     "@types/node": "25.6.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
+    "@types/three": "^0.185.4",
     "eslint": "9.39.2",
     "eslint-config-next": "16.2.6",
     "playwright": "^1.61.1",

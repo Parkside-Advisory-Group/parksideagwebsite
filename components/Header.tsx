@@ -3,135 +3,170 @@
 import Link from "next/link";
 import { track } from "@vercel/analytics";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { primaryCta } from "../lib/content";
+import { useEffect, useRef, useState } from "react";
 
-interface NavigationItem {
-  href: string;
-  label: string;
-}
-
-const navigationItems: NavigationItem[] = [
-  { href: "/services", label: "Services" },
-  { href: "/blueprint", label: "Free Snapshot" },
-  { href: "/opportunity-estimator", label: "Estimator" },
-  { href: "/use-cases", label: "Use Cases" },
-  { href: "/field-notes", label: "Field Notes" },
-  { href: "/about", label: "About" }
+const navigation = [
+  { href: "/services", label: "What we do" },
+  { href: "/about", label: "Who we are" },
+  { href: "/field-notes", label: "Field notes" },
 ];
 
 export function Header() {
   const pathname = usePathname();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const panel = useRef<HTMLElement>(null);
+  const [scrolled, setScrolled] = useState(false);
 
-  function isActiveRoute(href: string): boolean {
-    return href === "/" ? pathname === href : pathname.startsWith(href);
-  }
+  useEffect(() => {
+    // This boolean changes only when crossing the navigation threshold.
+    const update = () => setScrolled(window.scrollY > 40);
+    const frame = requestAnimationFrame(update);
+    window.addEventListener("scroll", update, { passive: true });
+    const desktop = window.matchMedia("(min-width: 761px)");
+    const closeOnDesktop = () => {
+      if (desktop.matches) setOpen(false);
+    };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", update);
+      desktop.removeEventListener("change", closeOnDesktop);
+    };
+  }, []);
 
-  function closeMobileMenu(): void {
-    setIsMobileMenuOpen(false);
-  }
+  useEffect(() => {
+    // Back/forward navigation bypasses our link click handlers.
+    const frame = requestAnimationFrame(() => setOpen(false));
+    return () => cancelAnimationFrame(frame);
+  }, [pathname]);
 
-  function trackNavigation(label: string, href: string, location: "desktop" | "mobile" | "brand"): void {
-    track("navigation_click", { label, href, location });
-  }
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const links = panel.current?.querySelectorAll<HTMLAnchorElement>("a");
+    links?.[0]?.focus();
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        menuButton.current?.focus();
+      }
+      if (event.key === "Tab" && links?.length) {
+        const first = links[0];
+        const last = links[links.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          menuButton.current?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          menuButton.current?.focus();
+        } else if (document.activeElement === menuButton.current) {
+          event.preventDefault();
+          (event.shiftKey ? last : first).focus();
+        }
+      }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKey);
+    };
+  }, [open]);
 
-  function trackCta(location: "header" | "mobile-header"): void {
-    track("snapshot_cta_click", { location, href: "/intake", cta: primaryCta });
+  function navigate(label: string, href: string) {
+    setOpen(false);
+    track("navigation_click", { label, href, location: "atelier_header" });
   }
 
   return (
-    <header className="site-header">
-      <div className="container site-header-inner">
+    <header
+      className={`atelier-header ${pathname === "/" ? "on-home" : "on-page"} ${open ? "menu-is-open" : ""} ${scrolled ? "is-scrolled" : ""}`}
+    >
+      <a className="skip-link" href="#main-content">
+        Skip to content
+      </a>
+      <div className="atelier-header-inner">
         <Link
-          className={isActiveRoute("/") ? "brand-link active" : "brand-link"}
           href="/"
-          aria-current={isActiveRoute("/") ? "page" : undefined}
+          className="atelier-brand"
           aria-label="Parkside Advisory Group home"
-          onClick={() => {
-            trackNavigation("Home", "/", "brand");
-            closeMobileMenu();
-          }}
+          onClick={() => navigate("Home", "/")}
         >
-          <svg className="brand-mark" viewBox="0 0 120 120" aria-hidden="true">
-            <path d="M 18 88 L 18 62 L 36 56 L 36 88 Z" />
-            <path d="M 46 88 L 46 50 L 64 44 L 64 88 Z" />
-            <path d="M 74 88 L 74 38 L 92 32 L 92 88 Z" />
-            <rect x="14" y="94" width="82" height="3" />
-          </svg>
-          <span className="brand-copy">
-            <span className="brand-word">Parkside</span>
-            <span className="brand-tag">Advisory Group</span>
+          <span className="atelier-mark" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+          </span>
+          <span>
+            Parkside<span className="atelier-brand-sub">ADVISORY GROUP</span>
           </span>
         </Link>
-        <nav className="nav-links" aria-label="Primary navigation">
-          {navigationItems.map((item) => (
+        <nav className="atelier-desktop-nav" aria-label="Primary navigation">
+          {navigation.map((item) => (
             <Link
-              className={isActiveRoute(item.href) ? "active" : undefined}
-              href={item.href}
-              aria-current={isActiveRoute(item.href) ? "page" : undefined}
               key={item.href}
-              onClick={() => trackNavigation(item.label, item.href, "desktop")}
+              href={item.href}
+              aria-current={pathname.startsWith(item.href) ? "page" : undefined}
+              onClick={() => navigate(item.label, item.href)}
             >
               {item.label}
             </Link>
           ))}
-          <Link
-            className={isActiveRoute("/intake") ? "btn active" : "btn"}
-            href="/intake"
-            aria-current={isActiveRoute("/intake") ? "page" : undefined}
-            onClick={() => trackCta("header")}
-          >
-            {primaryCta}
-          </Link>
         </nav>
-        <button
-          className="mobile-menu-button"
-          type="button"
-          aria-controls="mobile-navigation"
-          aria-expanded={isMobileMenuOpen}
-          onClick={() => setIsMobileMenuOpen((currentValue) => !currentValue)}
+        <Link
+          className="atelier-header-cta"
+          href="/intake"
+          onClick={() => {
+            navigate("Get the Free Snapshot", "/intake");
+            track("snapshot_cta_click", {
+              location: "header",
+              href: "/intake",
+            });
+          }}
         >
-          <span>Menu</span>
-          <span className="menu-lines" aria-hidden="true">
-            <span />
-            <span />
-          </span>
+          Let’s talk <span aria-hidden="true">↗</span>
+        </Link>
+        <button
+          ref={menuButton}
+          className="atelier-menu-toggle"
+          type="button"
+          aria-expanded={open}
+          aria-controls={open ? "atelier-menu" : undefined}
+          aria-label={open ? "Close menu" : "Open menu"}
+          onClick={() => setOpen(!open)}
+        >
+          <span>{open ? "Close" : "Menu"}</span>
+          <i aria-hidden="true" />
         </button>
       </div>
-      <nav
-        className={isMobileMenuOpen ? "mobile-nav open" : "mobile-nav"}
-        id="mobile-navigation"
-        aria-label="Mobile navigation"
-      >
-        <div className="container mobile-nav-inner">
-          {navigationItems.map((item) => (
+      {open && (
+        <nav
+          ref={panel}
+          className="atelier-menu-panel"
+          id="atelier-menu"
+          aria-label="Mobile navigation"
+        >
+          <span className="atelier-label">Find your way</span>
+          {[
+            ...navigation,
+            { href: "/blueprint", label: "Free Snapshot" },
+            { href: "/opportunity-estimator", label: "Workflow estimator" },
+            { href: "/intake", label: "Let’s talk" },
+          ].map((item, index) => (
             <Link
-              className={isActiveRoute(item.href) ? "active" : undefined}
-              href={item.href}
-              aria-current={isActiveRoute(item.href) ? "page" : undefined}
               key={item.href}
-              onClick={() => {
-                trackNavigation(item.label, item.href, "mobile");
-                closeMobileMenu();
-              }}
+              href={item.href}
+              onClick={() => navigate(item.label, item.href)}
             >
+              <span className="atelier-menu-number">0{index + 1}</span>
               {item.label}
+              <span aria-hidden="true">↗</span>
             </Link>
           ))}
-          <Link
-            className={isActiveRoute("/intake") ? "btn active" : "btn"}
-            href="/intake"
-            aria-current={isActiveRoute("/intake") ? "page" : undefined}
-            onClick={() => {
-              trackCta("mobile-header");
-              closeMobileMenu();
-            }}
-          >
-            {primaryCta}
-          </Link>
-        </div>
-      </nav>
+          <p>Practical intelligence. Lasting impact.</p>
+        </nav>
+      )}
     </header>
   );
 }

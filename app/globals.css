@@ -19,6 +19,8 @@
 @import "./styles/pages.css";
 @import "./styles/instruments.css";
 @import "./styles/motion.css";
+@import "./styles/atelier.css";
+@import "./styles/atelier-pages.css";
 
 /*
  * Semantic Parkside tokens exposed to Tailwind utilities (bg-ink, text-gold…).
@@ -74,9 +76,13 @@
   --mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, "SF Mono", monospace;
 
   /* Rhythm */
-  --max: 1216px;
-  --gutter: clamp(20px, 4vw, 56px);
-  --nav-height: 76px;
+  --max: 1440px;
+  --gutter: clamp(24px, 5vw, 88px);
+  --nav-height: 96px;
   --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-plot: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@media (max-width: 760px) {
+  :root { --nav-height: 78px; }
 }
