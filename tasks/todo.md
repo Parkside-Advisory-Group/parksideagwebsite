@@ -24,7 +24,7 @@ Three complete visual reviews are documented in tasks/astra-iterations.md. Produ
 - [x] Correct sitemap, article metadata, structured data and crawler resources.
 - [x] Measure production mobile performance and address material issues.
 - [x] Verify build, automated checks, browser behavior and crawlable output.
-- [ ] Commit and push the verified redesign branch; confirm remote revision.
+- [x] Commit and push the verified redesign branch; confirm remote revision.
 
 The approved scope preserves the visual design and adds useful search content without invented results or ranking promises. Public search indexing and field performance require external observation after release.
 
@@ -34,3 +34,5 @@ All 17 canonical sitemap URLs return indexable server-rendered HTML; all seven a
 Mobile Lighthouse baseline → release: performance 49 → 94; accessibility 96 → 100; best practices 96 → 100; SEO 100 → 100. LCP 5.8s → 3.0s; blocking time 2550ms → 10ms; layout shift 0. These are local simulated-mobile lab results, not production field Core Web Vitals. Desktop retains live 3D; touch/data-saving devices start with artwork and have an opt-in control.
 
 Production build, lint, typecheck, 14 tests, 16 browser groups and six WCAG scans passed. Final font changes received an additional viewport check at 320/390/820/1440 and accessibility rerun. Next 16.3.4 and patched transitive dependencies produce zero npm audit findings. Site quality CI now repeats build/test/browser checks. Search indexing and AI citations remain external outcomes, not verified guarantees.
+
+Search hardening commit 3c56951 was pushed to origin/redesign/astra-atelier and its remote hash matched the local revision. Production main remains unchanged.
