@@ -327,6 +327,16 @@ export default function Sculpture({ className }: SculptureProps) {
 
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(host);
+    // The first measure can land before the hero art has a box, which leaves
+    // the still frame unpublished. Retry until a real frame is drawn.
+    let layoutRetries = 0;
+    function ensureDrawn() {
+      if (disposed || host!.dataset.webglState === "unavailable") return;
+      resize();
+      if (host!.dataset.webglState === "ready" || layoutRetries >= 10) return;
+      layoutRetries += 1;
+      requestAnimationFrame(ensureDrawn);
+    }
     const intersectionObserver = new IntersectionObserver(
       ([entry]) => {
         visible = entry.isIntersecting;
@@ -346,7 +356,7 @@ export default function Sculpture({ className }: SculptureProps) {
       "webglcontextrestored",
       contextRestored,
     );
-    resize();
+    ensureDrawn();
 
     return () => {
       disposed = true;
