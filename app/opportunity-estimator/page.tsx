@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Link from "next/link";
 import { JsonLd } from "../../components/JsonLd";
 import { OpportunityEstimator } from "../../components/OpportunityEstimator";
@@ -81,7 +82,9 @@ export default function OpportunityEstimatorPage() {
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
-          <OpportunityEstimator />
+          <Suspense fallback={<p className="lede">Loading the readiness check.</p>}>
+            <OpportunityEstimator />
+          </Suspense>
         </div>
       </section>
     </main>

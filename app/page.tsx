@@ -7,6 +7,8 @@ import SculptureLoader from "../components/experience/SculptureLoader";
 import { MotionToggle } from "../components/experience/MotionToggle";
 import { ExperienceMotion } from "../components/experience/ExperienceMotion";
 import { WorkflowExplorer } from "../components/experience/WorkflowExplorer";
+import { WorkflowTeardown } from "../components/WorkflowTeardown";
+import { CompactReadiness } from "../components/CompactReadiness";
 import { fieldNotes } from "../lib/field-notes";
 import { createRouteMetadata } from "../lib/metadata";
 import {
@@ -46,8 +48,8 @@ const steps = [
     title: "Find the friction.",
     body: "We start with the way work actually happens. The inboxes, the handoffs, the spreadsheet someone rebuilds every Friday.",
     detail: "THE FREE WORKFLOW SNAPSHOT",
-    link: "/blueprint",
-    cta: "Meet your starting point",
+    link: "/intake",
+    cta: "Get the free Snapshot",
   },
   {
     number: "02",
@@ -107,19 +109,28 @@ export default function HomePage() {
         <div className="atelier-hero-bottom">
           <div className="hero-description">
             <p>
-              Practical AI. Thoughtful automation.
-              <br />A business with room to move.
+              For teams that lose work in follow-up, reporting, and handoffs.
             </p>
-            <TrackedLink
-              className="atelier-button cream-button"
-              href="/intake"
-              eventName="snapshot_cta_click"
-              eventProperties={{ location: "home_hero", href: "/intake" }}
-            >
-              Find your starting point <span aria-hidden="true">↗</span>
-            </TrackedLink>
+            <div className="hero-actions">
+              <TrackedLink
+                className="atelier-button cream-button"
+                href="/intake"
+                eventName="snapshot_cta_click"
+                eventProperties={{ location: "home_hero", href: "/intake" }}
+              >
+                Get the free Snapshot <span aria-hidden="true">↗</span>
+              </TrackedLink>
+              <TrackedLink
+                className="atelier-button outline-button"
+                href="/opportunity-estimator"
+                eventName="estimator_cta_click"
+                eventProperties={{ location: "home_hero", href: "/opportunity-estimator" }}
+              >
+                See if this workflow is ready <span aria-hidden="true">↗</span>
+              </TrackedLink>
+            </div>
             <span className="hero-cta-note">
-              Start with a free Workflow Snapshot
+              Free Snapshot. No passwords. No obligation.
             </span>
           </div>
           <a className="hero-explore" href="#perspective">
@@ -133,13 +144,53 @@ export default function HomePage() {
           </a>
           <div className="hero-utility">
             <span className="hero-location">
-              BASED IN THE MIDWEST
+              NORTHWEST INDIANA
               <br />
-              BUILT AROUND YOUR BUSINESS
+              CHICAGOLAND &amp; BEYOND
             </span>
             <div id="sculpture-control" />
             <MotionToggle />
           </div>
+        </div>
+      </section>
+
+      <section className="atelier-teardown atelier-pad" id="teardown" aria-labelledby="teardown-title">
+        <div className="atelier-section-meta">
+          <span className="atelier-label">ILLUSTRATIVE EXAMPLE</span>
+          <span className="atelier-label">NOT A CLIENT RESULT</span>
+        </div>
+        <div className="atelier-section-heading" data-reveal>
+          <h2 id="teardown-title">
+            Where a contractor’s
+            <br />
+            <em>estimate goes quiet.</em>
+          </h2>
+          <p>
+            A commercial contractor’s inquiry and estimate follow-up. The leak is the handoff.
+            Anything the customer hears stays with a person.
+          </p>
+        </div>
+        <WorkflowTeardown />
+      </section>
+
+      <section className="atelier-readiness atelier-pad" id="workflow-readiness" aria-labelledby="readiness-title">
+        <div className="atelier-section-meta">
+          <span className="atelier-label">A SHORT READINESS CHECK</span>
+          <span className="atelier-label">SAME SCORER AS THE FULL ESTIMATOR</span>
+        </div>
+        <div className="readiness-layout">
+          <div className="atelier-section-heading" data-reveal>
+            <h2 id="readiness-title">
+              See if this
+              <br />
+              <em>workflow is ready.</em>
+            </h2>
+            <p>
+              Four questions, scored the same way as the full check. Team size, tools, examples, and timing stay open
+              until you finish there.
+            </p>
+          </div>
+          <CompactReadiness />
         </div>
       </section>
 
@@ -344,7 +395,10 @@ export default function HomePage() {
           </Link>
         </div>
         <div className="journal-list">
-          {fieldNotes.slice(1, 3).map((note, index) => (
+          {[...fieldNotes]
+            .sort((left, right) => right.date.localeCompare(left.date))
+            .slice(0, 3)
+            .map((note, index) => (
             <Link
               className="journal-entry"
               href={`/field-notes/${note.slug}`}

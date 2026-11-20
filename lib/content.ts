@@ -55,7 +55,7 @@ export const offers: Offer[] = [
       "Capture and routing logic",
       "Reminders, summaries, or status views",
       "Validation and handoff rules",
-      "Team rollout and tuning"
+      "A short walkthrough and review rules your team can run on a Tuesday"
     ]
   },
   {
@@ -67,8 +67,8 @@ export const offers: Offer[] = [
     outcomes: [
       "Agent scope and non-goals",
       "Prompt, tool, and data design",
-      "Review and escalation rules",
-      "Operational test cases"
+      "Review and escalation rules a person can follow",
+      "A walkthrough of the failure path"
     ]
   },
   {
@@ -81,7 +81,7 @@ export const offers: Offer[] = [
       "Monthly workflow review",
       "System tuning and cleanup",
       "Reporting improvements",
-      "Next-build discovery"
+      "Support so your people keep running the system"
     ]
   }
 ];

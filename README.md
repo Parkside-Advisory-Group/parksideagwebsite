@@ -61,7 +61,7 @@ Copy `.env.example` to `.env.local` and fill values as integrations are connecte
 
 ## Current live system
 
-- Home, Services, Blueprint, Use Cases, About, Intake, Growth Audit, and Privacy pages.
+- Home, Services, Blueprint, Use Cases, About, Intake, Opportunity Estimator, and Privacy pages. `/growth-audit` permanently redirects to `/intake`.
 - Primary intake route at `/api/intake`.
 - Server-side intake validation and guardrail enforcement.
 - Lead scoring and tiering.

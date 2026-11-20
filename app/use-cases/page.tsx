@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "../../components/JsonLd";
+import { WorkflowTeardown } from "../../components/WorkflowTeardown";
 import { primaryCta, useCases } from "../../lib/content";
 import { createRouteMetadata } from "../../lib/metadata";
 import {
@@ -20,13 +21,6 @@ export const metadata: Metadata = createRouteMetadata({
 
 const useCaseAnswer =
   "Parkside use cases are recurring operating workflows where better capture, routing, follow-up, drafting, or visibility can reduce manual coordination while keeping ownership and review clear.";
-
-const illustrativeWorkflow = [
-  "An estimate is marked sent, with the customer, owner, and next follow-up date recorded.",
-  "The system checks for a reply or status change before preparing a reminder.",
-  "The owner reviews the message and any customer-specific context before sending.",
-  "Accepted, declined, or paused estimates leave the follow-up queue; unclear cases return to the owner."
-];
 
 const evaluationMeasures = [
   "Follow-up coverage: estimates with a recorded next action, compared with all open estimates.",
@@ -116,27 +110,29 @@ export default function UseCasesPage() {
       </section>
 
       <section className="section">
+        <div className="container">
+          <p className="eyebrow">Illustrative Workflow</p>
+          <h2 className="section-title">An estimate sent. A next step kept.</h2>
+          <p className="lede">
+            An illustrative teardown of a commercial contractor’s inquiry and estimate follow-up, not a client result.
+            The final design depends on the team’s tools and review requirements.
+          </p>
+          <WorkflowTeardown />
+        </div>
+      </section>
+
+      <section className="section" style={{ paddingTop: 0 }}>
         <div className="container evidence-grid">
-          <div>
-            <p className="eyebrow">Illustrative Workflow</p>
-            <h2 className="section-title">An estimate sent. A next step kept.</h2>
-            <p>A possible follow-up sequence, not a client result. The final design depends on the team’s tools and review requirements.</p>
-            <ul className="audit-checklist">
-              {illustrativeWorkflow.map((input) => (
-                <li key={input}>{input}</li>
-              ))}
-            </ul>
-          </div>
           <div>
             <p className="eyebrow">How to Evaluate It</p>
             <h2 className="section-title">Measure the work, including the review.</h2>
             <p>Compare a representative sample before and after a pilot. Include exception handling and reviewer time; a faster draft alone does not prove the workflow improved.</p>
-            <ul className="audit-checklist">
-              {evaluationMeasures.map((output) => (
-                <li key={output}>{output}</li>
-              ))}
-            </ul>
           </div>
+          <ul className="audit-checklist">
+            {evaluationMeasures.map((output) => (
+              <li key={output}>{output}</li>
+            ))}
+          </ul>
         </div>
       </section>
 

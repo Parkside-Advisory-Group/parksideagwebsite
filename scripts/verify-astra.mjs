@@ -97,8 +97,8 @@ await check(
       "/about",
       "/field-notes",
       "/intake",
-      "/growth-audit",
       "/opportunity-estimator",
+      "/use-cases/contractors",
       "/privacy",
     ]) {
       await page.goto(base + route, { waitUntil: "networkidle" });
@@ -118,6 +118,11 @@ await check(
     }
   },
 );
+await check("Legacy growth audit permanently redirects to intake", async () => {
+  const response = await page.request.get(base + "/growth-audit", { maxRedirects: 0 });
+  assert.equal(response.status(), 301);
+  assert.match(response.headers().location ?? "", /\/intake$/);
+});
 await check(
   "Estimator calculates and displays strongest readiness case",
   async () => {

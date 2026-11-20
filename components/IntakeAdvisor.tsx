@@ -1,9 +1,12 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { track } from "@vercel/analytics";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { BookingLink } from "./BookingLink";
 import { contactEmail } from "../lib/content";
+import { STRONG_STARTING_SCORE, readEstimatorContext } from "../lib/opportunity/estimator";
 
 interface IntakeFormState {
   name: string;
@@ -120,7 +123,15 @@ function computeDiagnostics(formState: IntakeFormState): Diagnostics {
 }
 
 export function IntakeAdvisor() {
-  const [formState, setFormState] = useState<IntakeFormState>(initialState);
+  const searchParams = useSearchParams();
+  const estimatorContext = useMemo(
+    () => readEstimatorContext(searchParams),
+    [searchParams],
+  );
+  const [formState, setFormState] = useState<IntakeFormState>({
+    ...initialState,
+    toolsUsed: estimatorContext?.state.tools.join(", ") ?? "",
+  });
   const [status, setStatus] = useState<string>("");
   const [summary, setSummary] = useState<string>("");
   const [phase, setPhase] = useState<IntakePhase>("idle");
@@ -150,7 +161,8 @@ export function IntakeAdvisor() {
     event: FormEvent<HTMLFormElement>,
   ): Promise<void> {
     event.preventDefault();
-    track("snapshot_form_submit_attempt", { source: "intake-advisor" });
+    const source = estimatorContext ? "opportunity-estimator" : "intake";
+    track("snapshot_form_submit_attempt", { source });
     setStepIndex(0);
     setPhase("analyzing");
     setStatus("Preparing the Snapshot intake...");
@@ -160,7 +172,16 @@ export function IntakeAdvisor() {
       const response = await fetch("/api/intake", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formState),
+        body: JSON.stringify({
+          ...formState,
+          source,
+          ...(estimatorContext?.state.teamSize
+            ? { teamSize: estimatorContext.state.teamSize }
+            : {}),
+          ...(estimatorContext
+            ? { growthContext: estimatorContext.summary }
+            : {}),
+        }),
       });
       const payload: unknown = await response.json();
       if (
@@ -179,7 +200,7 @@ export function IntakeAdvisor() {
               )
             : [];
         track("snapshot_form_submit_error", {
-          source: "intake-advisor",
+          source,
           reason: "api_validation",
         });
         setPhase("error");
@@ -190,7 +211,7 @@ export function IntakeAdvisor() {
         return;
       }
 
-      track("snapshot_form_submit_success", { source: "intake-advisor" });
+      track("snapshot_form_submit_success", { source });
       setPhase("received");
       setStatus(
         "Snapshot request received. Parkside will review the workflow and follow up with the report or next question.",
@@ -206,7 +227,7 @@ export function IntakeAdvisor() {
       );
     } catch {
       track("snapshot_form_submit_error", {
-        source: "intake-advisor",
+        source,
         reason: "network_or_response",
       });
       setPhase("error");
@@ -233,6 +254,16 @@ export function IntakeAdvisor() {
         The free Snapshot starts with how work moves today. Do not submit
         passwords, private credentials, or confidential access details.
       </div>
+
+      {estimatorContext ? (
+        <div className="estimator-context" role="status">
+          <p>From your readiness check</p>
+          <p>{estimatorContext.summary}</p>
+          {estimatorContext.result.score >= STRONG_STARTING_SCORE ? (
+            <BookingLink className="btn ghost" />
+          ) : null}
+        </div>
+      ) : null}
 
       <FormSection
         step="Step 1 of 4"
@@ -436,6 +467,7 @@ export function IntakeAdvisor() {
           {status}
         </p>
       ) : null}
+      {phase === "received" ? <BookingLink className="btn ghost" /> : null}
       {summary ? <pre className="result-box">{summary}</pre> : null}
     </form>
   );
