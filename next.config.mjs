@@ -44,6 +44,15 @@ const nextConfig = {
       }
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: "/growth-audit",
+        destination: "/intake",
+        statusCode: 301
+      }
+    ];
+  },
   turbopack: {
     root: import.meta.dirname
   }

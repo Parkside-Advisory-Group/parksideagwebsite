@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { JsonLd } from "../../components/JsonLd";
 import { IntakeAdvisor } from "../../components/IntakeAdvisor";
 import { createRouteMetadata } from "../../lib/metadata";
@@ -50,7 +51,9 @@ export default function IntakePage() {
               </ul>
             </div>
           </div>
-          <IntakeAdvisor />
+          <Suspense fallback={<p className="lede">Loading the Snapshot form.</p>}>
+            <IntakeAdvisor />
+          </Suspense>
         </div>
       </section>
     </main>

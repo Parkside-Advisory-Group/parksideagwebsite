@@ -124,7 +124,7 @@ export function Header() {
             });
           }}
         >
-          Let’s talk <span aria-hidden="true">↗</span>
+          Get the free Snapshot <span aria-hidden="true">↗</span>
         </Link>
         <button
           ref={menuButton}
@@ -149,9 +149,10 @@ export function Header() {
           <span className="atelier-label">Find your way</span>
           {[
             ...navigation,
-            { href: "/blueprint", label: "Free Snapshot" },
+            { href: "/use-cases", label: "Use cases" },
             { href: "/opportunity-estimator", label: "Workflow estimator" },
-            { href: "/intake", label: "Let’s talk" },
+            { href: "/blueprint", label: "How the Snapshot works" },
+            { href: "/intake", label: "Get the free Snapshot" },
           ].map((item, index) => (
             <Link
               key={item.href}

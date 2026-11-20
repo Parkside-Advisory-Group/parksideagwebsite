@@ -107,6 +107,21 @@ export default function BlueprintPage() {
     "Readiness notes, human review points, and follow-up questions"
   ];
 
+  const snapshotDeliverables = [
+    "Workflow leak summary",
+    "Three practical opportunities",
+    "First-system recommendation",
+    "Readiness notes and follow-up questions"
+  ];
+
+  const paidBlueprintDeliverables = [
+    "Workflow leak map with owners and handoffs",
+    "First-build recommendation",
+    "Human review and failure-path notes",
+    "30/60/90-day implementation path",
+    "Owner and next-action model"
+  ];
+
   const blueprintExamples = [
     "A contractor needs missed calls and web leads turned into complete intake records with follow-up reminders.",
     "A service business needs stale estimates surfaced before revenue opportunities go cold.",
@@ -115,9 +130,9 @@ export default function BlueprintPage() {
   ];
 
   const blueprintGuardrails = [
-    "The Blueprint does not assume AI is the answer before the workflow is understood.",
+    "Parkside does not assume AI is the answer before the workflow is understood.",
     "The recommendation keeps customer-facing judgment human-owned unless review rules are clear.",
-    "The audit calls out data or access gaps before implementation is scoped.",
+    "The Snapshot calls out data or access gaps before a paid Blueprint or implementation is scoped.",
     "The output avoids fixed pricing, exact savings claims, and feasibility promises before discovery is complete."
   ];
 
@@ -134,15 +149,6 @@ export default function BlueprintPage() {
     "Which handoffs depend on texts, memory, or side conversations",
     "Which spreadsheets, inboxes, calendars, or CRMs hold the source of truth",
     "Where human review is required before AI or automation should act"
-  ];
-
-  const deliverables = [
-    "Workflow leak map",
-    "First-build recommendation",
-    "Automation and AI opportunity list",
-    "Human review and failure-path notes",
-    "30/60/90-day implementation path",
-    "Owner and next-action model"
   ];
 
   return (
@@ -213,7 +219,7 @@ export default function BlueprintPage() {
         <div className="container evidence-grid">
           <div>
             <p className="eyebrow">Inputs</p>
-            <h2 className="section-title">What makes the audit productive.</h2>
+            <h2 className="section-title">What makes the Snapshot useful.</h2>
             <ul className="audit-checklist">
               {blueprintInputs.map((input) => (
                 <li key={input}>{input}</li>
@@ -222,7 +228,7 @@ export default function BlueprintPage() {
           </div>
           <div>
             <p className="eyebrow">Outputs</p>
-            <h2 className="section-title">What the Blueprint produces.</h2>
+            <h2 className="section-title">What the Snapshot produces.</h2>
             <ul className="audit-checklist">
               {blueprintOutputs.map((output) => (
                 <li key={output}>{output}</li>
@@ -235,9 +241,32 @@ export default function BlueprintPage() {
       <section className="section">
         <div className="container">
           <p className="eyebrow">What You Receive</p>
-          <h2 className="section-title">A short report that names the likely leaks and best first move.</h2>
+          <h2 className="section-title">A short free report that names the likely leaks and best first move.</h2>
+          <p className="lede">
+            The Snapshot is free. It does not include a 30/60/90-day implementation path. That planning belongs to the
+            paid Blueprint, and only after the Snapshot shows a workflow worth mapping.
+          </p>
           <div className="deliverable-grid">
-            {deliverables.map((deliverable, index) => (
+            {snapshotDeliverables.map((deliverable, index) => (
+              <article className="deliverable-item" key={deliverable}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <h3>{deliverable}</h3>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ background: "var(--cream-deep)" }}>
+        <div className="container">
+          <p className="eyebrow">The paid next step</p>
+          <h2 className="section-title">The AI Operations Blueprint is a separate working session.</h2>
+          <p className="lede">
+            The Snapshot is free. The Blueprint is a paid working session, scoped after the Snapshot. Implementation is
+            quoted only after that. No price is set before the workflow is understood.
+          </p>
+          <div className="deliverable-grid">
+            {paidBlueprintDeliverables.map((deliverable, index) => (
               <article className="deliverable-item" key={deliverable}>
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 <h3>{deliverable}</h3>
@@ -297,7 +326,7 @@ export default function BlueprintPage() {
         <div className="container guardrail-layout">
           <div>
             <p className="eyebrow">Guardrails</p>
-            <h2 className="section-title">The Blueprint defines where automation should stop.</h2>
+            <h2 className="section-title">The Snapshot says where to wait. The Blueprint defines where a build should stop.</h2>
             <ul className="audit-checklist">
               {blueprintGuardrails.map((guardrail) => (
                 <li key={guardrail}>{guardrail}</li>
@@ -339,9 +368,9 @@ export default function BlueprintPage() {
           </div>
           <div>
             <p className="lede">
-              The Snapshot can lead into a paid AI Operations Blueprint, then a scoped automation sprint, AI-assisted
-              intake or follow-up, a reporting view, or an internal handoff system. Parkside installs the useful layer
-              first, then tunes it as the team uses it.
+              If the Snapshot shows a real opportunity, the next step is a paid AI Operations Blueprint: a working
+              session that maps owners, handoffs, and a 30/60/90-day path. Implementation is quoted after that, not
+              before. The system is built so the people who own the work can run it.
             </p>
             <div className="button-row">
               <Link className="btn" href="/intake">

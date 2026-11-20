@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "../../components/JsonLd";
+import { BookingLink } from "../../components/BookingLink";
 import { primaryCta } from "../../lib/content";
 import { createRouteMetadata } from "../../lib/metadata";
 import {
@@ -109,6 +110,7 @@ export default function AboutPage() {
               <Link className="btn ghost" href="/intake">
                 {primaryCta}
               </Link>
+              <BookingLink className="btn ghost" />
             </div>
           </div>
         </div>

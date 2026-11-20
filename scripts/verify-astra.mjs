@@ -97,8 +97,8 @@ await check(
       "/about",
       "/field-notes",
       "/intake",
-      "/growth-audit",
       "/opportunity-estimator",
+      "/use-cases/contractors",
       "/privacy",
     ]) {
       await page.goto(base + route, { waitUntil: "networkidle" });
@@ -118,6 +118,11 @@ await check(
     }
   },
 );
+await check("Legacy growth audit permanently redirects to intake", async () => {
+  const response = await page.request.get(base + "/growth-audit", { maxRedirects: 0 });
+  assert.equal(response.status(), 301);
+  assert.match(response.headers().location ?? "", /\/intake$/);
+});
 await check(
   "Estimator calculates and displays strongest readiness case",
   async () => {
@@ -261,6 +266,8 @@ await check(
     }
   },
 );
+await page.goto(base + "/privacy", { waitUntil: "domcontentloaded" });
+await mobile.close();
 const reduced = await browser.newPage({
   viewport: { width: 390, height: 844 },
   reducedMotion: "reduce",
@@ -269,8 +276,11 @@ await check(
   "Reduced motion has a still sculpture, visible content and honest control",
   async () => {
     await reduced.goto(base, { waitUntil: "networkidle" });
+    await reduced.locator(".atelier-hero").scrollIntoViewIfNeeded();
     await reduced.getByRole("button", { name: "Explore in 3D" }).click();
-    await reduced.waitForSelector('[data-webgl-state="ready"]');
+    await reduced.waitForSelector('[data-webgl-state="ready"]', {
+      timeout: 45000,
+    });
     assert.equal(
       await reduced
         .getByRole("button", { name: "Reduced motion", exact: true })

@@ -91,6 +91,9 @@ export default function ServicesPage() {
           <p className="lede">
             Practical AI and workflow automation for business owners and operating teams. We inspect the handoff,
             define the owner and next action, then build the system that makes repeated work easier to run.
+            The Snapshot is free. The Blueprint is a paid working session, scoped after the Snapshot. Implementation is
+            quoted only after that. Sprints and retainers include the notes and walkthrough your people need to run the
+            system on a Tuesday.
           </p>
         </div>
       </section>

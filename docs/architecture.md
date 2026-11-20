@@ -73,10 +73,11 @@ This handoff is intentionally controlled. The Snapshot involves judgment and sho
 ## Entry Points
 
 - `/intake`: primary Snapshot intake / Intake Advisor flow
-- `/growth-audit`: legacy-compatible Snapshot intake route
-- `/blueprint`: explains the free Snapshot and paid Blueprint path
+- `/growth-audit`: permanently redirects to `/intake`
+- `/blueprint`: explains the free Snapshot, kept separate from the paid Blueprint
+- `/opportunity-estimator`: readiness check; a strong result can pass context into `/intake`
 
-Both intake entry points post to the same `/api/intake` route. The `source` field distinguishes entry points.
+Intake posts to `/api/intake`. The `source` field distinguishes a direct Snapshot request from an estimator handoff.
 
 ---
 

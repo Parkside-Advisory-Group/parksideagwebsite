@@ -55,6 +55,27 @@ test("validateIntakeSubmission rejects missing required fields and permission", 
   ]);
 });
 
+test("validateIntakeSubmission returns field errors for empty or malformed payloads", () => {
+  assert.deepEqual(validateIntakeSubmission({}), [
+    "Name is required.",
+    "A valid email is required.",
+    "Business name is required.",
+    "Business type is required.",
+    "Primary workflow pain is required.",
+    "Current process is required.",
+    "Permission to follow up is required."
+  ]);
+  assert.deepEqual(validateIntakeSubmission(null), ["A complete intake is required."]);
+  assert.deepEqual(validateIntakeSubmission([]), ["A complete intake is required."]);
+  assert.ok(
+    validateIntakeSubmission({
+      ...completeSubmission,
+      name: 12,
+      email: "dana@example.com"
+    }).includes("Name is required.")
+  );
+});
+
 test("validateIntakeSubmission blocks pricing promises and credential requests", () => {
   const errors = validateIntakeSubmission({
     ...completeSubmission,

@@ -381,3 +381,316 @@
 .intake-diag-scan-bar-live span {
   animation: intakeScan 1.2s var(--ease-cinematic) infinite;
 }
+
+/* ── Illustrative handoff teardown ──────────────────────────────────── */
+
+.handoff {
+  margin-top: clamp(28px, 4vw, 44px);
+}
+
+.handoff-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.handoff-switch button,
+.handoff-rail button,
+.readiness-options button,
+.readiness-back {
+  cursor: pointer;
+  font: inherit;
+}
+
+.handoff-switch button {
+  background: transparent;
+  border: 1px solid var(--rule-strong);
+  color: var(--ink);
+  min-height: 48px;
+  padding: 10px 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.handoff-switch button[aria-pressed="true"] {
+  background: var(--burgundy);
+  border-color: var(--burgundy);
+  color: var(--cream);
+}
+
+.handoff-rail {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--rule-strong);
+}
+
+.handoff-rail li {
+  min-width: 0;
+}
+
+.handoff-rail button {
+  background: transparent;
+  border: 0;
+  border-right: 1px solid var(--rule);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 92px;
+  padding: 16px 14px 18px;
+  text-align: left;
+  width: 100%;
+}
+
+.handoff-rail li:last-child button {
+  border-right: 0;
+}
+
+.handoff-rail button span {
+  color: var(--burgundy);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+}
+
+.handoff-rail button[aria-current="step"] {
+  background: var(--paper);
+  box-shadow: inset 0 2px 0 var(--gold);
+}
+
+.handoff-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(220px, 0.8fr);
+  gap: clamp(20px, 3vw, 40px);
+  background: var(--paper);
+  padding: clamp(22px, 3vw, 36px);
+  box-shadow: 0 18px 40px rgba(26, 22, 19, 0.08);
+  animation: handoff-in 0.45s var(--ease-cinematic);
+}
+
+.handoff-kicker {
+  color: var(--burgundy);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+}
+
+.handoff-detail h3 {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 450;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0 0 14px;
+}
+
+.handoff-detail p {
+  color: var(--ink-soft);
+  font-size: 17px;
+  line-height: 1.55;
+  margin: 0;
+  max-width: 62ch;
+}
+
+.handoff-detail dl {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+}
+
+.handoff-detail dt {
+  color: var(--burgundy);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.handoff-detail dd {
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.45;
+  margin: 6px 0 0;
+}
+
+@keyframes handoff-in {
+  from {
+    opacity: 0.45;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .handoff-detail {
+    animation: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .handoff-rail {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .handoff-rail button {
+    border-bottom: 1px solid var(--rule);
+    min-height: 76px;
+  }
+
+  .handoff-detail {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Homepage short readiness check ─────────────────────────────────── */
+
+.readiness-progress {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.readiness-progress span {
+  background: var(--rule-strong);
+  height: 2px;
+}
+
+.readiness-progress span.is-on {
+  background: var(--burgundy);
+}
+
+.readiness-question {
+  border: 0;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
+.readiness-question legend {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 450;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 18px;
+  padding: 0;
+}
+
+.readiness-question legend span {
+  color: var(--burgundy);
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.readiness-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.readiness-options button {
+  background: var(--paper);
+  border: 1px solid var(--rule-strong);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.4;
+  min-height: 48px;
+  padding: 12px 16px;
+  text-align: left;
+}
+
+.readiness-options button:hover {
+  border-color: var(--burgundy);
+}
+
+.readiness-band {
+  color: var(--burgundy);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.readiness-result h3 {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 46px);
+  font-weight: 450;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 8px 0 14px;
+}
+
+.readiness-result > p {
+  color: var(--ink-soft);
+  margin: 0;
+  max-width: 62ch;
+}
+
+.readiness-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.readiness-back {
+  background: none;
+  border: 0;
+  color: var(--burgundy);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  margin-top: 8px;
+  min-height: 44px;
+  padding: 8px 0;
+  text-transform: uppercase;
+}
+
+.estimator-carried,
+.estimator-context {
+  background: var(--paper);
+  border-top: 1px solid var(--gold);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 1.5;
+  margin-bottom: 18px;
+  padding: 16px 18px;
+  text-transform: none;
+}
+
+.estimator-context p {
+  margin: 0;
+}
+
+.estimator-context p:first-child {
+  color: var(--burgundy);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.estimator-context .btn {
+  margin-top: 14px;
+}
