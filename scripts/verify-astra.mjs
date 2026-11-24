@@ -24,31 +24,37 @@ await page.goto(base, { waitUntil: "networkidle" });
 await page.evaluate(
   () => (document.documentElement.style.scrollBehavior = "auto"),
 );
-await check("Home metadata, meaningful landmarks and live WebGL", async () => {
+await check("Home metadata, one headline, and a visible job ledger", async () => {
   assert.match(await page.title(), /Parkside/);
   assert.equal(await page.locator("h1").count(), 1);
-  await page.waitForSelector('[data-webgl-state="ready"]');
+  assert.equal(
+    (await page.locator("h1").innerText()).replace(/\s+/g, " ").trim(),
+    "Estimates shouldn't go quiet.",
+  );
+  await page.locator(".ledger-sheet").waitFor();
+  assert.equal(await page.locator("canvas").count(), 0);
 });
-await check("Visitor can pause and resume the actual canvas", async () => {
-  await page.getByRole("button", { name: "Pause motion", exact: true }).click();
-  await page.waitForTimeout(500);
-  const canvas = page.locator(".atelier-hero-art canvas");
+await check("The ledger changes once and then stays still", async () => {
+  await page.waitForTimeout(1800);
+  const ledger = page.locator(".ledger");
   const hash = async () =>
     createHash("sha256")
-      .update(await canvas.screenshot())
+      .update(await ledger.screenshot())
       .digest("hex");
   const a = await hash();
-  await page.waitForTimeout(500);
+  await page.waitForTimeout(700);
   assert.equal(await hash(), a);
   assert.equal(
-    await page.locator("html").getAttribute("data-motion-paused"),
-    "true",
+    await page.locator(".ledger-after").first().evaluate((element) => getComputedStyle(element).opacity),
+    "1",
   );
-  await page
-    .getByRole("button", { name: "Motion paused", exact: true })
-    .click();
-  await page.waitForTimeout(800);
-  assert.notEqual(await hash(), a);
+  const looping = await page.evaluate(() =>
+    document.getAnimations().filter((animation) => {
+      const timing = animation.effect && animation.effect.getTiming();
+      return timing && (timing.iterations === Infinity || timing.iterations > 1);
+    }).length,
+  );
+  assert.equal(looping, 0);
 });
 await check(
   "All four capability selections produce the corresponding detail",
@@ -97,8 +103,9 @@ await check(
       "/about",
       "/field-notes",
       "/intake",
-      "/growth-audit",
       "/opportunity-estimator",
+      "/use-cases/contractors",
+      "/security-check",
       "/privacy",
     ]) {
       await page.goto(base + route, { waitUntil: "networkidle" });
@@ -118,6 +125,11 @@ await check(
     }
   },
 );
+await check("Legacy growth audit permanently redirects to intake", async () => {
+  const response = await page.request.get(base + "/growth-audit", { maxRedirects: 0 });
+  assert.equal(response.status(), 301);
+  assert.match(response.headers().location ?? "", /\/intake$/);
+});
 await check(
   "Estimator calculates and displays strongest readiness case",
   async () => {
@@ -153,11 +165,12 @@ const mobile = await browser.newPage({
   hasTouch: true,
 });
 await mobile.goto(base, { waitUntil: "networkidle" });
-await check("Mobile starts light and enables the real sculpture on request", async () => {
-  assert.equal(await mobile.locator(".atelier-hero-art canvas").count(), 0);
-  await mobile.getByRole("button", { name: "Explore in 3D" }).click();
-  await mobile.waitForSelector('[data-webgl-state="ready"]');
-  assert.equal(await mobile.locator(".atelier-hero-art canvas").count(), 1);
+await check("Mobile hero shows the ledger without a canvas", async () => {
+  assert.equal(await mobile.locator("canvas").count(), 0);
+  assert.match(await mobile.locator("h1").innerText(), /Estimates shouldn’t go quiet|Estimates shouldn't go quiet/);
+  await mobile.locator(".ledger-sheet").waitFor();
+  const heading = await mobile.locator("h1").boundingBox();
+  assert(heading && heading.y < 700, JSON.stringify(heading));
 });
 
 await check(
@@ -261,31 +274,42 @@ await check(
     }
   },
 );
+await page.goto(base + "/privacy", { waitUntil: "domcontentloaded" });
+await mobile.close();
 const reduced = await browser.newPage({
   viewport: { width: 390, height: 844 },
   reducedMotion: "reduce",
 });
 await check(
-  "Reduced motion has a still sculpture, visible content and honest control",
+  "Reduced motion has a still ledger, visible content and no looping motion",
   async () => {
     await reduced.goto(base, { waitUntil: "networkidle" });
-    await reduced.getByRole("button", { name: "Explore in 3D" }).click();
-    await reduced.waitForSelector('[data-webgl-state="ready"]');
+    await reduced.locator(".ledger-hero").scrollIntoViewIfNeeded();
+    assert.equal(await reduced.locator("canvas").count(), 0);
     assert.equal(
-      await reduced
-        .getByRole("button", { name: "Reduced motion", exact: true })
-        .isDisabled(),
-      true,
+      await reduced.locator(".ledger-after").first().evaluate((element) => getComputedStyle(element).opacity),
+      "1",
     );
-    const canvas = reduced.locator(".atelier-hero-art canvas");
+    assert.equal(
+      await reduced.locator(".ledger-before").first().evaluate((element) => getComputedStyle(element).opacity),
+      "0",
+    );
+    const ledger = reduced.locator(".ledger");
     const a = createHash("sha256")
-      .update(await canvas.screenshot())
+      .update(await ledger.screenshot())
       .digest("hex");
     await reduced.waitForTimeout(500);
     const b = createHash("sha256")
-      .update(await canvas.screenshot())
+      .update(await ledger.screenshot())
       .digest("hex");
     assert.equal(a, b);
+    const looping = await reduced.evaluate(() =>
+      document.getAnimations().filter((animation) => {
+        const timing = animation.effect && animation.effect.getTiming();
+        return timing && (timing.iterations === Infinity || timing.iterations > 1);
+      }).length,
+    );
+    assert.equal(looping, 0);
     const hidden = await reduced
       .locator("[data-reveal]")
       .evaluateAll(
@@ -297,30 +321,16 @@ await check(
     });
   },
 );
-await check("WebGL failure retains a visible static artwork", async () => {
-  const p = await browser.newPage({ viewport: { width: 390, height: 844 } });
-  await p.addInitScript(() => {
-    const original = HTMLCanvasElement.prototype.getContext;
-    HTMLCanvasElement.prototype.getContext = function (type, ...args) {
-      if (
-        type === "webgl2" ||
-        type === "webgl" ||
-        type === "experimental-webgl"
-      )
-        return null;
-      return original.call(this, type, ...args);
-    };
-  });
-  await p.goto(base, { waitUntil: "networkidle" });
-  await p.getByRole("button", { name: "Explore in 3D" }).click();
-  await p.waitForSelector('[data-webgl-state="unavailable"]');
-  assert.equal(
-    await p
-      .locator(".sculpture-fallback")
-      .evaluate((e) => getComputedStyle(e).opacity),
-    "1",
+await check("Security Check page states the fee and the disclaimer", async () => {
+  const p = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  await p.goto(base + "/security-check", { waitUntil: "networkidle" });
+  assert.match(await p.locator("h1").innerText(), /See the risk before you automate/);
+  const text = await p.locator("main").innerText();
+  assert.match(text, /\$500/);
+  assert.match(
+    text,
+    /The AI-Ready Security Check is a practical operations and risk review\. It is not a penetration test, audit, or certification\./,
   );
-  await p.screenshot({ path: "work/astra/verification/webgl-fallback.png" });
   await p.close();
 });
 await check("A missing route returns 404", async () =>

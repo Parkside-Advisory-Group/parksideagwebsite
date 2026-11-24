@@ -3,6 +3,8 @@ export interface Offer {
   summary: string;
   bestFor: string;
   outcomes: string[];
+  feeLabel: string;
+  href: string;
 }
 
 export interface UseCase {
@@ -12,121 +14,101 @@ export interface UseCase {
   signals: string[];
 }
 
-export const primaryCta = "Get the Free Snapshot";
-export const secondaryCta = "See How It Works";
-export const tertiaryCta = "Explore Use Cases";
+export const primaryCta = "Book a free Snapshot";
+export const secondaryCta = "See the work";
+export const tertiaryCta = "See use cases";
 
 export const contactEmail = "info@parksideag.com";
 
+/** Homepage hero. Edit this string to change the first line. */
+export const heroHeadline = "Estimates shouldn't go quiet.";
+
+export const SECURITY_CHECK_FEE_USD = 500;
+export const BLUEPRINT_FROM_USD = 1500;
+
+export const securityCheckDisclaimer =
+  "The AI-Ready Security Check is a practical operations and risk review. It is not a penetration test, audit, or certification. It is not legal, compliance, or insurance advice, and it does not guarantee against a breach. The client's IT provider or a qualified security firm should carry out any IT changes.";
+
+export const securityCheckAudience = "Owner-led firms that want a clear view of risk.";
+
+export const securityCheckDeliverables = [
+  "Systems and vendors",
+  "Who has access",
+  "Where AI is used",
+  "Rules for automation",
+  "What to fix first"
+];
+
 export const offers: Offer[] = [
   {
-    name: "Free AI Workflow Savings Snapshot",
-    summary:
-      "A lightweight report that reviews one painful workflow, names likely leaks, and shows where practical AI or automation could help first.",
-    bestFor:
-      "Operators who want a clear first look at missed follow-up, stale estimates, slow updates, manual reporting, or repeated admin work before paying for a deeper Blueprint.",
-    outcomes: [
-      "Workflow leak summary",
-      "3 practical AI or automation opportunities",
-      "First-system recommendation",
-      "Readiness notes and follow-up questions"
-    ]
+    name: "Snapshot",
+    feeLabel: "Free",
+    href: "/intake",
+    summary: "One workflow. Where it stalls. What to do first.",
+    bestFor: "A first look before you spend.",
+    outcomes: ["Where work stalls", "What to do first", "What to leave alone"]
   },
   {
-    name: "AI Operations Blueprint",
-    summary:
-      "A paid working session and roadmap for one painful workflow: how requests arrive, who owns the next step, where follow-up stalls, and what should be built first.",
-    bestFor:
-      "Operators who have reviewed the Snapshot and want a clear build plan, implementation sequence, and scope for the first useful system.",
-    outcomes: [
-      "Workflow leak map",
-      "First-build recommendation",
-      "Human review and failure points",
-      "30/60/90-day implementation path"
-    ]
+    name: "Security Check",
+    feeLabel: "$500",
+    href: "/security-check",
+    summary: "A clear view of systems, access, and AI risk.",
+    bestFor: securityCheckAudience,
+    outcomes: securityCheckDeliverables
   },
   {
-    name: "Workflow Automation Sprint",
-    summary:
-      "A scoped build for one recurring process such as lead intake, estimate follow-up, customer updates, reporting, or internal handoffs.",
-    bestFor:
-      "Teams with a repeated workflow, a clear owner, and enough examples to define what good handling should look like.",
-    outcomes: [
-      "Capture and routing logic",
-      "Reminders, summaries, or status views",
-      "Validation and handoff rules",
-      "Team rollout and tuning"
-    ]
+    name: "Blueprint",
+    feeLabel: "From $1,500",
+    href: "/blueprint",
+    summary: "A plan for one workflow, with an owner on every step.",
+    bestFor: "A team ready to decide what to build.",
+    outcomes: ["Owners and next steps", "What to build first", "Where a person decides"]
   },
   {
-    name: "AI Agent Build",
-    summary:
-      "A practical AI assistant for bounded work: qualifying requests, summarizing context, drafting follow-up, or guiding an internal process.",
-    bestFor:
-      "Teams that need AI help inside an existing workflow, with clear review points and a defined path when the assistant is uncertain.",
-    outcomes: [
-      "Agent scope and non-goals",
-      "Prompt, tool, and data design",
-      "Review and escalation rules",
-      "Operational test cases"
-    ]
-  },
-  {
-    name: "AI Operations Retainer",
-    summary:
-      "Ongoing support after the first build: tune the workflow, extend the automation, improve visibility, and keep AI usage aligned with daily operations.",
-    bestFor:
-      "Businesses that want an operating partner to keep improving the systems the team now depends on.",
-    outcomes: [
-      "Monthly workflow review",
-      "System tuning and cleanup",
-      "Reporting improvements",
-      "Next-build discovery"
-    ]
+    name: "Build",
+    feeLabel: "Quoted after the Blueprint",
+    href: "/services",
+    summary: "We build the system and stay to keep it running.",
+    bestFor: "A team with a Blueprint in hand.",
+    outcomes: ["The system, in use", "A person in control", "Support after launch"]
   }
 ];
 
 export const useCases: UseCase[] = [
   {
-    title: "Client Intake",
+    title: "Client intake",
     category: "Front office",
-    description:
-      "Turn calls, forms, and emails into a consistent request record with an owner, priority, and next action.",
-    signals: ["Missing project details", "Slow first response", "Manual routing"]
+    description: "Every request gets an owner.",
+    signals: ["Missing details", "Slow replies", "Unclear routing"]
   },
   {
-    title: "Follow-Up Discipline",
-    category: "Revenue operations",
-    description:
-      "Keep prospects, estimates, and customer promises from sitting until someone remembers to check.",
-    signals: ["Missed callbacks", "Stale estimates", "No clear owner"]
+    title: "Follow-up",
+    category: "Revenue",
+    description: "Open estimates stay visible.",
+    signals: ["Missed callbacks", "Quiet estimates", "No owner"]
   },
   {
-    title: "Reporting Visibility",
+    title: "Reporting",
     category: "Operations",
-    description:
-      "Create a reliable view of open work, aging items, blocked handoffs, and recurring cleanup.",
-    signals: ["Spreadsheet sprawl", "Status meetings", "Hidden delays"]
+    description: "One view of open work.",
+    signals: ["Rebuilt reports", "Status meetings", "Hidden delays"]
   },
   {
-    title: "Internal Handoffs",
+    title: "Handoffs",
     category: "Delivery",
-    description:
-      "Define exactly what moves from sales to operations, intake to delivery, or field work to admin follow-up.",
-    signals: ["Missing context", "Repeated questions", "Delayed work starts"]
+    description: "The next person has the context.",
+    signals: ["Missing context", "Repeated questions", "Late starts"]
   },
   {
-    title: "Document and Email Drafting",
-    category: "Administrative work",
-    description:
-      "Use AI to draft routine summaries, next-step emails, internal notes, and customer updates for human review.",
-    signals: ["Manual summaries", "Delayed updates", "Inconsistent tone"]
+    title: "Drafting",
+    category: "Admin",
+    description: "A draft. A person sends it.",
+    signals: ["Manual summaries", "Late updates", "Uneven tone"]
   },
   {
-    title: "Workflow Triage",
+    title: "Triage",
     category: "Management",
-    description:
-      "Sort requests by urgency, readiness, owner, and next action so the team works from the same queue.",
-    signals: ["Queue confusion", "Urgent items buried", "Poor prioritization"]
+    description: "The urgent work stays on top.",
+    signals: ["A crowded queue", "Buried urgency", "Unclear priority"]
   }
 ];

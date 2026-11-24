@@ -4,10 +4,10 @@ This project is for Parkside Advisory Group.
 
 The goal is to create a launchable conversion site and intake flow for the baseline path:
 
-1. Free AI Workflow Savings Snapshot
-2. Paid AI Operations Blueprint
-3. Workflow Automation Sprint / AI Agent Build
-4. AI Operations Retainer
+1. Snapshot (free)
+2. Security Check ($500)
+3. Blueprint (from $1,500)
+4. Build (quoted after the Blueprint)
 
 Brand source files are located in `/source-docs`.
 
@@ -61,7 +61,7 @@ Do not overbuild:
 
 Primary website conversion goal:
 
-Get the Free AI Workflow Savings Snapshot request.
+Book a free Snapshot.
 
 Secondary conversion goal:
 

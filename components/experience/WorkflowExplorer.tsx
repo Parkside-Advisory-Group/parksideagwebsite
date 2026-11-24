@@ -5,52 +5,44 @@ import Link from "next/link";
 
 const workflows = [
   {
-    name: "Follow-up that follows through",
-    category: "CUSTOMER EXPERIENCE",
-    pain: "The inquiry arrives. The day gets busy. The opportunity goes quiet.",
+    name: "Follow-up",
+    category: "CUSTOMERS",
     title: "Every inquiry. A next step.",
-    description:
-      "Capture the request, give it an owner, and make follow-up part of the process.",
+    description: "An owner. A next step.",
     input: "New inquiry",
     middle: "Right person",
     output: "Next step set",
-    note: "A person owns the relationship. The system keeps it moving.",
+    note: "A person owns the relationship.",
   },
   {
-    name: "Reporting without the rework",
-    category: "OPERATIONAL VISIBILITY",
-    pain: "Another Friday. Another spreadsheet rebuilt from the same scattered sources.",
+    name: "Reporting",
+    category: "VISIBILITY",
     title: "Less assembling. More understanding.",
-    description:
-      "Bring recurring information into one clear view, with a human check before it goes out.",
+    description: "One view. A person checks it.",
     input: "Source data",
     middle: "Clear summary",
     output: "Human review",
-    note: "One dependable view of what is open, changing, or stuck.",
+    note: "Open, changing, or stuck.",
   },
   {
-    name: "Handoffs with nothing lost",
-    category: "WORKFLOW AUTOMATION",
-    pain: "The work is done. But who picks it up next? And where did the context go?",
+    name: "Handoffs",
+    category: "HANDOFFS",
     title: "A clear owner. At every turn.",
-    description:
-      "Connect the steps between your people and tools, with the context the next person needs.",
+    description: "Context moves with the work.",
     input: "Work ready",
     middle: "Context carried",
     output: "Owner notified",
-    note: "The next person starts with the full picture.",
+    note: "The next person can start.",
   },
   {
-    name: "AI with a useful job to do",
-    category: "PRACTICAL AI",
-    pain: "Powerful tools. Interesting experiments. But nothing your team can rely on yet.",
+    name: "A useful AI job",
+    category: "AI",
     title: "Intelligence with a purpose.",
-    description:
-      "Put AI to work on a defined task: summarize, draft, or qualify. Keep judgment with your team.",
+    description: "Draft or summarize. A person decides.",
     input: "Real context",
-    middle: "AI-assisted draft",
+    middle: "A draft",
     output: "Team approves",
-    note: "Clear boundaries. Useful output. A person in control.",
+    note: "A person stays in control.",
   },
 ];
 
@@ -92,7 +84,7 @@ export function WorkflowExplorer() {
           </button>
         ))}
         <Link className="atelier-text-link" href="/services">
-          Explore our capabilities <span aria-hidden="true">↗</span>
+          See the work <span aria-hidden="true">↗</span>
         </Link>
       </div>
       <div

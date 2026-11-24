@@ -361,15 +361,59 @@ body {
   padding-top: 25px;
 }
 .hero-description > p {
-  font-size: 13px;
-  line-height: 1.7;
-  margin-bottom: 22px;
+  font-size: 15px;
+  line-height: 1.55;
+  margin-bottom: 18px;
+  max-width: 36ch;
+}
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.hero-actions .atelier-button {
+  min-height: 48px;
+  width: min(100%, 340px);
+  gap: 16px;
+  white-space: normal;
+}
+.outline-button {
+  background: transparent;
+  color: var(--cream);
+  border-color: rgba(246, 241, 232, 0.62);
+}
+.outline-button:hover {
+  background: rgba(246, 241, 232, 0.12);
+  color: var(--cream);
+}
+.atelier-teardown {
+  background: var(--cream-deep);
+}
+.atelier-readiness {
+  background: var(--cream);
+}
+.readiness-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+  gap: clamp(28px, 4vw, 72px);
+  align-items: start;
+}
+.readiness-layout .atelier-section-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 0;
+}
+.readiness-layout .atelier-section-heading > p {
+  margin-top: 18px;
+  max-width: 38ch;
 }
 .hero-cta-note {
   display: block;
   margin-top: 9px;
-  font-size: 9px;
-  color: #f6f1e8b8;
+  font-size: 12px;
+  color: #f6f1e8f0;
 }
 .hero-explore {
   justify-self: center;
@@ -612,7 +656,7 @@ body {
   top: 113px;
   background: var(--gold-light);
   box-shadow: 0 0 10px #c9a765;
-  animation: connection-flow 4s ease-in-out infinite;
+  animation: none;
 }
 .workflow-note {
   font-size: 9px;
@@ -1247,8 +1291,8 @@ body {
   }
   .atelier-hero {
     padding: 113px 24px 27px;
-    height: 890px;
-    min-height: 850px;
+    height: auto;
+    min-height: 920px;
     max-height: none;
   }
   .atelier-hero-topline .atelier-label {
@@ -1281,17 +1325,21 @@ body {
     gap: 20px;
   }
   .hero-description > p {
-    font-size: 11px;
-    margin-bottom: 18px;
+    font-size: 15px;
+    margin-bottom: 16px;
+  }
+  .readiness-layout {
+    grid-template-columns: 1fr;
   }
   .hero-description .atelier-button {
     padding: 12px 17px;
     min-height: 49px;
     gap: 24px;
-    font-size: 11px;
+    font-size: 13px;
   }
   .hero-cta-note {
-    font-size: 8px;
+    font-size: 12px;
+    color: #f6f1e8f0;
   }
   .hero-location {
     display: none;
@@ -1660,7 +1708,7 @@ html[data-motion-paused="true"] .statement-word {
     font-size: 14px;
   }
   .hero-cta-note {
-    font-size: 10px;
+    font-size: 12px;
   }
   .atelier-button {
     font-size: 13px;

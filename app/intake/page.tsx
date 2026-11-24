@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { JsonLd } from "../../components/JsonLd";
 import { IntakeAdvisor } from "../../components/IntakeAdvisor";
+import { securityCheckDisclaimer } from "../../lib/content";
 import { createRouteMetadata } from "../../lib/metadata";
 import { createPageBreadcrumbItems, createPageStructuredData, siteUrl } from "../../lib/structured-data";
 
 export const metadata: Metadata = createRouteMetadata({
-  title: "Free AI Workflow Savings Snapshot Intake",
-  description: "Request a free AI Workflow Savings Snapshot from Parkside Advisory Group.",
+  title: "Book a free Snapshot",
+  description: "Tell us one workflow. No passwords.",
   path: "/intake"
 });
 
@@ -14,12 +16,12 @@ const structuredData = createPageStructuredData({
   pageType: "ContactPage",
   id: `${siteUrl}/intake#contactpage`,
   path: "/intake",
-  name: "Parkside Snapshot Intake Advisor",
-  description: "Request a free AI Workflow Savings Snapshot by sharing one workflow for review.",
+  name: "Snapshot intake",
+  description: "Book a free Snapshot.",
   breadcrumbItems: createPageBreadcrumbItems("Intake", "/intake"),
   potentialAction: {
     "@type": "ContactAction",
-    name: "Request the Free AI Workflow Savings Snapshot",
+    name: "Book a free Snapshot",
     target: {
       "@type": "EntryPoint",
       urlTemplate: `${siteUrl}/intake`
@@ -27,30 +29,59 @@ const structuredData = createPageStructuredData({
   }
 });
 
-export default function IntakePage() {
+const introductions = {
+  snapshot: {
+    eyebrow: "Snapshot",
+    title: "Book a free Snapshot.",
+    lede: "Tell us one workflow. No passwords.",
+    next: ["We review one workflow.", "You get a Snapshot.", "Then Security Check, Blueprint, or Build."]
+  },
+  "security-check": {
+    eyebrow: "Security Check",
+    title: "Request the Security Check.",
+    lede: "Security Check, $500. No passwords.",
+    next: ["We confirm the fit.", "You get a clear view of risk.", "Blueprint is the next paid step."],
+    disclaimer: securityCheckDisclaimer
+  },
+  blueprint: {
+    eyebrow: "Blueprint",
+    title: "Request the Blueprint.",
+    lede: "Blueprint from $1,500. Build is quoted after.",
+    next: ["We look at one workflow.", "You get a plan.", "Build comes after."]
+  }
+} as const;
+
+export default async function IntakePage({
+  searchParams
+}: {
+  searchParams: Promise<{ interest?: string }>;
+}) {
+  const { interest } = await searchParams;
+  const intro =
+    interest === "security-check" || interest === "blueprint" ? introductions[interest] : introductions.snapshot;
+
   return (
     <main>
       <JsonLd data={structuredData} />
       <section className="page-hero">
         <div className="container intake-shell">
           <div>
-            <p className="eyebrow">Free AI Workflow Savings Snapshot</p>
-            <h1 className="page-title">Request your free Snapshot.</h1>
-            <p className="lede">
-              Share the workflow that feels manual, repetitive, or hard to keep up with. Parkside will organize the
-              context, identify likely leaks, and send a practical Snapshot at no charge and with no obligation to
-              move forward.
-            </p>
+            <p className="eyebrow">{intro.eyebrow}</p>
+            <h1 className="page-title">{intro.title}</h1>
+            <p className="lede">{intro.lede}</p>
+            {"disclaimer" in intro ? <p className="security-disclaimer">{intro.disclaimer}</p> : null}
             <div className="intake-proof-panel" aria-label="What happens after submitting the intake">
               <p className="eyebrow">What happens next</p>
               <ul>
-                <li>Parkside reviews one workflow for fit and urgency.</li>
-                <li>You get a short Snapshot with likely leaks and practical AI opportunities.</li>
-                <li>If the opportunity is real, the next step is a paid AI Operations Blueprint.</li>
+                {intro.next.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
               </ul>
             </div>
           </div>
-          <IntakeAdvisor />
+          <Suspense fallback={<p className="lede">Loading the Snapshot form.</p>}>
+            <IntakeAdvisor />
+          </Suspense>
         </div>
       </section>
     </main>

@@ -1,0 +1,310 @@
+/* The Ledger That Moves. Nothing here loops. The job changes once. */
+
+.ledger-hero.atelier-hero {
+  height: auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.92fr);
+  column-gap: clamp(28px, 4vw, 72px);
+  row-gap: 28px;
+  align-items: end;
+  padding: 128px var(--gutter) 64px;
+}
+
+.ledger-hero .atelier-hero-topline {
+  grid-column: 1 / -1;
+  align-self: start;
+}
+
+.ledger-hero .ledger-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+}
+
+.ledger-hero h1 {
+  margin: 22px 0 18px;
+  max-width: 11ch;
+  color: var(--cream);
+  font-size: clamp(52px, 5.8vw, 88px);
+  font-weight: 450;
+  letter-spacing: -0.045em;
+  line-height: 0.96;
+  text-shadow: none;
+  white-space: normal;
+  word-spacing: normal;
+}
+
+.ledger-hero .hero-description > p {
+  max-width: 38ch;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.ledger {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  color: var(--ink);
+}
+
+.ledger-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 10px;
+  color: #f6f1e8d4;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ledger-sheet {
+  background: var(--cream);
+  border: 1px solid rgba(246, 241, 232, 0.35);
+  box-shadow: 0 22px 50px rgba(20, 18, 16, 0.28);
+  padding: 22px 22px 8px;
+}
+
+.ledger-rule {
+  height: 2px;
+  margin-bottom: 16px;
+  background: var(--gold);
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.ledger-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--burgundy);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ledger-job {
+  margin: 14px 0 8px;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: clamp(28px, 2.4vw, 36px);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.ledger-rows {
+  margin: 0;
+}
+
+.ledger-rows > div {
+  display: grid;
+  grid-template-columns: 108px minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+  border-top: 1px solid rgba(26, 22, 19, 0.12);
+  padding: 14px 0;
+}
+
+.ledger-rows dt {
+  color: var(--burgundy);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ledger-line {
+  display: grid;
+  min-height: 1.4em;
+  margin: 0;
+}
+
+.ledger-line > span {
+  grid-area: 1 / 1;
+}
+
+.ledger-before {
+  color: var(--ink-soft);
+  opacity: 1;
+}
+
+.ledger-after {
+  color: var(--ink);
+  font-weight: 600;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ledger-rule {
+    transform: scaleX(0);
+    animation: ledger-rule 900ms cubic-bezier(0.16, 1, 0.3, 1) 420ms forwards;
+  }
+
+  .ledger-before {
+    animation: ledger-leave 800ms cubic-bezier(0.16, 1, 0.3, 1) 520ms forwards;
+  }
+
+  .ledger-after {
+    animation: ledger-arrive 800ms cubic-bezier(0.16, 1, 0.3, 1) 520ms forwards;
+  }
+}
+
+@keyframes ledger-rule {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes ledger-leave {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes ledger-arrive {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ledger-hero .ledger-before {
+    opacity: 0 !important;
+  }
+
+  .ledger-hero .ledger-after {
+    opacity: 1 !important;
+  }
+
+  .ledger-hero .ledger-rule {
+    transform: none !important;
+  }
+}
+
+.founder-note {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: center;
+  background: var(--cream);
+  border-bottom: 1px solid var(--rule);
+}
+
+.founder-portrait {
+  background: var(--cream-deep);
+  border: 1px solid var(--rule);
+}
+
+.founder-portrait img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.founder-copy h2 {
+  margin: 12px 0 14px;
+  font-size: clamp(36px, 4vw, 56px);
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+}
+
+.founder-copy p {
+  max-width: 46ch;
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+.founder-copy .atelier-text-link {
+  margin-top: 8px;
+}
+
+.security-band {
+  background: var(--cream-deep);
+}
+
+.security-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 720px);
+  gap: clamp(28px, 4vw, 72px);
+  align-items: start;
+}
+
+.security-layout h2 {
+  margin: 10px 0 14px;
+  font-size: clamp(40px, 4.4vw, 64px);
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+}
+
+.security-fee {
+  margin: 0 0 12px;
+  color: var(--burgundy);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.security-layout .audit-checklist,
+.security-page-list {
+  margin: 0;
+}
+
+.security-disclaimer-note {
+  margin-top: 28px;
+  max-width: 62ch;
+  color: var(--ink-soft);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.security-disclaimer {
+  margin: 22px 0 0;
+  padding: 16px 18px;
+  border-left: 3px solid var(--gold);
+  background: rgba(246, 241, 232, 0.72);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.offer-fee {
+  margin: 0 0 12px;
+  color: var(--burgundy);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.human-layout-text {
+  grid-template-columns: minmax(0, 760px);
+}
+
+@media (max-width: 900px) {
+  .ledger-hero.atelier-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    min-height: 0;
+    padding: 112px var(--gutter) 40px;
+  }
+
+  .ledger-hero h1 {
+    font-size: clamp(46px, 13vw, 68px);
+  }
+
+  .founder-note,
+  .security-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .founder-portrait {
+    max-width: 280px;
+  }
+}

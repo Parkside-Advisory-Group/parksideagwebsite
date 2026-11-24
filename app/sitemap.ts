@@ -2,7 +2,19 @@ import type { MetadataRoute } from "next";
 import { fieldNotes } from "../lib/field-notes";
 import { absoluteUrl } from "../lib/structured-data";
 
-const routes = ["/", "/services", "/blueprint", "/use-cases", "/field-notes", "/about", "/intake", "/growth-audit", "/opportunity-estimator", "/privacy"];
+const routes = [
+  "/",
+  "/services",
+  "/blueprint",
+  "/security-check",
+  "/use-cases",
+  "/use-cases/contractors",
+  "/field-notes",
+  "/about",
+  "/intake",
+  "/opportunity-estimator",
+  "/privacy"
+];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routeEntries = routes.map((route) => ({

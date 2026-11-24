@@ -1,4 +1,9 @@
-import type { Offer, UseCase } from "./content";
+import {
+  BLUEPRINT_FROM_USD,
+  SECURITY_CHECK_FEE_USD,
+  type Offer,
+  type UseCase
+} from "./content";
 import type { FieldNote } from "./field-notes";
 
 export const siteUrl = "https://parksideag.com";
@@ -106,13 +111,18 @@ export function createSitewideStructuredData(contactEmail: string): StructuredDa
       {
         "@type": "OfferCatalog",
         "@id": offerCatalogId,
-        name: "Parkside AI Operations Services",
+        name: "Parkside services",
         itemListElement: [
-          { "@type": "Offer", price: 0, priceCurrency: "USD", itemOffered: { "@type": "Service", name: "Free AI Workflow Savings Snapshot" } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Operations Blueprint" } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Workflow Automation Sprint" } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Agent Build" } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Operations Retainer" } }
+          { "@type": "Offer", price: 0, priceCurrency: "USD", itemOffered: { "@type": "Service", name: "Snapshot" } },
+          { "@type": "Offer", price: SECURITY_CHECK_FEE_USD, priceCurrency: "USD", itemOffered: { "@type": "Service", name: "Security Check" } },
+          {
+            "@type": "Offer",
+            price: BLUEPRINT_FROM_USD,
+            priceCurrency: "USD",
+            description: "Blueprint from $1,500.",
+            itemOffered: { "@type": "Service", name: "Blueprint" }
+          },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Build" } }
         ]
       },
       {
