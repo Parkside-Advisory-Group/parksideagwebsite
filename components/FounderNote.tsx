@@ -27,10 +27,9 @@ export function FounderNote() {
       </div>
       <div className="founder-copy">
         <span className="atelier-label">Founder</span>
-        <h2 id="founder-note-title">A note from Anthony Mora.</h2>
+        <h2 id="founder-note-title">Anthony Mora.</h2>
         <p>
-          I’m Anthony Mora. When an estimate goes quiet, the work didn’t get harder. It lost its owner.
-          Parkside puts a name and a next action on that job, then builds a system your people can run.
+          When work goes quiet, it lost its owner. I put a name on the next step.
         </p>
         <Link className="atelier-text-link" href="/about">
           About Anthony Mora <span aria-hidden="true">↗</span>

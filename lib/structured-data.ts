@@ -1,5 +1,5 @@
 import {
-  BLUEPRINT_FOUNDER_COHORT_TARGET_USD,
+  BLUEPRINT_FROM_USD,
   SECURITY_CHECK_FEE_USD,
   type Offer,
   type UseCase
@@ -111,16 +111,16 @@ export function createSitewideStructuredData(contactEmail: string): StructuredDa
       {
         "@type": "OfferCatalog",
         "@id": offerCatalogId,
-        name: "Parkside AI Operations Services",
+        name: "Parkside services",
         itemListElement: [
-          { "@type": "Offer", price: 0, priceCurrency: "USD", itemOffered: { "@type": "Service", name: "Free AI Workflow Savings Snapshot" } },
-          { "@type": "Offer", price: SECURITY_CHECK_FEE_USD, priceCurrency: "USD", itemOffered: { "@type": "Service", name: "AI-Ready Security Check" } },
+          { "@type": "Offer", price: 0, priceCurrency: "USD", itemOffered: { "@type": "Service", name: "Snapshot" } },
+          { "@type": "Offer", price: SECURITY_CHECK_FEE_USD, priceCurrency: "USD", itemOffered: { "@type": "Service", name: "Security Check" } },
           {
             "@type": "Offer",
-            price: BLUEPRINT_FOUNDER_COHORT_TARGET_USD,
+            price: BLUEPRINT_FROM_USD,
             priceCurrency: "USD",
-            description: "Founder-cohort target. The $500 AI-Ready Security Check is credited if the Blueprint is signed within 30 days.",
-            itemOffered: { "@type": "Service", name: "AI Operations Blueprint" }
+            description: "Blueprint from $1,500.",
+            itemOffered: { "@type": "Service", name: "Blueprint" }
           },
           { "@type": "Offer", itemOffered: { "@type": "Service", name: "Build" } }
         ]

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     template: "%s | Parkside Advisory Group",
   },
   description:
-    "Parkside helps small and mid-sized businesses use practical AI and workflow automation to reduce manual work, improve follow-up, and see what is happening across recurring workflows.",
+    "Estimates shouldn't go quiet. Book a free Snapshot.",
   metadataBase: new URL("https://parksideag.com"),
   alternates: {
     canonical: "https://parksideag.com/",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AI & Workflow Automation for Small Businesses | Parkside",
     description:
-      "Get a free AI Workflow Savings Snapshot for one messy business process, then decide if a paid Blueprint or implementation sprint is worth it.",
+      "Estimates shouldn't go quiet. Book a free Snapshot.",
     url: "https://parksideag.com",
     siteName: "Parkside Advisory Group",
     locale: "en_US",

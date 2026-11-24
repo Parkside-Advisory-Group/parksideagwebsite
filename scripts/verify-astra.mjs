@@ -321,13 +321,12 @@ await check(
     });
   },
 );
-await check("Security Check page states the fee, the audience, and the disclaimer", async () => {
+await check("Security Check page states the fee and the disclaimer", async () => {
   const p = await browser.newPage({ viewport: { width: 1280, height: 900 } });
   await p.goto(base + "/security-check", { waitUntil: "networkidle" });
-  assert.match(await p.locator("h1").innerText(), /systems your business already depends on/);
+  assert.match(await p.locator("h1").innerText(), /See the risk before you automate/);
   const text = await p.locator("main").innerText();
   assert.match(text, /\$500/);
-  assert.match(text, /HVAC, refrigeration, electrical, plumbing, roofing, and property management/);
   assert.match(
     text,
     /The AI-Ready Security Check is a practical operations and risk review\. It is not a penetration test, audit, or certification\./,

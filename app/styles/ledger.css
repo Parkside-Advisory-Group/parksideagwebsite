@@ -228,7 +228,7 @@
 
 .security-layout {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 720px);
   gap: clamp(28px, 4vw, 72px);
   align-items: start;
 }
@@ -252,6 +252,14 @@
 .security-layout .audit-checklist,
 .security-page-list {
   margin: 0;
+}
+
+.security-disclaimer-note {
+  margin-top: 28px;
+  max-width: 62ch;
+  color: var(--ink-soft);
+  font-size: 12px;
+  line-height: 1.45;
 }
 
 .security-disclaimer {

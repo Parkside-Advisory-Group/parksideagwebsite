@@ -7,8 +7,8 @@ import { createRouteMetadata } from "../../lib/metadata";
 import { createPageBreadcrumbItems, createPageStructuredData, siteUrl } from "../../lib/structured-data";
 
 export const metadata: Metadata = createRouteMetadata({
-  title: "Free AI Workflow Savings Snapshot Intake",
-  description: "Request a free AI Workflow Savings Snapshot from Parkside Advisory Group.",
+  title: "Book a free Snapshot",
+  description: "Tell us one workflow. No passwords.",
   path: "/intake"
 });
 
@@ -16,12 +16,12 @@ const structuredData = createPageStructuredData({
   pageType: "ContactPage",
   id: `${siteUrl}/intake#contactpage`,
   path: "/intake",
-  name: "Parkside Snapshot Intake Advisor",
-  description: "Request a free AI Workflow Savings Snapshot by sharing one workflow for review.",
+  name: "Snapshot intake",
+  description: "Book a free Snapshot.",
   breadcrumbItems: createPageBreadcrumbItems("Intake", "/intake"),
   potentialAction: {
     "@type": "ContactAction",
-    name: "Request the Free AI Workflow Savings Snapshot",
+    name: "Book a free Snapshot",
     target: {
       "@type": "EntryPoint",
       urlTemplate: `${siteUrl}/intake`
@@ -31,38 +31,23 @@ const structuredData = createPageStructuredData({
 
 const introductions = {
   snapshot: {
-    eyebrow: "Free AI Workflow Savings Snapshot",
-    title: "Request your free Snapshot.",
-    lede:
-      "Share the workflow that feels manual, repetitive, or hard to keep up with. Parkside will organize the context, identify likely leaks, and send a practical Snapshot at no charge and with no obligation to move forward.",
-    next: [
-      "Parkside reviews one workflow for fit and urgency.",
-      "You get a short Snapshot with likely leaks and practical AI opportunities.",
-      "If the opportunity is real, later steps are the AI-Ready Security Check, the paid Blueprint, and a Build quoted after the Blueprint."
-    ]
+    eyebrow: "Snapshot",
+    title: "Book a free Snapshot.",
+    lede: "Tell us one workflow. No passwords.",
+    next: ["We review one workflow.", "You get a Snapshot.", "Then Security Check, Blueprint, or Build."]
   },
   "security-check": {
-    eyebrow: "AI-Ready Security Check",
+    eyebrow: "Security Check",
     title: "Request the Security Check.",
-    lede:
-      "Tell us about the business and the systems already in use. The AI-Ready Security Check is a $500 fixed fee and takes about 2–3 weeks. This form collects the context. It does not ask for passwords.",
-    next: [
-      "Parkside reviews the request and confirms the Check is the right fit.",
-      "The work covers systems, access, shadow AI, guardrails, and a ranked list of fixes.",
-      "The $500 fee is credited toward the Blueprint if that pilot is signed within 30 days."
-    ],
+    lede: "Security Check, $500. No passwords.",
+    next: ["We confirm the fit.", "You get a clear view of risk.", "Blueprint is the next paid step."],
     disclaimer: securityCheckDisclaimer
   },
   blueprint: {
-    eyebrow: "AI Operations Blueprint",
+    eyebrow: "Blueprint",
     title: "Request the Blueprint.",
-    lede:
-      "Tell us about the workflow you want in the pilot. The AI Operations Blueprint is a 30-day AI Operator Pilot. The founder-cohort target is $1,500, and the $500 Security Check is credited if you sign within 30 days.",
-    next: [
-      "Parkside reviews the workflow and confirms the pilot is the right next step.",
-      "The Blueprint names owners, next actions, and the first system worth building.",
-      "Build — implementation and ongoing operating support — is quoted after the Blueprint."
-    ]
+    lede: "Blueprint from $1,500. Build is quoted after.",
+    next: ["We look at one workflow.", "You get a plan.", "Build comes after."]
   }
 } as const;
 

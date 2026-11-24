@@ -19,9 +19,9 @@ export function Footer() {
         </div>
         <div>
           <span className="atelier-label">Start here</span>
-          <Link href="/intake">Get the free Snapshot</Link>
+          <Link href="/intake">Book a free Snapshot</Link>
           <Link href="/opportunity-estimator">Workflow estimator</Link>
-          <Link href="/security-check">AI-Ready Security Check</Link>
+          <Link href="/security-check">Security Check</Link>
           <Link href="/blueprint">The Blueprint</Link>
           <Link href="/use-cases/contractors">For contractors</Link>
         </div>

@@ -7,13 +7,7 @@ import { LedgerMotion } from "../components/LedgerMotion";
 import { WorkflowExplorer } from "../components/experience/WorkflowExplorer";
 import { WorkflowTeardown } from "../components/WorkflowTeardown";
 import { CompactReadiness } from "../components/CompactReadiness";
-import {
-  heroHeadline,
-  securityCheckAudience,
-  securityCheckDeliverables,
-  securityCheckDisclaimer,
-  securityCheckDuration
-} from "../lib/content";
+import { heroHeadline, primaryCta, securityCheckDisclaimer } from "../lib/content";
 import { fieldNotes } from "../lib/field-notes";
 import { createRouteMetadata } from "../lib/metadata";
 import {
@@ -27,8 +21,7 @@ import {
 
 export const metadata: Metadata = createRouteMetadata({
   title: "AI & Workflow Automation for Small Businesses | Parkside",
-  description:
-    "Estimates shouldn't go quiet. Parkside helps operators in Northwest Indiana and Chicagoland put an owner and a next action on follow-up. Start with a free Workflow Snapshot.",
+  description: "Estimates shouldn't go quiet. Book a free Snapshot.",
   path: "/",
 });
 
@@ -45,40 +38,39 @@ const structuredData = createPageStructuredData({
   ],
 });
 
-const statement =
-  "Your business has places to go. The work between the work shouldn’t hold it back.";
+const statement = "The work between the work.";
 const steps = [
   {
     number: "01",
-    title: "Find the friction.",
-    body: "We start with the way work actually happens. The inboxes, the handoffs, the estimate that went quiet.",
-    detail: "FREE WORKFLOW SNAPSHOT",
+    title: "Start with a Snapshot.",
+    body: "See where one workflow stalls.",
+    detail: "SNAPSHOT · FREE",
     link: "/intake",
-    cta: "Get the free Snapshot",
+    cta: primaryCta,
   },
   {
     number: "02",
-    title: "See how the business is set up.",
-    body: "A fixed-fee review of systems, vendors, access, and the AI tools already in use. About 2–3 weeks.",
-    detail: "AI-READY SECURITY CHECK · $500",
+    title: "Check the risk.",
+    body: "Security Check, $500.",
+    detail: "SECURITY CHECK",
     link: "/security-check",
     cta: "See the Security Check",
   },
   {
     number: "03",
-    title: "Run the 30-day pilot.",
-    body: "The paid Blueprint names the owner, the next action, and the first system worth building. Founder-cohort target $1,500. The $500 Check is credited if you sign within 30 days.",
-    detail: "AI OPERATIONS BLUEPRINT",
+    title: "Plan the work.",
+    body: "Blueprint from $1,500.",
+    detail: "BLUEPRINT",
     link: "/blueprint",
     cta: "See the Blueprint",
   },
   {
     number: "04",
-    title: "Build it. Keep it running.",
-    body: "Implementation and an ongoing operating partnership, quoted after the Blueprint. Your people can run the system on a Tuesday.",
-    detail: "BUILD · QUOTED AFTER THE BLUEPRINT",
+    title: "Build and stay.",
+    body: "Quoted after the Blueprint.",
+    detail: "BUILD",
     link: "/services",
-    cta: "See what we build",
+    cta: "See Build",
   },
 ];
 
@@ -99,9 +91,7 @@ export default function HomePage() {
         <div className="ledger-copy">
           <h1 id="hero-title">{heroHeadline}</h1>
           <div className="hero-description">
-            <p>
-              For teams that lose work in follow-up, reporting, and handoffs.
-            </p>
+            <p>Put an owner on the next step.</p>
             <div className="hero-actions">
               <TrackedLink
                 className="atelier-button cream-button"
@@ -109,7 +99,7 @@ export default function HomePage() {
                 eventName="snapshot_cta_click"
                 eventProperties={{ location: "home_hero", href: "/intake" }}
               >
-                Get the free Snapshot <span aria-hidden="true">↗</span>
+                {primaryCta} <span aria-hidden="true">↗</span>
               </TrackedLink>
               <TrackedLink
                 className="atelier-button outline-button"
@@ -117,12 +107,9 @@ export default function HomePage() {
                 eventName="estimator_cta_click"
                 eventProperties={{ location: "home_hero", href: "/opportunity-estimator" }}
               >
-                See if this workflow is ready <span aria-hidden="true">↗</span>
+                Check a workflow <span aria-hidden="true">↗</span>
               </TrackedLink>
             </div>
-            <span className="hero-cta-note">
-              Free Snapshot. No passwords. No obligation.
-            </span>
           </div>
         </div>
         <LedgerMotion />
@@ -137,14 +124,11 @@ export default function HomePage() {
         </div>
         <div className="atelier-section-heading" data-reveal>
           <h2 id="teardown-title">
-            Where a contractor’s
+            Where an estimate
             <br />
-            <em>estimate goes quiet.</em>
+            <em>goes quiet.</em>
           </h2>
-          <p>
-            A commercial contractor’s inquiry and estimate follow-up. The leak is the handoff.
-            Anything the customer hears stays with a person.
-          </p>
+          <p>An illustrative example. Not a client result.</p>
         </div>
         <WorkflowTeardown />
       </section>
@@ -157,14 +141,11 @@ export default function HomePage() {
         <div className="readiness-layout">
           <div className="atelier-section-heading" data-reveal>
             <h2 id="readiness-title">
-              See if this
+              Is this workflow
               <br />
-              <em>workflow is ready.</em>
+              <em>ready?</em>
             </h2>
-            <p>
-              Four questions, scored the same way as the full check. Team size, tools, examples, and timing stay open
-              until you finish there.
-            </p>
+            <p>Four questions. Same scoring as the full check.</p>
           </div>
           <CompactReadiness />
         </div>
@@ -173,7 +154,7 @@ export default function HomePage() {
       <section id="perspective" className="atelier-perspective atelier-pad">
         <div className="atelier-section-meta">
           <span className="atelier-label">A LITTLE PERSPECTIVE</span>
-          <span className="atelier-label">01 — 05</span>
+          <span className="atelier-label">01 — 04</span>
         </div>
         <h2 className="atelier-statement">
           {statement.split(" ").map((word, index) => (
@@ -186,22 +167,14 @@ export default function HomePage() {
           <span className="perspective-symbol" aria-hidden="true">
             ↳
           </span>
-          <p>
-            Missed follow-ups. Manual reports. The constant chase for an update.
-            We help untangle the everyday work, so your people can get back to
-            what they do best.
-          </p>
-          <p>
-            AI and workflow automation for small and mid-sized businesses. Based in
-            Northwest Indiana, working with teams across Chicagoland and the United States.
-          </p>
+          <p>We give that work an owner.</p>
         </div>
       </section>
 
       <section className="atelier-capabilities atelier-pad" id="capabilities">
         <div className="atelier-section-meta">
           <span className="atelier-label">WHAT WE MAKE POSSIBLE</span>
-          <span className="atelier-label">02 — 05</span>
+          <span className="atelier-label">02 — 04</span>
         </div>
         <div className="atelier-section-heading" data-reveal>
           <h2>
@@ -209,11 +182,7 @@ export default function HomePage() {
             <br />
             <em>More forward.</em>
           </h2>
-          <p>
-            Start with the part of your day
-            <br />
-            that should be easier.
-          </p>
+          <p>Start with the part that stalls.</p>
         </div>
         <WorkflowExplorer />
       </section>
@@ -221,7 +190,7 @@ export default function HomePage() {
       <section className="atelier-approach atelier-pad" id="approach">
         <div className="atelier-section-meta">
           <span className="atelier-label">FROM POSSIBILITY TO PRACTICE</span>
-          <span className="atelier-label">03 — 05</span>
+          <span className="atelier-label">03 — 04</span>
         </div>
         <div className="approach-layout">
           <div className="approach-intro" data-reveal>
@@ -232,11 +201,7 @@ export default function HomePage() {
               <br />
               <em>Actually built.</em>
             </h2>
-            <p>
-              A clear starting point. A practical plan.
-              <br />
-              And a partner who stays for the work.
-            </p>
+            <p>A starting point. A plan. A build.</p>
             <Link href="/services" className="atelier-text-link">
               How we work <span aria-hidden="true">↗</span>
             </Link>
@@ -261,79 +226,21 @@ export default function HomePage() {
 
       <section className="security-band atelier-pad" id="security-check" aria-labelledby="security-title">
         <div className="atelier-section-meta">
-          <span className="atelier-label">AI-READY SECURITY CHECK</span>
-          <span className="atelier-label">$500 FIXED FEE</span>
+          <span className="atelier-label">SECURITY CHECK</span>
+          <span className="atelier-label">$500</span>
         </div>
         <div className="security-layout">
           <div data-reveal>
             <h2 id="security-title">
-              Know the systems
+              See the risk
               <br />
-              <em>before you automate them.</em>
+              <em>first.</em>
             </h2>
-            <p className="security-fee">$500 fixed fee · {securityCheckDuration}</p>
-            <p>{securityCheckAudience}</p>
+            <p className="security-fee">Security Check, $500.</p>
             <Link className="atelier-text-link" href="/security-check">
               See the Security Check <span aria-hidden="true">↗</span>
             </Link>
-            <p className="security-disclaimer">{securityCheckDisclaimer}</p>
-          </div>
-          <ol className="audit-checklist">
-            {securityCheckDeliverables.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      <section className="atelier-human atelier-pad" id="people">
-        <div className="atelier-section-meta">
-          <span className="atelier-label">EXPERIENCE BEHIND THE IDEAS</span>
-          <span className="atelier-label">04 — 05</span>
-        </div>
-        <div className="human-layout human-layout-text">
-          <div className="human-copy" data-reveal>
-            <h2>
-              Technology
-              <br />
-              is the tool.
-              <br />
-              <em>
-                People are
-                <br />
-                the point.
-              </em>
-            </h2>
-            <p>
-              Parkside brings an operator’s perspective to AI and automation.
-              Anthony’s background spans project controls, financial planning,
-              and the reality of keeping complex work moving.
-            </p>
-            <p>
-              That experience shapes how we work: ask good questions, make the
-              next step clear, and build something people can actually use.
-            </p>
-            <Link className="atelier-text-link" href="/about">
-              The thinking behind Parkside <span aria-hidden="true">↗</span>
-            </Link>
-            <div className="human-proof">
-              <div>
-                <strong>
-                  10<span>+</span>
-                </strong>
-                <span>YEARS IN COMPLEX OPERATIONS</span>
-              </div>
-              <div>
-                <strong>
-                  $500<span>M+</span>
-                </strong>
-                <span>CAPITAL PROGRAM EXPERIENCE</span>
-              </div>
-            </div>
-            <p className="proof-note">
-              Experience from Anthony’s career in utility and energy
-              infrastructure.
-            </p>
+            <p className="security-disclaimer-note">{securityCheckDisclaimer}</p>
           </div>
         </div>
       </section>
@@ -341,13 +248,13 @@ export default function HomePage() {
       <section className="atelier-journal atelier-pad">
         <div className="atelier-section-meta">
           <span className="atelier-label">NOTES FROM THE WORK</span>
-          <span className="atelier-label">05 — 05</span>
+          <span className="atelier-label">04 — 04</span>
         </div>
         <div className="atelier-section-heading" data-reveal>
           <h2>
-            A little less noise.
+            Notes from
             <br />
-            <em>A useful perspective.</em>
+            <em>the work.</em>
           </h2>
           <Link className="atelier-text-link" href="/field-notes">
             All field notes <span aria-hidden="true">↗</span>
@@ -381,31 +288,20 @@ export default function HomePage() {
       </section>
 
       <section className="atelier-invitation atelier-pad">
-        <span className="atelier-label">EVERY BETTER WAY HAS A BEGINNING.</span>
         <h2 data-reveal>
-          What could
+          What should
           <br />
           <em>work better?</em>
         </h2>
         <div className="invitation-bottom">
-          <p>
-            Let’s look at one workflow.
-            <br />
-            Your first Snapshot is on us.
-          </p>
           <TrackedLink
             className="atelier-button cream-button"
             href="/intake"
             eventName="snapshot_cta_click"
             eventProperties={{ location: "home_final_cta", href: "/intake" }}
           >
-            Get the free Snapshot <span aria-hidden="true">↗</span>
+            {primaryCta} <span aria-hidden="true">↗</span>
           </TrackedLink>
-          <span className="invitation-note">
-            A personal review.
-            <br />
-            No charge. No obligation.
-          </span>
         </div>
       </section>
     </main>

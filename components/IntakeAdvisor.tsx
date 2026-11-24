@@ -251,8 +251,7 @@ export function IntakeAdvisor() {
       />
 
       <div className="notice">
-        The free Snapshot starts with how work moves today. Do not submit
-        passwords, private credentials, or confidential access details.
+        Do not submit passwords or access details.
       </div>
 
       {estimatorContext ? (
@@ -268,7 +267,7 @@ export function IntakeAdvisor() {
       <FormSection
         step="Step 1 of 4"
         title="Business Basics"
-        description="Share who should be contacted and enough context to understand the business."
+        description="Who should we contact?"
       >
         <Field id="name" label="Name" required>
           <input
@@ -324,7 +323,7 @@ export function IntakeAdvisor() {
       <FormSection
         step="Step 2 of 4"
         title="Current Bottlenecks"
-        description="Point to the repeated work, missed handoffs, or slow response points that need a clearer system."
+        description="Where does the work stall?"
       >
         <Field
           id="primary-pain"
@@ -378,7 +377,7 @@ export function IntakeAdvisor() {
       <FormSection
         step="Step 3 of 4"
         title="Systems & Tools"
-        description="List the tools and rough impact so the Snapshot can separate quick wins from deeper implementation work."
+        description="Which tools, and what is at stake?"
       >
         <Field id="tools-used" label="What tools or systems are involved?" full>
           <input
@@ -415,7 +414,7 @@ export function IntakeAdvisor() {
       <FormSection
         step="Step 4 of 4"
         title="Desired Outcomes"
-        description="Describe what should be more repeatable after the Snapshot and how soon the issue matters."
+        description="What should change, and how soon?"
       >
         <Field
           id="desired-outcome"

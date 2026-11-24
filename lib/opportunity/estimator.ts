@@ -135,10 +135,9 @@ export function calculateEstimatorResult(state: EstimatorState): EstimatorResult
     return {
       score,
       band: "Strong starting point",
-      headline: "This looks ready for a Snapshot and likely Blueprint discussion.",
-      recommendation:
-        "The workflow appears repeated, visible, and important enough to inspect. Parkside should start by mapping where work stalls, then decide whether the next step is a Blueprint or a narrow build.",
-      nextStep: "Request the Free Snapshot",
+      headline: "Ready for a Snapshot.",
+      recommendation: "The work repeats, and someone can own the next step.",
+      nextStep: "Book a free Snapshot",
       signals,
     };
   }
@@ -147,10 +146,9 @@ export function calculateEstimatorResult(state: EstimatorState): EstimatorResult
     return {
       score,
       band: "Promising but needs focus",
-      headline: "This could be a good Parkside fit after one round of clarification.",
-      recommendation:
-        "The opportunity is there, but the first review should clarify ownership, examples, current tools, or impact before scoping implementation.",
-      nextStep: "Use the Snapshot to narrow it",
+      headline: "Promising. Narrow it first.",
+      recommendation: "Name the owner and the workflow before you build.",
+      nextStep: "Book a free Snapshot",
       signals,
     };
   }
@@ -158,10 +156,9 @@ export function calculateEstimatorResult(state: EstimatorState): EstimatorResult
   return {
     score,
     band: "Prepare before automating",
-    headline: "Do not buy another tool yet. Tighten the workflow first.",
-    recommendation:
-      "The current signal is too broad or too occasional for a useful build recommendation. Gather examples, name the owner, and choose one repeated workflow before moving into implementation.",
-    nextStep: "Gather examples, then request the Snapshot",
+    headline: "Not ready to automate.",
+    recommendation: "Pick one repeated workflow and a named owner.",
+    nextStep: "Book a free Snapshot",
     signals,
   };
 }

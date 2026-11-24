@@ -117,14 +117,14 @@ export function Header() {
           className="atelier-header-cta"
           href="/intake"
           onClick={() => {
-            navigate("Get the Free Snapshot", "/intake");
+            navigate("Book a free Snapshot", "/intake");
             track("snapshot_cta_click", {
               location: "header",
               href: "/intake",
             });
           }}
         >
-          Get the free Snapshot <span aria-hidden="true">↗</span>
+          Book a free Snapshot <span aria-hidden="true">↗</span>
         </Link>
         <button
           ref={menuButton}
@@ -153,7 +153,7 @@ export function Header() {
             { href: "/opportunity-estimator", label: "Workflow estimator" },
             { href: "/security-check", label: "Security Check" },
             { href: "/blueprint", label: "The Blueprint" },
-            { href: "/intake", label: "Get the free Snapshot" },
+            { href: "/intake", label: "Book a free Snapshot" },
           ].map((item, index) => (
             <Link
               key={item.href}

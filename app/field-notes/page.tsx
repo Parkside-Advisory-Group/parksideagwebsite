@@ -6,7 +6,7 @@ import { createRouteMetadata } from "../../lib/metadata";
 export const metadata: Metadata = createRouteMetadata({
   title: "Field Notes",
   description:
-    "Practical notes from Parkside on AI adoption, workflow systems, follow-up, handoffs, reporting, and operating leverage.",
+    "Notes on follow-up, handoffs, and where AI belongs.",
   path: "/field-notes"
 });
 
@@ -16,11 +16,8 @@ export default function FieldNotesPage() {
       <section className="page-hero field-notes-hero">
         <div className="container narrow-container">
           <p className="eyebrow">Field Notes</p>
-          <h1 className="page-title">Practical notes on AI, workflow, and operating leverage.</h1>
-          <p className="lede">
-            Parkside Field Notes turn common business friction into clear operating lessons: missed follow-up, stale
-            estimates, manual reporting, handoffs, and where AI actually belongs.
-          </p>
+          <h1 className="page-title">Notes from the work.</h1>
+          <p className="lede">Follow-up, estimates, reporting, and handoffs.</p>
         </div>
       </section>
 
@@ -45,11 +42,10 @@ export default function FieldNotesPage() {
 
       <section className="section dark-band home-final-cta">
         <div className="container narrow-container reveal-on-scroll">
-          <h2 className="section-title">If one of these notes sounds familiar, start with the workflow.</h2>
-          <p className="lede">Share the process that keeps slipping. Parkside will help identify the first useful build.</p>
+          <h2 className="section-title">Start with one workflow.</h2>
           <div className="button-row">
             <Link className="btn" href="/intake">
-              Get the Free Snapshot
+              Book a free Snapshot
             </Link>
           </div>
         </div>

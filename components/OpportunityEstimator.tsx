@@ -109,7 +109,7 @@ export function OpportunityEstimator() {
       <form className="estimator-form" aria-label="Parkside opportunity estimator">
         {carriedAnswers ? (
           <p className="estimator-carried">
-            Some answers are already selected. Finish anything still open, then see the recommendation.
+            Some answers are filled in. Finish the rest.
           </p>
         ) : null}
         <EstimatorSection eyebrow="Business shape" title="How much repeated work is there?">
@@ -221,7 +221,7 @@ export function OpportunityEstimator() {
           </>
         ) : (
           <div className="estimator-placeholder">
-            <h2>Answer the questions to get a practical next-step recommendation.</h2>
+            <h2>A few questions. A clear next step.</h2>
             <p>
               Parkside is looking for a repeated workflow with business impact, examples, current tools, and a human
               owner. If those pieces exist, the Snapshot has something real to inspect.

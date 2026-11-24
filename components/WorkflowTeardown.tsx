@@ -25,16 +25,16 @@ const stages: Stage[] = [
     index: "01",
     title: "Inquiry arrives",
     today: {
-      sits: "A shared inbox, a voicemail, or a text",
-      accountable: "Whoever happens to see it",
-      human: "Deciding whether the work is a fit",
-      body: "A call, web form, or email asks for an estimate. The job type and site address live in the message. Nobody has written down who answers.",
+      sits: "A shared inbox",
+      accountable: "Whoever sees it",
+      human: "Is this a fit?",
+      body: "The ask arrives. Nobody owns the reply.",
     },
     owned: {
-      sits: "One intake record",
-      accountable: "A named office owner",
-      human: "Deciding whether the work is a fit, before any date is promised",
-      body: "The same inquiry is captured once: source, job type, site, and the question they asked. A person is named before the company promises anything.",
+      sits: "One record",
+      accountable: "A named owner",
+      human: "Is this a fit?",
+      body: "Captured once. A person is named.",
     },
   },
   {
@@ -42,16 +42,16 @@ const stages: Stage[] = [
     index: "02",
     title: "Estimate goes out",
     today: {
-      sits: "One person’s sent mail",
-      accountable: "The person who built the number",
-      human: "Price, scope, and what the company will commit to",
-      body: "Someone builds the estimate and sends it from their own email. “Sent” is a status only if they remember to say so.",
+      sits: "One sent mailbox",
+      accountable: "Whoever priced it",
+      human: "Price and scope",
+      body: "Sent, if someone remembers to say so.",
     },
     owned: {
-      sits: "A queue the office can see",
-      accountable: "The estimator, with the record updated",
-      human: "Price, scope, and what the company will commit to",
-      body: "The estimate is marked sent, with the customer and the date. The rest of the office can see it without opening that person’s inbox.",
+      sits: "A shared queue",
+      accountable: "The estimator",
+      human: "Price and scope",
+      body: "Marked sent. The office can see it.",
     },
   },
   {
@@ -59,16 +59,16 @@ const stages: Stage[] = [
     index: "03",
     title: "The quiet days",
     today: {
-      sits: "Nowhere. It ages in place.",
+      sits: "Nowhere",
       accountable: "No one",
-      human: "Noticing, which only happens by accident",
-      body: "There is no follow-up date and no owner. The estimate sits until the customer calls someone else, or the office stumbles on the thread.",
+      human: "Noticing it",
+      body: "No date. No owner. It just sits.",
     },
     owned: {
-      sits: "A dated next step",
+      sits: "A next step",
       accountable: "The named owner",
-      human: "Whether this customer should hear from you, and what the note should say",
-      body: "A next follow-up date is on the record. A reminder is prepared. It does not send itself.",
+      human: "What the note says",
+      body: "A date is set. It does not send itself.",
     },
   },
   {
@@ -76,16 +76,16 @@ const stages: Stage[] = [
     index: "04",
     title: "The reply",
     today: {
-      sits: "The same thread, unread or half-read",
+      sits: "The same thread",
       accountable: "Still unclear",
-      human: "Whatever someone types when they finally look",
-      body: "A yes, a no, or silence all look the same until someone happens to check. The next promise is whatever that person improvises.",
+      human: "Whatever gets typed",
+      body: "Yes, no, and silence look the same.",
     },
     owned: {
-      sits: "Accepted, declined, paused, or back with the owner",
-      accountable: "The owner, for anything the customer will read",
-      human: "The commitment. The queue can be automatic. The company’s word cannot.",
-      body: "Accepted, declined, or paused leaves the queue. An unclear reply returns to the owner. Customer-facing words stay with a person.",
+      sits: "A clear status",
+      accountable: "The owner",
+      human: "The company’s word",
+      body: "A person still sends the reply.",
     },
   },
 ];
@@ -134,7 +134,7 @@ export function WorkflowTeardown() {
       </ol>
       <div className="handoff-detail" key={`${mode}-${stage.id}`} aria-live="polite">
         <div>
-          <p className="handoff-kicker">{mode === "today" ? "No owner, no next step" : "A person still decides"}</p>
+          <p className="handoff-kicker">{mode === "today" ? "No owner" : "A named owner"}</p>
           <h3>{stage.title}</h3>
           <p>{copy.body}</p>
         </div>

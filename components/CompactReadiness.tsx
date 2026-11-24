@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { track } from "@vercel/analytics";
+import { primaryCta } from "../lib/content";
 import {
   type EstimatorOption,
   type EstimatorState,
@@ -88,16 +89,13 @@ export function CompactReadiness() {
         <div className="readiness-result" aria-live="polite">
           <p className="readiness-band">{result.band}</p>
           <h3>{result.headline}</h3>
-          <p>
-            This short check leaves team size, tools, examples, and timing open, so it uses the same weights without
-            calling the workflow a strong starting point on its own. Finish the full check before booking time.
-          </p>
+          <p>Finish the full check for a complete read.</p>
           <div className="readiness-actions">
             <Link className="btn" href={buildEstimatorHref(state)}>
               Finish the full check <span aria-hidden="true">↗</span>
             </Link>
             <Link className="btn ghost" href={buildIntakeHref(state)}>
-              Get the free Snapshot <span aria-hidden="true">↗</span>
+              {primaryCta} <span aria-hidden="true">↗</span>
             </Link>
           </div>
           <button className="readiness-back" type="button" onClick={back}>
