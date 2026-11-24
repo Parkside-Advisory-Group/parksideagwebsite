@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { JsonLd } from "../components/JsonLd";
 import { TrackedLink } from "../components/TrackedLink";
-import SculptureLoader from "../components/experience/SculptureLoader";
-import { MotionToggle } from "../components/experience/MotionToggle";
-import { ExperienceMotion } from "../components/experience/ExperienceMotion";
+import { FounderNote } from "../components/FounderNote";
+import { LedgerMotion } from "../components/LedgerMotion";
 import { WorkflowExplorer } from "../components/experience/WorkflowExplorer";
 import { WorkflowTeardown } from "../components/WorkflowTeardown";
 import { CompactReadiness } from "../components/CompactReadiness";
+import {
+  heroHeadline,
+  securityCheckAudience,
+  securityCheckDeliverables,
+  securityCheckDisclaimer,
+  securityCheckDuration
+} from "../lib/content";
 import { fieldNotes } from "../lib/field-notes";
 import { createRouteMetadata } from "../lib/metadata";
 import {
@@ -23,7 +28,7 @@ import {
 export const metadata: Metadata = createRouteMetadata({
   title: "AI & Workflow Automation for Small Businesses | Parkside",
   description:
-    "Parkside helps small and mid-sized businesses improve intake, follow-up and reporting with practical AI and workflow automation. Start with a free Workflow Snapshot.",
+    "Estimates shouldn't go quiet. Parkside helps operators in Northwest Indiana and Chicagoland put an owner and a next action on follow-up. Start with a free Workflow Snapshot.",
   path: "/",
 });
 
@@ -46,24 +51,32 @@ const steps = [
   {
     number: "01",
     title: "Find the friction.",
-    body: "We start with the way work actually happens. The inboxes, the handoffs, the spreadsheet someone rebuilds every Friday.",
-    detail: "THE FREE WORKFLOW SNAPSHOT",
+    body: "We start with the way work actually happens. The inboxes, the handoffs, the estimate that went quiet.",
+    detail: "FREE WORKFLOW SNAPSHOT",
     link: "/intake",
     cta: "Get the free Snapshot",
   },
   {
     number: "02",
-    title: "Design the way forward.",
-    body: "One clear plan for one important workflow. What changes, who owns it, where AI helps, and where a person stays in control.",
-    detail: "THE AI OPERATIONS BLUEPRINT",
-    link: "/services",
-    cta: "Explore the approach",
+    title: "See how the business is set up.",
+    body: "A fixed-fee review of systems, vendors, access, and the AI tools already in use. About 2–3 weeks.",
+    detail: "AI-READY SECURITY CHECK · $500",
+    link: "/security-check",
+    cta: "See the Security Check",
   },
   {
     number: "03",
-    title: "Build it. Make it work.",
-    body: "We connect the pieces, test with real examples, and help your team put the system to use. Then tune it from what we learn.",
-    detail: "AUTOMATION, IMPLEMENTATION & SUPPORT",
+    title: "Run the 30-day pilot.",
+    body: "The paid Blueprint names the owner, the next action, and the first system worth building. Founder-cohort target $1,500. The $500 Check is credited if you sign within 30 days.",
+    detail: "AI OPERATIONS BLUEPRINT",
+    link: "/blueprint",
+    cta: "See the Blueprint",
+  },
+  {
+    number: "04",
+    title: "Build it. Keep it running.",
+    body: "Implementation and an ongoing operating partnership, quoted after the Blueprint. Your people can run the system on a Tuesday.",
+    detail: "BUILD · QUOTED AFTER THE BLUEPRINT",
     link: "/services",
     cta: "See what we build",
   },
@@ -73,40 +86,18 @@ export default function HomePage() {
   return (
     <main className="atelier-home">
       <JsonLd data={structuredData} />
-      <ExperienceMotion />
-      <section className="atelier-hero" aria-labelledby="hero-title">
+      <section className="atelier-hero ledger-hero" aria-labelledby="hero-title">
         <div className="hero-fine-grid" aria-hidden="true" />
         <div className="atelier-hero-topline">
           <span className="atelier-label">
             PRACTICAL INTELLIGENCE. LASTING IMPACT.
           </span>
           <span className="hero-edition atelier-label">
-            INDEPENDENT THINKING. CONNECTED SYSTEMS.
+            NORTHWEST INDIANA / CHICAGOLAND
           </span>
         </div>
-        <div className="atelier-hero-art">
-          <div className="sculpture-fallback">
-            <Image
-              src="/assets/atelier/sculpture.webp"
-              alt=""
-              fill
-              sizes="(max-width: 760px) 100vw, 67vw"
-              priority
-              fetchPriority="high"
-            />
-          </div>
-          <SculptureLoader />
-        </div>
-        <div className="atelier-hero-copy">
-          <h1 id="hero-title">
-            <span className="hero-line">Make room</span>{" "}
-            <span className="hero-line hero-line-second">for what</span>{" "}
-            <span className="hero-line hero-line-last">
-              <em>matters.</em>
-            </span>
-          </h1>
-        </div>
-        <div className="atelier-hero-bottom">
+        <div className="ledger-copy">
+          <h1 id="hero-title">{heroHeadline}</h1>
           <div className="hero-description">
             <p>
               For teams that lose work in follow-up, reporting, and handoffs.
@@ -133,26 +124,11 @@ export default function HomePage() {
               Free Snapshot. No passwords. No obligation.
             </span>
           </div>
-          <a className="hero-explore" href="#perspective">
-            <span className="explore-circle" aria-hidden="true">
-              ↓
-            </span>
-            <span>
-              Explore
-              <br />a clearer way
-            </span>
-          </a>
-          <div className="hero-utility">
-            <span className="hero-location">
-              NORTHWEST INDIANA
-              <br />
-              CHICAGOLAND &amp; BEYOND
-            </span>
-            <div id="sculpture-control" />
-            <MotionToggle />
-          </div>
         </div>
+        <LedgerMotion />
       </section>
+
+      <FounderNote />
 
       <section className="atelier-teardown atelier-pad" id="teardown" aria-labelledby="teardown-title">
         <div className="atelier-section-meta">
@@ -242,31 +218,6 @@ export default function HomePage() {
         <WorkflowExplorer />
       </section>
 
-      <section className="atelier-portal" aria-label="A clearer way through">
-        <div className="portal-image">
-          <Image
-            src="/assets/atelier/architecture.webp"
-            alt="An uninterrupted gold ribbon passes through a monumental burgundy arch into a sunlit cream space"
-            fill
-            sizes="100vw"
-            quality={90}
-          />
-        </div>
-        <div className="portal-shade" />
-        <div className="portal-caption" data-reveal>
-          <span className="atelier-label">COMPLEXITY, MEET CLARITY.</span>
-          <h2>
-            A clearer
-            <br />
-            <em>way through.</em>
-          </h2>
-        </div>
-        <div className="portal-bottom">
-          <span>Good systems make space.</span>
-          <span className="atelier-label">PARKSIDE ADVISORY GROUP</span>
-        </div>
-      </section>
-
       <section className="atelier-approach atelier-pad" id="approach">
         <div className="atelier-section-meta">
           <span className="atelier-label">FROM POSSIBILITY TO PRACTICE</span>
@@ -286,15 +237,9 @@ export default function HomePage() {
               <br />
               And a partner who stays for the work.
             </p>
-            <Link href="/blueprint" className="atelier-text-link">
+            <Link href="/services" className="atelier-text-link">
               How we work <span aria-hidden="true">↗</span>
             </Link>
-            <div className="approach-art" aria-hidden="true">
-              <span />
-              <span />
-              <span />
-              <i />
-            </div>
           </div>
           <div className="approach-steps">
             {steps.map((step) => (
@@ -314,25 +259,39 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="security-band atelier-pad" id="security-check" aria-labelledby="security-title">
+        <div className="atelier-section-meta">
+          <span className="atelier-label">AI-READY SECURITY CHECK</span>
+          <span className="atelier-label">$500 FIXED FEE</span>
+        </div>
+        <div className="security-layout">
+          <div data-reveal>
+            <h2 id="security-title">
+              Know the systems
+              <br />
+              <em>before you automate them.</em>
+            </h2>
+            <p className="security-fee">$500 fixed fee · {securityCheckDuration}</p>
+            <p>{securityCheckAudience}</p>
+            <Link className="atelier-text-link" href="/security-check">
+              See the Security Check <span aria-hidden="true">↗</span>
+            </Link>
+            <p className="security-disclaimer">{securityCheckDisclaimer}</p>
+          </div>
+          <ol className="audit-checklist">
+            {securityCheckDeliverables.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
       <section className="atelier-human atelier-pad" id="people">
         <div className="atelier-section-meta">
           <span className="atelier-label">EXPERIENCE BEHIND THE IDEAS</span>
           <span className="atelier-label">04 — 05</span>
         </div>
-        <div className="human-layout">
-          <div className="human-portrait" data-reveal>
-            <Image
-              src="/assets/atelier/balance.webp"
-              alt="A gold ribbon surrounds a calm stone sphere on a burgundy pedestal"
-              width={700}
-              height={850}
-              sizes="(max-width: 760px) 100vw, 38vw"
-            />
-            <div className="portrait-caption">
-              <span>Complexity, with a human center.</span>
-              <span className="atelier-label">THE PARKSIDE PERSPECTIVE</span>
-            </div>
-          </div>
+        <div className="human-layout human-layout-text">
           <div className="human-copy" data-reveal>
             <h2>
               Technology
@@ -422,11 +381,6 @@ export default function HomePage() {
       </section>
 
       <section className="atelier-invitation atelier-pad">
-        <div className="invitation-orbits" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </div>
         <span className="atelier-label">EVERY BETTER WAY HAS A BEGINNING.</span>
         <h2 data-reveal>
           What could

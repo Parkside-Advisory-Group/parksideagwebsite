@@ -50,7 +50,7 @@ const idealFitSignals = [
 ];
 
 const notAFitSignals = [
-  "The business wants fixed pricing before the workflow and scope are understood",
+  "The business wants a fixed Build price before the Blueprint defines the work",
   "The request depends on exact savings claims or guaranteed feasibility before discovery",
   "The team wants to submit passwords, API keys, or private credentials through intake",
   "The desired system would remove human accountability from judgment-heavy work"

@@ -656,7 +656,7 @@ body {
   top: 113px;
   background: var(--gold-light);
   box-shadow: 0 0 10px #c9a765;
-  animation: connection-flow 4s ease-in-out infinite;
+  animation: none;
 }
 .workflow-note {
   font-size: 9px;

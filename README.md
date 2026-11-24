@@ -4,14 +4,15 @@ Vercel-ready Next.js site for Parkside Advisory Group, including public marketin
 
 ## Astra redesign — Room for what matters
 
-The `redesign/astra-atelier` branch rebuilds the public visual experience around the existing burgundy, cream, and gold palette. It includes a live Three.js ribbon sculpture, original architectural artwork, responsive editorial layouts, a workflow explorer, and consistent secondary-page styling.
+The public site keeps the burgundy, cream, and gold palette. The homepage hero is a job ledger: an estimate that went quiet becomes an owned job with a next action. That change plays once. Reduced motion shows the owned job and stays still.
 
-- `components/experience/` owns the WebGL, progressive reveals, workflow explorer, and motion preference control.
+- `components/experience/` owns the workflow explorer. The homepage ledger is `components/LedgerMotion.tsx`.
 - `app/styles/atelier.css` and `atelier-pages.css` define the new visual system.
-- `public/assets/atelier/` contains optimized, local artwork and the social-sharing image. The sculpture still is rendered from the actual geometry.
+- `public/images/anthony-mora.jpg` is the founder portrait slot. Replace that file with Anthony's photograph. Do not use a generated portrait.
+- `public/assets/atelier/` contains optimized local artwork and the social-sharing image.
 - `tasks/astra-iterations.md` records the three design passes and final navigation fixes.
 
-Motion respects the operating-system preference and a visitor pause control. The 3D renderer pauses offscreen and falls back to a static image when WebGL is unavailable. Run `npm run build` followed by `npm run start -- --port 3017` for the production-build preview. This branch has not been published to the live site.
+Motion on the ledger plays once. `prefers-reduced-motion` shows the owned job and stays still. Run `npm run build` followed by `npm run start -- --port 3017` for the production-build preview. This branch has not been published to the live site.
 
 ## Run locally
 
@@ -61,7 +62,7 @@ Copy `.env.example` to `.env.local` and fill values as integrations are connecte
 
 ## Current live system
 
-- Home, Services, Blueprint, Use Cases, About, Intake, Opportunity Estimator, and Privacy pages. `/growth-audit` permanently redirects to `/intake`.
+- Home, Services, Blueprint, Security Check, Use Cases, About, Intake, Opportunity Estimator, and Privacy pages. `/growth-audit` permanently redirects to `/intake`.
 - Primary intake route at `/api/intake`.
 - Server-side intake validation and guardrail enforcement.
 - Lead scoring and tiering.
@@ -84,14 +85,11 @@ To persist correlation IDs in a dedicated Supabase column, run:
 ## Search readiness and quality checks
 
 Public pages are prerendered with canonical URLs, shared Organization/Service data,
-and article-specific authorship and publication metadata. The sitemap covers all
-17 public pages and articles. FAQs and illustrative workflows are visible HTML.
+and article-specific authorship and publication metadata. The sitemap covers every public page and article. FAQs and illustrative workflows are visible HTML.
 `llms.txt` is a supplementary directory, not a requirement or ranking guarantee.
 
-Touch screens and data-saving connections receive the sculpture artwork first;
-visitors can enable the full 3D renderer with the visible control. Desktop retains
-live 3D. Reduced-motion preferences and graphics failure fallbacks are supported.
-The site uses only the Newsreader weight it renders and avoids preloading the
+The homepage does not load a 3D scene. Touch screens receive the same ledger as desktop.
+Reduced motion shows the owned job with no animation. The site uses only the Newsreader weight it renders and avoids preloading the
 secondary monospace font. Analytics components run in Vercel environments, where
 their first-party collection endpoints exist.
 

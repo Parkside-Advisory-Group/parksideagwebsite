@@ -151,7 +151,8 @@ export function Header() {
             ...navigation,
             { href: "/use-cases", label: "Use cases" },
             { href: "/opportunity-estimator", label: "Workflow estimator" },
-            { href: "/blueprint", label: "How the Snapshot works" },
+            { href: "/security-check", label: "Security Check" },
+            { href: "/blueprint", label: "The Blueprint" },
             { href: "/intake", label: "Get the free Snapshot" },
           ].map((item, index) => (
             <Link

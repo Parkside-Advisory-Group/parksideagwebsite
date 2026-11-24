@@ -21,6 +21,7 @@
 @import "./styles/motion.css";
 @import "./styles/atelier.css";
 @import "./styles/atelier-pages.css";
+@import "./styles/ledger.css";
 
 /*
  * Semantic Parkside tokens exposed to Tailwind utilities (bg-ink, text-gold…).

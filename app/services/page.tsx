@@ -15,7 +15,7 @@ import {
 export const metadata: Metadata = createRouteMetadata({
   title: "Services",
   description:
-    "The free AI Workflow Savings Snapshot, paid AI Operations Blueprint, workflow automation sprints, AI agent builds, and ongoing operating support from Parkside Advisory Group.",
+    "The free Workflow Snapshot, a $500 AI-Ready Security Check, the paid AI Operations Blueprint, and Build quoted after the Blueprint.",
   path: "/services"
 });
 
@@ -32,8 +32,8 @@ const serviceQuestions = [
     answer: "Not necessarily. The first step is to review the tools and records you already use, along with their integration options and access controls. A useful solution may connect existing steps or simplify the process. Any need for a new tool should follow from the workflow, not precede it."
   },
   {
-    question: "What is the difference between the Snapshot and the Blueprint?",
-    answer: "The free AI Workflow Savings Snapshot reviews one painful workflow and identifies a practical starting point. The paid AI Operations Blueprint goes deeper into the steps, owners, constraints, and proposed build. Implementation scope is agreed after that work is understood."
+    question: "What is the difference between the Snapshot, the Security Check, and the Blueprint?",
+    answer: "The free AI Workflow Savings Snapshot reviews one painful workflow. The AI-Ready Security Check is a $500 fixed-fee operations and risk review, about 2–3 weeks. The paid AI Operations Blueprint is a 30-day AI Operator Pilot, with a founder-cohort target of $1,500 and the Check credited if signed within 30 days. Build is quoted after the Blueprint."
   },
   {
     question: "How do we decide whether an automation is worth keeping?",
@@ -56,7 +56,7 @@ const serviceOutputs = [
 ];
 
 const serviceGuardrails = [
-  "Parkside does not quote final pricing before discovery confirms scope.",
+  "Build is quoted after the Blueprint. The Security Check is a $500 fixed fee, and the Blueprint founder-cohort target is $1,500.",
   "Parkside does not request passwords, private API keys, or login credentials through intake.",
   "Parkside does not promise exact savings or guarantee technical feasibility before reviewing the workflow.",
   "Parkside keeps judgment-heavy moments human-owned unless a review path is clearly defined."
@@ -89,11 +89,10 @@ export default function ServicesPage() {
           <p className="eyebrow">Services</p>
           <h1 className="page-title">Start with the workflow that keeps costing attention.</h1>
           <p className="lede">
-            Practical AI and workflow automation for business owners and operating teams. We inspect the handoff,
-            define the owner and next action, then build the system that makes repeated work easier to run.
-            The Snapshot is free. The Blueprint is a paid working session, scoped after the Snapshot. Implementation is
-            quoted only after that. Sprints and retainers include the notes and walkthrough your people need to run the
-            system on a Tuesday.
+            Practical AI and workflow automation for business owners and operating teams. The path is a free Workflow
+            Snapshot, a $500 AI-Ready Security Check, the paid Blueprint (a 30-day AI Operator Pilot, founder-cohort
+            target $1,500, with the Check credited if signed within 30 days), then Build — implementation and an
+            ongoing operating partnership, quoted after the Blueprint.
           </p>
         </div>
       </section>
@@ -102,6 +101,7 @@ export default function ServicesPage() {
           {offers.map((offer) => (
             <article className="card" key={offer.name}>
               <h3>{offer.name}</h3>
+              <p className="offer-fee">{offer.feeLabel}</p>
               <p>{offer.summary}</p>
               <p>
                 <strong>Best for:</strong> {offer.bestFor}
@@ -193,7 +193,7 @@ export default function ServicesPage() {
               {primaryCta}
             </Link>
           </div>
-          <p className="cta-assurance">Every engagement starts with the free Snapshot · No pricing before scope is clear</p>
+          <p className="cta-assurance">Snapshot is free · Security Check $500 · Blueprint founder-cohort target $1,500 · Build quoted after the Blueprint</p>
         </div>
       </section>
     </main>
